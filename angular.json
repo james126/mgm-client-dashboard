@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "coreui-free-angular-admin-template": {
+    "mgm-client-dashboard": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -23,14 +23,17 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/coreui-free-angular-admin-template",
+            "outputPath": "dist/mgm-client-dashboard",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "preserveSymlinks": true,
-            "assets": ["src/assets/brand/logo.svg"],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
             "styles": ["src/scss/styles.scss"],
             "scripts": [],
             "allowedCommonJsDependencies": []
@@ -64,10 +67,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "coreui-free-angular-admin-template:build:production"
+              "buildTarget": "mgm-client-dashboard:build:production"
             },
             "development": {
-              "buildTarget": "coreui-free-angular-admin-template:build:development"
+              "buildTarget": "mgm-client-dashboard:build:development"
             }
           },
           "options": {
@@ -78,7 +81,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "coreui-free-angular-admin-template:build"
+            "buildTarget": "mgm-client-dashboard:build"
           }
         },
         "test": {

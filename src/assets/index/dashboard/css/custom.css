@@ -1,0 +1,20 @@
+.footer {
+	color: #d7a403;
+	background-color: #f4f5fa !important;
+}
+
+.top-navbar {
+	background-color: #f4f5fa !important;
+}
+
+.custom-pill {
+	background-color: #d7a403;
+}
+
+.update-button {
+	border: rgb(189,147,4) !important;
+}
+
+.input-email:hover {
+	border: black !important;
+}
