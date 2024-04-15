@@ -3,3 +3,44 @@
 // If you want to customize your project please add your variables below.
 
 $enable-deprecation-messages: false !default;
+
+//margin: 0;
+//font-family: var(--cui-body-font-family);
+//font-size: var(--cui-body-font-size);
+//font-weight: var(--cui-body-font-weight);
+//line-height: var(--cui-body-line-height);
+//color: var(--cui-body-color);
+//text-align: var(--cui-body-text-align);
+//background-color: var(--cui-body-bg);
+//-webkit-text-size-adjust: 100%;
+//-webkit-tap-highlight-color: rgba(8, 10, 12, 0);
+
+$font-family-sans-serif: system-ui,
+-apple-system,
+"Segoe UI",
+Roboto,
+"Helvetica Neue",
+Arial,
+"Noto Sans",
+"Liberation Sans",
+sans-serif,
+"Apple Color Emoji",
+"Segoe UI Emoji",
+"Segoe UI Symbol",
+"Noto Color Emoji";
+
+$display-font-sizes: (
+        1: 5rem,
+        2: 4.5rem,
+        3: 4rem,
+        4: 3.5rem,
+        5: 3rem,
+        6: 2.5rem,
+        7: 2.0rem,
+        8: 1.5rem,
+        9: 1.0rem,
+);
+
+$display-font-weight: 300;
+
+

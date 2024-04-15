@@ -153,16 +153,21 @@
 
 .navbar .navbar-brand,
 .navbar a.btn {
-    height: 80px
+    height: 80px;
 }
 
 .navbar .navbar-nav .nav-link {
     margin-right: 30px;
     padding: 25px 0;
     color: var(--dark);
-    font-weight: 500;
+    font-weight: 100;
+    font-family: "Work Sans", sand-serif, serif !important;
     text-transform: uppercase;
     outline: none;
+}
+
+.nav-active {
+    color: rgb(243, 189, 0) !important;
 }
 
 .navbar .navbar-nav .nav-link:hover,
@@ -173,7 +178,7 @@
 .navbar .dropdown-toggle::after {
     border: none;
     content: "\f107";
-    font-family: "Font Awesome 5 Free";
+    font-family: "Work Sans", sand-serif, serif;
     font-weight: 900;
     vertical-align: middle;
     margin-left: 8px;
@@ -208,6 +213,39 @@
         opacity: 1;
     }
 }
+
+.index-primary-background-color {
+    background-color: rgb(243, 189, 0) !important;
+}
+
+.index-primary-color {
+    color: rgb(243, 189, 0) !important;
+}
+
+.index-heading-color {
+color: rgb(12, 43, 75);
+}
+
+.index-button {
+    background-color: rgb(243, 189, 0) !important;
+    border-radius: 0;
+}
+
+.index-button:hover {
+    background-color: rgb(243, 189, 0) !important;
+    opacity: 0.75;
+    transition: opacity 0.15s ease;
+    transition-duration: 0.15s;
+    transition-timing-function: ease;
+    transition-delay: 0s;
+    transition-property: opacity;
+    border-radius: 0;
+}
+
+.index-font-color {
+    color: rgb(117, 117, 117);
+}
+
 
 
 /*** Header ***/

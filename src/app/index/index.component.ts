@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, RendererFactory2, ViewChild, ViewEncapsulation } from '@angular/core'
+import { Component, OnInit, Renderer2, RendererFactory2, ViewChild } from '@angular/core'
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from "@angular/router";
 import { environment } from "../../environments/environment";
@@ -6,6 +6,7 @@ import { Scripts, ScriptStore } from './script.store'
 import { ContactFormService } from "./service/contact-form.service";
 import { Contact } from './dto/contact';
 import { RecaptchaComponent } from 'ng-recaptcha';
+import { cilCheck } from '@coreui/icons';
 
 @Component({
   selector: 'mgm-index',
@@ -20,7 +21,7 @@ import { RecaptchaComponent } from 'ng-recaptcha';
   styleUrls: [
       '../../assets/index/css/google-web-font.css',
     '../../assets/index/lib/animate/animate.min.css',
-     '../../assets/index/css/bootstrap.min.css',
+     '../../assets/index/css/google-web-font.css',
     '../../assets/index/css/style2.css'
   ],
   providers: [ContactFormService],
@@ -34,7 +35,8 @@ export class IndexComponent implements OnInit {
   submitted: boolean = false;
   contactForm!: FormGroup;
   private scripts: Scripts[] = [];
-  slides: any[] = new Array(3).fill({id: -1, src: '', title: '', subtitle: ''});
+  slides: any[] = new Array(2).fill({id: -1, src: '', title: '', name: '', location: ''});
+  icons = { cilCheck };
 
   formValues = {
     first_name: '',
@@ -64,25 +66,21 @@ export class IndexComponent implements OnInit {
       script.src = obj.src;
       // this.renderer.appendChild(document.head, script);
       document.getElementsByTagName('head')[0].appendChild(script);
+
       this.slides[0] = {
         id: 0,
-        src: './assets/img.png',
-        title: 'First slide',
-        subtitle: 'Nulla vitae elit libero, a pharetra augue mollis interdum.'
+        src: './assets/index/image/quote1.png',
+        title: 'Aston and Mark did a great job cleaning up my overgrown lawn which hadn\'t been mowed for months',
+        name: 'Billy Brown',
+        location: 'Dannemora'
       };
       this.slides[1] = {
         id: 1,
-        src: './assets/img.png',
-        title: 'Second slide',
-        subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+        src: '/assets/index/image/quote1.png',
+        title: 'The team did a great job landscaping my development before it went to market',
+        name: 'Kirsty Merriman',
+        location: 'Sunnyvale'
       }
-      this.slides[2] = {
-        id: 2,
-        src: './assets/img.png',
-        title: 'Third slide',
-        subtitle: 'Praesent commodo cursus magna, vel scelerisque nisl consectetur.'
-      }
-
     });
 
     this.contactForm = new FormGroup({
