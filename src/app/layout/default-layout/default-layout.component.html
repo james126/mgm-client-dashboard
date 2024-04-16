@@ -1,9 +1,8 @@
 <!--sidebar-->
 <c-sidebar #sidebar1="cSidebar" class="d-print-none sidebar sidebar-fixed border-end" colorScheme="dark" id="sidebar1" visible>
     <c-sidebar-header class="border-bottom">
-        <img src="app/icons/">
+        <default-logo></default-logo>
     </c-sidebar-header>
-
     <ng-scrollbar
         #scrollbar="ngScrollbar"
         (updated)="onScrollbarUpdate(scrollbar.state)"

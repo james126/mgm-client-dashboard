@@ -9,12 +9,13 @@ import { IndexRoutingModule } from './index-routing.module'
 import { IndexComponent } from './index.component'
 import { FooterComponent } from "./footer/footer.component";
 import { HeaderComponent } from "./header/header.component";
+import { LogoComponent } from './logo/logo.component'
 import { ContactFormService } from './service/contact-form.service'
 import { CarouselModule } from '@coreui/angular';
 
 @NgModule({
   declarations: [
-    IndexComponent, HeaderComponent, FooterComponent, CopyrightDirective
+    IndexComponent, HeaderComponent, FooterComponent, CopyrightDirective, LogoComponent
   ],
   imports: [
     CommonModule,
