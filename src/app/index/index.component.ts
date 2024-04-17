@@ -19,10 +19,10 @@ import { cilCheck } from '@coreui/icons';
 		padding-bottom: 4.5rem; /* Footer height */
 	}`],
   styleUrls: [
-      '../../assets/index/css/google-web-font.css',
+    '../../assets/index/css/google-web-font.css',
     '../../assets/index/lib/animate/animate.min.css',
-     '../../assets/index/css/google-web-font.css',
-    '../../assets/index/css/style2.css'
+    '../../assets/index/css/google-web-font.css',
+    '../../assets/index/css/style2.css',
   ],
   providers: [ContactFormService],
 })
