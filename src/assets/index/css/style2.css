@@ -25,15 +25,6 @@
     background: radial-gradient(circle, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.575), rgba(255, 255, 255, 0.60), rgba(255, 255, 255, 0.625)), url("../image/grass4.png") repeat;
 }
 
-/* Admin page - Contact Enquiry */
-#contact-enquiry {
-    margin-bottom: 6rem;
-}
-
-#contact-us-now {
-    color: #757575 !important;
-}
-
 /* Login page header */
 .page-header {
     width:100%;
@@ -327,51 +318,7 @@ color: rgb(12, 43, 75);
 }
 
 
-/*** Team ***/
-.team-items {
-    margin: -.75rem;
-}
 
-.team-item {
-    padding: .75rem;
-}
-
-.team-item::after {
-    position: absolute;
-    content: "";
-    width: 100%;
-    height: 0;
-    top: 0;
-    left: 0;
-    background: #FFFFFF;
-    transition: .5s;
-    z-index: -1;
-}
-
-.team-item:hover::after {
-    height: 100%;
-    background: var(--primary);
-}
-
-.team-item .team-social {
-    position: absolute;
-    width: 100%;
-    height: 0;
-    top: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, .75);
-    overflow: hidden;
-    opacity: 0;
-    transition: .5s;
-}
-
-.team-item:hover .team-social {
-    height: 100%;
-    opacity: 1;
-}
 
 
 /*** Testimonial ***/

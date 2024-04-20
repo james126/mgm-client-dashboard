@@ -18,6 +18,8 @@ export class AppComponent implements OnInit {
     this.titleService.setTitle(this.title);
     // iconSet singleton
     this.iconSetService.icons = { ...iconSubset };
+    this.router.navigate(['/'], { skipLocationChange: true })
+        .then(r => true );
   }
 
   ngOnInit(): void {

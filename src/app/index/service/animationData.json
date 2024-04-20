@@ -1,0 +1,290 @@
+{
+    "carousel": [
+        {
+            "opacity": 0,
+            "transform": ""
+        },
+        {
+            "timing": "750ms ease-in-out"
+        },
+        {
+            "opacity": 1,
+            "transform": ""
+        }
+    ],
+    "fact1": [
+        {
+            "opacity": 0,
+            "transform": ""
+        },
+        {
+            "timing": "1000ms ease-in-out"
+        },
+        {
+            "opacity": 1,
+            "transform": ""
+        }
+    ],
+    "fact2": [
+        {
+            "opacity": 0,
+            "transform": ""
+        },
+        {
+            "timing": "1250ms ease-in-out"
+        },
+        {
+            "opacity": 1,
+            "transform": ""
+        }
+    ],
+    "fact3": [
+        {
+            "opacity": 0,
+            "transform": ""
+        },
+        {
+            "timing": "1500ms ease-in-out"
+        },
+        {
+            "opacity": 1,
+            "transform": ""
+        }
+    ],
+    "about1": [
+        {
+            "opacity": 0,
+            "transform": "translateY(100%)"
+        },
+        {
+            "timing": "1s 500ms ease-out"
+        },
+        {
+            "opacity": 1,
+            "transform": "translateY(0)"
+        }
+    ],
+    "about2": [
+        {
+            "opacity": 0,
+            "transform": "translateY(100%)"
+        },
+        {
+            "timing": "1s ease-out"
+        },
+        {
+            "opacity": 1,
+            "transform": "translateY(0)"
+        }
+    ],
+    "regular-services": [
+        {
+            "opacity": 0,
+            "transform": ""
+        },
+        {
+            "timing": "1s ease-out"
+        },
+        {
+            "opacity": 1,
+            "transform": ""
+        }
+    ],
+    "service1": [
+        {
+            "opacity": 0,
+            "transform": "translateY(100%)"
+        },
+        {
+            "timing": "1s 250ms ease-out"
+        },
+        {
+            "opacity": 1,
+            "transform": "translateY(0)"
+        }
+    ],
+    "service2": [
+        {
+            "opacity": 0,
+            "transform": "translateY(100%)"
+        },
+        {
+            "timing": "1s 500ms ease-out"
+        },
+        {
+            "opacity": 1,
+            "transform": "translateY(0)"
+        }
+    ],
+    "service3": [
+        {
+            "opacity": 0,
+            "transform": "translateY(100%)"
+        },
+        {
+            "timing": "1s 750ms ease-out"
+        },
+        {
+            "opacity": 1,
+            "transform": "translateY(0)"
+        }
+    ],
+
+    "service-row-2": [
+        {
+            "opacity": 0,
+            "transform": "translateY(100%)"
+        },
+        {
+            "timing": "1s ease-out"
+        },
+        {
+            "opacity": 1,
+            "transform": "translateY(0)"
+        }
+    ],
+    "service5": [
+        {
+            "opacity": 0,
+            "transform": "translateY(100%)"
+        },
+        {
+            "timing": "1s 250ms ease-out"
+        },
+        {
+            "opacity": 1,
+            "transform": "translateY(0)"
+        }
+    ],
+    "service6": [
+        {
+            "opacity": 0,
+            "transform": "translateY(100%)"
+        },
+        {
+            "timing": "1s 500ms ease-out"
+        },
+        {
+            "opacity": 1,
+            "transform": "translateY(0)"
+        }
+    ],
+    "contact": [
+        {
+            "opacity": 0,
+            "transform": ""
+        },
+        {
+            "timing": "3s ease-out"
+        },
+        {
+            "opacity": 1,
+            "transform": ""
+        }
+    ],
+    "values-heading": [
+        {
+            "opacity": 0,
+            "transform": ""
+        },
+        {
+            "timing": "1000ms ease-out"
+        },
+        {
+            "opacity": 1,
+            "transform": ""
+        }
+    ],
+    "values1": [
+        {
+            "opacity": 0,
+            "transform": "translateY(100%)"
+        },
+        {
+            "timing": "1000ms ease-out"
+        },
+        {
+            "opacity": 1,
+            "transform": "translateY(0)"
+        }
+    ],
+    "values2": [
+        {
+            "opacity": 0,
+            "transform": "translateY(100%)"
+        },
+        {
+            "timing": "1000ms 250ms ease-out"
+        },
+        {
+            "opacity": 1,
+            "transform": "translateY(0)"
+        }
+    ],
+    "values3": [
+        {
+            "opacity": 0,
+            "transform": "translateY(100%)"
+        },
+        {
+            "timing": "1000ms 500ms ease-out"
+        },
+        {
+            "opacity": 1,
+            "transform": "translateY(0)"
+        }
+    ],
+    "values4": [
+        {
+            "opacity": 0,
+            "transform": "translateY(100%)"
+        },
+        {
+            "timing": "1000ms 750ms ease-out"
+        },
+        {
+            "opacity": 1,
+            "transform": "translateY(0)"
+        }
+    ],
+    "values5": [
+        {
+            "opacity": 0,
+            "transform": ""
+        },
+        {
+            "timing": "2000ms ease-out"
+        },
+        {
+            "opacity": 1,
+            "transform": ""
+        }
+    ],
+
+    "testimonial1": [
+        {
+            "opacity": 0,
+            "transform": ""
+        },
+        {
+            "timing": "1s ease-out"
+        },
+        {
+            "opacity": 1,
+            "transform": ""
+        }
+    ],
+    "testimonial2": [
+        {
+            "opacity": 0,
+            "transform": "translateX(100%)"
+        },
+        {
+            "timing": "1s ease-out"
+        },
+        {
+            "opacity": 1,
+            "transform": "translateX(0)"
+        }
+    ]
+}

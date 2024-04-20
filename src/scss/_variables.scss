@@ -4,17 +4,6 @@
 
 $enable-deprecation-messages: false !default;
 
-//margin: 0;
-//font-family: var(--cui-body-font-family);
-//font-size: var(--cui-body-font-size);
-//font-weight: var(--cui-body-font-weight);
-//line-height: var(--cui-body-line-height);
-//color: var(--cui-body-color);
-//text-align: var(--cui-body-text-align);
-//background-color: var(--cui-body-bg);
-//-webkit-text-size-adjust: 100%;
-//-webkit-tap-highlight-color: rgba(8, 10, 12, 0);
-
 $font-family-sans-serif: system-ui,
 -apple-system,
 "Segoe UI",
@@ -43,4 +32,5 @@ $display-font-sizes: (
 
 $display-font-weight: 300;
 
-
+$carousel-control-color: red;
+$carousel-dark-control-icon-filter: invert(1) #F3BD00;

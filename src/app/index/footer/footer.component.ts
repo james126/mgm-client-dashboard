@@ -12,10 +12,10 @@ import { Component, ViewEncapsulation } from '@angular/core'
 		}`
 	],
 	styleUrls: [
-		'../../../assets/index/css/google-web-font.css',
-		'../../../assets/index/lib/animate/animate.min.css',
-		'../../../assets/index/css/bootstrap.min.css',
-		'../../../assets/index/css/style2.css'
+		// '../../../assets/index/css/google-web-font.css',
+		// '../../../assets/index/lib/animate/animate.min.css',
+		// '../../../assets/index/css/bootstrap.min.css',
+		// '../../../assets/index/css/style2.css'
 	],
 	encapsulation: ViewEncapsulation.Emulated
 })

@@ -16,9 +16,11 @@
 
 ### Backlog
 - [ ] Scaffold new app to include existing webpage and dashboard
-- [ ] create an invoice
-- [ ] view all invoices in a table
-- [ ] view a summary with graph, amount outstanding etc
+- [ ] Add view all contact forms page (table)
+- [ ] Add view single contact forms page (table)
+- [ ] Add invoices pages to create, view, summary
+- [ ] Remove unused js/css impacting startup (use Lighthouse developer tools extension)
+
 
 <a name="screenshots"></a>
 
