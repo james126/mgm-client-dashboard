@@ -25,15 +25,15 @@ An invoice feature could be added to the dashboard...
 
 ### `create invoice`
 
-[<img src="readme/invoice.png" width="100%"/>](src/main/resources/readme/login.png)
+[<img src="readme/invoice.png" width="70%"/>](src/main/resources/readme/login.png)
 <br/><br/>
 
 ### `view invoices`
 
-[<img src="readme/invoices.png" width="100%"/>](src/main/resources/readme/invalid-login.png)
+[<img src="readme/invoices.png" width="70%"/>](src/main/resources/readme/invalid-login.png)
 <br/><br/>
 
 ### `summary`
 
-[<img src="readme/summary.png" width="100%"/>](src/main/resources/readme/admin.png)
+[<img src="readme/summary.png" width="70%"/>](src/main/resources/readme/admin.png)
 <br/><br/>
