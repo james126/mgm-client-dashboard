@@ -1,36 +1,33 @@
-import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { Router } from "@angular/router";
+import { Component, Input} from '@angular/core'
+import { Router } from '@angular/router'
 
 @Component({
-	selector: 'mgm-header',
-	templateUrl: './header.component.html',
-	styles: [`$utilities: (
-		"nav-item": (
-			property: font-family,
-			values: "arial"
-		)
-	);
-	`],
-	styleUrls: [
-		// '../../../assets/index/css/google-web-font.css',
-		// '../../../assets/index/lib/animate/animate.min.css',
-		// '../../../assets/index/css/bootstrap.min.css',
-		// '../../../assets/index/css/style2.css'
-	],
-	// encapsulation: ViewEncapsulation.Emulated
+    selector: 'mgm-header',
+    templateUrl: './header.component.html',
+    styles: [`
+      #get-started-link {
+        color: rgba(218,165,32) !important;
+      };
+      #get-started-link:hover {
+        color: rgba(243,189,0) !important;
+      };
+      #home-link:hover {
+        color: rgba(218,165,32) !important;
+      }
+    `],
 })
 export class HeaderComponent {
-	@Input() currentRoute: String = '';
+    @Input() currentRoute: String = ''
 
-	constructor(public router: Router) {
-	}
+    constructor(public router: Router) {
+    }
 
-	// logout() {
-	// 	this.logoutService.logout().subscribe({
-	// 		next: (data) => {
-	// 			this.router.navigate(["/"], { skipLocationChange: true });
-	// 		},
-	// 		error: (err) => { }
-	// 	})
-	// }
+    // logout() {
+    // 	this.logoutService.logout().subscribe({
+    // 		next: (data) => {
+    // 			this.router.navigate(["/"], { skipLocationChange: true });
+    // 		},
+    // 		error: (err) => { }
+    // 	})
+    // }
 }

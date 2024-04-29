@@ -1,29 +1,59 @@
 <!-- Header Start -->
-<nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
-	<div class="navbar-brand d-flex align-items-center px-4 px-lg-5">
-        <logo></logo>
-	</div>
-	<button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-		<span class="navbar-toggler-icon"></span>
-	</button>
+<c-navbar colorScheme="light" expand="lg" class="bg-light" style="padding-top:0;padding-bottom:0;">
+    <c-container fluid>
 
-	<div class="collapse navbar-collapse" id="navbarCollapse">
 
-		<div class="navbar-nav ms-auto p-4 p-lg-0" id="test-div">
-			<a routerLink="/index" class="nav-item nav-link nav-active" skipLocationChange="true">Home</a>
-			<a routerLink="/index" fragment="about" class="nav-item nav-link" skipLocationChange="true">About</a>
-			<a routerLink="/index" fragment="services" class="nav-item nav-link" skipLocationChange="true">Services</a>
-			<a routerLink="/index" fragment="contact" class="nav-item nav-link" skipLocationChange="true">Contact</a>
-			<a routerLink="/login" skipLocationChange="true" class="nav-item nav-link">Login</a>
-		</div>
+            <div class="justify-content-center">
+                <logo ></logo>
+            </div>
 
-		<!-- Far right header button -->
-		<div>
-			<a routerLink="/index" fragment="contact" skipLocationChange="true" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">
-				Get Started
-				<i class="fa fa-arrow-right ms-3"></i>
-			</a>
-		</div>
-	</div>
-</nav>
+        <button [cNavbarToggler]="collapseRef"></button>
+        <div #collapseRef="cCollapse" navbar cCollapse>
+            <c-navbar-nav class="me-auto mb-2 mb-lg-0">
+            </c-navbar-nav>
+            <c-navbar-nav class="d-flex">
+                <c-nav-item>
+                    <a cNavLink routerLink="/index" [active]=true skipLocationChange="true" id="home-link">Home</a>
+                </c-nav-item>
+                <c-nav-item>
+                    <a cNavLink routerLink="/index" fragment="about" skipLocationChange="true">About</a>
+                </c-nav-item>
+                <c-nav-item>
+                    <a cNavLink routerLink="/index" fragment="services" skipLocationChange="true">Services</a>
+                </c-nav-item>
+                <c-nav-item>
+                    <a cNavLink routerLink="/index" fragment="contact" skipLocationChange="true">Contact</a>
+                </c-nav-item>
+                <c-nav-item>
+                    <a cNavLink routerLink="/login" skipLocationChange="true">Login</a>
+                </c-nav-item>
+                <c-nav-item>
+                    <a cNavLink routerLink="/intext" fragment="contact" skipLocationChange="true" id="get-started-link">Get Started</a>
+                </c-nav-item>
+            </c-navbar-nav>
+
+        </div>
+    </c-container>
+</c-navbar>
+
+
+<!--	<div class="collapse navbar-collapse" id="navbarCollapse">-->
+
+<!--		<div class="navbar-nav ms-auto p-4 p-lg-0" id="test-div">-->
+<!--			<a routerLink="/index" class="nav-item nav-link nav-active" skipLocationChange="true">Home</a>-->
+<!--			<a routerLink="/index" fragment="about" class="nav-item nav-link" skipLocationChange="true">About</a>-->
+<!--			<a routerLink="/index" fragment="services" class="nav-item nav-link" skipLocationChange="true">Services</a>-->
+<!--			<a routerLink="/index" fragment="contact" class="nav-item nav-link" skipLocationChange="true">Contact</a>-->
+<!--			<a routerLink="/login" skipLocationChange="true" class="nav-item nav-link">Login</a>-->
+<!--		</div>-->
+
+<!--		&lt;!&ndash; Far right header button &ndash;&gt;-->
+<!--		<div>-->
+<!--			<a routerLink="/index" fragment="contact" skipLocationChange="true" class="btn btn-primary py-4 px-lg-5 d-none d-lg-block">-->
+<!--				Get Started-->
+<!--				<i class="fa fa-arrow-right ms-3"></i>-->
+<!--			</a>-->
+<!--		</div>-->
+<!--	</div>-->
+<!--</nav>-->
 <!-- Header End -->

@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
     this.titleService.setTitle(this.title);
     // iconSet singleton
     this.iconSetService.icons = { ...iconSubset };
-    this.router.navigate(['/'], { skipLocationChange: true })
+    this.router.navigate(['/index'], { skipLocationChange: true })
         .then(r => true );
   }
 

@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { RouterLink } from '@angular/router'
+import { NavbarTogglerDirective } from '@coreui/angular/lib/navbar/navbar-toggler/navbar-toggler.directive'
+import { NavbarComponent } from '@coreui/angular/lib/navbar/navbar.component'
 import { IconDirective } from '@coreui/icons-angular'
 import { RecaptchaModule } from 'ng-recaptcha'
 import { CopyrightDirective } from './footer/copyright.directive'
@@ -14,7 +16,7 @@ import { LogoComponent } from './logo/logo.component'
 import { AnimationService } from './service/animation.service'
 import { CustomAnimationBuilderService } from './service/custom-animation-builder.service'
 import { ContactFormService } from './service/contact-form.service'
-import { CarouselModule, GridModule } from '@coreui/angular'
+import { CarouselModule, CollapseModule, GridModule, NavbarModule, NavModule } from '@coreui/angular'
 
 @NgModule({
     declarations: [
@@ -29,6 +31,9 @@ import { CarouselModule, GridModule } from '@coreui/angular'
         IconDirective,
         CarouselModule,
         GridModule,
+        NavbarModule,
+        NavModule,
+        CollapseModule,
         BrowserAnimationsModule,
     ],
     exports: [

@@ -1,30 +1,28 @@
 <!-- Heading start-->
-<h1 align="center"> feature/dashboard </h1> <br>
+<h2 align="center"> feature/dashboard</h2>
+
+<p align="center">Angular landing page and dashboard</p>
 
 <div align="center">
     <picture>
-        <img src="src/assets/favicon.ico" align="center" width="10%" height="10%" alt="">
+        <img src=".github/logo.png" align="center" width="40%" alt="">
     </picture>
 </div>
 
-<p align="center">
-  manage invoices with a dashboard
-</p>
-
-<!-- Heading end-->
-<br>
-
 ### Backlog
-- [ ] Scaffold new app to include existing webpage and dashboard
-- [ ] Add view all contact forms page (table)
-- [ ] Add view single contact forms page (table)
-- [ ] Add invoices pages to create, view, summary
-- [ ] Remove unused js/css impacting startup (use Lighthouse developer tools extension)
-
+- [x] Scaffold new app to include landing page and dashboard
+- [ ] Remove reduncant css/js for landing page
+- [ ] Add new login page with recaptcha
+- [ ] Unit tests for submit-contact-form and logging in
+- [ ] Add under construction image on dashboard landing page
+- [ ] Create release branches
+- [ ] Deploy front-end and update SSL certificate
+- [ ] Deploy back-end and update SSL certificate
 
 <a name="screenshots"></a>
 
 ## A few wireframes
+Invoice could be added to the dashboard
 
 ### `create invoice`
 

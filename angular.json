@@ -7,7 +7,7 @@
   "newProjectRoot": "projects",
   "projects": {
     "mgm-client-dashboard": {
-      "projectType": "application",
+      "projectType": "application"
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
