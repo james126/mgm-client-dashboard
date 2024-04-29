@@ -1,6 +1,5 @@
 <!-- Heading start-->
-<h2 align="center"> feature/dashboard</h2>
-
+<h3 align="center">feature/dashboard</h3>
 <p align="center">Angular landing page and dashboard</p>
 
 <div align="center">
@@ -8,7 +7,7 @@
         <img src=".github/logo.png" align="center" width="15%" alt="">
     </picture>
 </div>
-<br>
+<hr/>
 
 ### Backlog
 - [x] Scaffold new app to include landing page and dashboard
@@ -19,23 +18,27 @@
 - [ ] Deploy front-end and update SSL certificate
 - [ ] Deploy back-end and update SSL certificate
 
+<br/>
+<img align="center" src="https://github-readme-stats.vercel.app/api/top-langs?username=james126&langs_count=10&&hide=php" alt="Gift's language"/>
+
+
 <a name="screenshots"></a>
-___
+<h2></h3>
 
 ### A few wireframes
 An invoice feature could be added to the dashboard...
 
-### `create invoice`
+#### create invoice
 
-[<img src="readme/invoice.png" width="70%"/>](src/main/resources/readme/login.png)
+[<img src="readme/invoice.png" width="50%"/>](src/main/resources/readme/login.png)
 <br/><br/>
 
-### `view invoices`
+### view invoices
 
-[<img src="readme/invoices.png" width="70%"/>](src/main/resources/readme/invalid-login.png)
+[<img src="readme/invoices.png" width="50%"/>](src/main/resources/readme/invalid-login.png)
 <br/><br/>
 
-### `summary`
+### summary
 
-[<img src="readme/summary.png" width="70%"/>](src/main/resources/readme/admin.png)
+[<img src="readme/summary.png" width="50%"/>](src/main/resources/readme/admin.png)
 <br/><br/>
