@@ -5,24 +5,23 @@
 
 <div align="center">
     <picture>
-        <img src=".github/logo.png" align="center" width="40%" alt="">
+        <img src=".github/logo.png" align="center" width="15%" alt="">
     </picture>
 </div>
 
 ### Backlog
 - [x] Scaffold new app to include landing page and dashboard
-- [ ] Remove reduncant css/js for landing page
-- [ ] Add new login page with recaptcha
-- [ ] Unit tests for submit-contact-form and logging in
-- [ ] Add under construction image on dashboard landing page
-- [ ] Create release branches
+- [ ] Remove redundant css/js for landing page
+- [ ] Add new login page with reCAPTCHA
+- [ ] Unit tests for submitting a contact form and logging in
+- [ ] Release branches
 - [ ] Deploy front-end and update SSL certificate
 - [ ] Deploy back-end and update SSL certificate
 
 <a name="screenshots"></a>
 
 ## A few wireframes
-Invoice could be added to the dashboard
+An invoice feature could be added to the dashboard...
 
 ### `create invoice`
 
