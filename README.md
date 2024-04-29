@@ -8,6 +8,7 @@
         <img src=".github/logo.png" align="center" width="15%" alt="">
     </picture>
 </div>
+<br>
 
 ### Backlog
 - [x] Scaffold new app to include landing page and dashboard
