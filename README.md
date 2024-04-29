@@ -20,8 +20,9 @@
 - [ ] Deploy back-end and update SSL certificate
 
 <a name="screenshots"></a>
+___
 
-## A few wireframes
+### A few wireframes
 An invoice feature could be added to the dashboard...
 
 ### `create invoice`
