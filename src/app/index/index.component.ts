@@ -29,7 +29,7 @@ export class IndexComponent implements OnInit, OnDestroy {
     submitted: boolean = false
     contactForm!: FormGroup
     testimonialSlides: any[] = new Array(2).fill({ id: -1, src: '', title: '', name: '', location: '' })
-    landingSlides: any[] = new Array(3).fill({ id: -1, src: '', line1: '', line2: '' })
+    landingSlides: any[] = new Array(3).fill({ id: -1, src: '', line1: '', line2: ''})
     icons = { cilCheck }
     private player!: AnimationPlayer;
     observerable: IntersectionObserver | undefined;
@@ -68,19 +68,19 @@ export class IndexComponent implements OnInit, OnDestroy {
             id: 0,
             src: './assets/index/image/one.jpg',
             line1: 'Mr Grass Master',
-            line2: 'East Auckland garden maintenance specialists',
+            line2: 'East Auckland garden maintenance specialists'
         }
         this.landingSlides[1] = {
             id: 1,
             src: './assets/index/image/two.jpg',
             line1: 'We\'re here to help',
-            line2: 'get your outdoor areas looking great',
+            line2: 'get your outdoor areas looking great'
         }
         this.landingSlides[2] = {
             id: 2,
             src: './assets/index/image/three.jpg',
             line1: 'Giving you more time',
-            line2: 'to enjoy doing what you love most',
+            line2: 'to enjoy doing what you love most'
         }
 
         this.contactForm = new FormGroup({

@@ -1,0 +1,21 @@
+[33mcommit 0570790365105cffacaa7e1378472c136e7e3398[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m)[m
+Author: James Eason <mrjameseason@gmail.com>
+Date:   Sun May 5 15:22:59 2024 +1200
+
+    added purgecss
+    
+    ng build && http-server dist/mgm-client-dashboard/browser/ -p=80
+    
+    click second link
+
+[33mcommit 1fc9e9981eb6c33ca3fa613583d2eed08e3c4cd5[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: James <44129935+james126@users.noreply.github.com>
+Date:   Mon Apr 29 21:38:13 2024 +1200
+
+    Update README.md
+
+[33mcommit 6f0b1c9e2d7ef018286112821d167f5c01a1865e[m
+Author: James <44129935+james126@users.noreply.github.com>
+Date:   Mon Apr 29 21:14:58 2024 +1200
+
+    Update README.md

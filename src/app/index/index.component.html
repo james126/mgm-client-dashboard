@@ -6,12 +6,12 @@
         <c-carousel-indicators></c-carousel-indicators>
         <c-carousel-inner>
             <c-carousel-item *ngFor="let slide of landingSlides">
-                <img
-                    alt="{{slide.line1}}"
-                    class="d-block w-100"
-                    loading="lazy"
-                    src="{{slide.src}}"
-                />
+                    <img
+                        alt="{{slide.line1}}"
+                        class="d-block w-100"
+                        src="{{slide.src}}"
+                        loading="eager"
+                    >
                 <c-carousel-caption>
                     <div style="width:100%;position:absolute;top:50%;transform: translate(0,-50%);">
                         <h1 class="display-6 text-light animated slideInDown">{{ slide.line1 }}</h1>

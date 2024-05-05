@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { RouterLink } from '@angular/router'
-import { NavbarTogglerDirective } from '@coreui/angular/lib/navbar/navbar-toggler/navbar-toggler.directive'
-import { NavbarComponent } from '@coreui/angular/lib/navbar/navbar.component'
+import { NgOptimizedImage } from '@angular/common'
 import { IconDirective } from '@coreui/icons-angular'
 import { RecaptchaModule } from 'ng-recaptcha'
 import { CopyrightDirective } from './footer/copyright.directive'
@@ -35,6 +34,7 @@ import { CarouselModule, CollapseModule, GridModule, NavbarModule, NavModule } f
         NavModule,
         CollapseModule,
         BrowserAnimationsModule,
+        NgOptimizedImage
     ],
     exports: [
         IndexComponent, HeaderComponent, FooterComponent
