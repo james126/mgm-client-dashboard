@@ -296,12 +296,13 @@
                                 <!-- first_name	-->
                                 <div class="col-sm-6">
                                     <div class="form-floating">
-                                        <input type="text" id="first_name" placeholder="First Name" maxlength="50"
+                                        <input type="text" id="first_name" placeholder="First Name" maxlength="50" required
                                                formControlName="first_name"
-                                               [ngClass]="first_name?.errors && submitted ? 'form-control border-0 is-invalid' : 'form-control border-0'">
+                                               [ngClass]="first_name?.invalid && submitted ? 'form-control border-0 is-invalid' : 'form-control border-0'">
                                         <label for="first_name">First Name</label>
-                                        <div class="custom-invalid-feedback" *ngIf="first_name?.errors && submitted">enter
-                                            first name
+                                        <div class="custom-invalid-feedback"
+                                             *ngIf="first_name?.invalid && (first_name?.dirty || first_name?.untouched) && submitted">
+                                            enter first name
                                         </div>
                                     </div>
                                 </div>
@@ -311,10 +312,10 @@
                                     <div class="form-floating">
                                         <input type="text" id="last_name" placeholder="First Name" maxlength="50"
                                                formControlName="last_name"
-                                               [ngClass]="last_name?.errors && submitted ? 'form-control border-0 is-invalid' : 'form-control border-0'">
+                                               [ngClass]="last_name?.invalid && submitted ? 'form-control border-0 is-invalid' : 'form-control border-0'">
                                         <label for="last_name">Last Name</label>
-                                        <div class="custom-invalid-feedback" *ngIf="last_name?.errors && submitted">enter
-                                            last name
+                                        <div class="custom-invalid-feedback" *ngIf="last_name?.invalid && (last_name?.dirty || last_name?.untouched) && submitted">enter
+                                            enter last name
                                         </div>
                                     </div>
                                 </div>
@@ -324,10 +325,10 @@
                                     <div class="form-floating">
                                         <input type="email" placeholder="Email" id="email" maxlength="50"
                                                formControlName="email"
-                                               [ngClass]="email?.errors && submitted ? 'form-control border-0 is-invalid' : 'form-control border-0'">
+                                               [ngClass]="email?.invalid && submitted ? 'form-control border-0 is-invalid' : 'form-control border-0'">
                                         <label for="email">Email</label>
-                                        <div class="custom-invalid-feedback" *ngIf="email?.errors && submitted">enter
-                                            email
+                                        <div class="custom-invalid-feedback" *ngIf="email?.invalid && (email?.dirty || email?.untouched) && submitted">enter
+                                            enter email
                                         </div>
                                     </div>
                                 </div>
@@ -337,9 +338,9 @@
                                     <div class="form-floating">
                                         <input type="tel" placeholder="Phone" id="phone" maxlength="50"
                                                formControlName="phone"
-                                               [ngClass]="phone?.errors && submitted ? 'form-control border-0 is-invalid' : 'form-control border-0'">
+                                               [ngClass]="phone?.invalid && submitted ? 'form-control border-0 is-invalid' : 'form-control border-0'">
                                         <label for="phone">Phone</label>
-                                        <div class="custom-invalid-feedback" *ngIf="phone?.errors && submitted">enter phone
+                                        <div class="custom-invalid-feedback" *ngIf="phone?.invalid && (phone?.dirty || phone?.untouched) && submitted">enter phone
                                             number
                                         </div>
                                     </div>
@@ -351,9 +352,9 @@
                                         <input type="text" placeholder="Address Line 1" id="address_line1" name="phone"
                                                maxlength="60"
                                                formControlName="address_line1"
-                                               [ngClass]="address_line1?.errors && submitted ? 'form-control border-0 is-invalid' : 'form-control border-0'">
+                                               [ngClass]="address_line1?.invalid && submitted ? 'form-control border-0 is-invalid' : 'form-control border-0'">
                                         <label for="address_line1">Number and road</label>
-                                        <div class="custom-invalid-feedback" *ngIf="address_line1?.errors && submitted">
+                                        <div class="custom-invalid-feedback" *ngIf="address_line1?.invalid && (address_line1?.dirty || address_line1?.untouched) && submitted">
                                             enter number and road
                                         </div>
                                     </div>
@@ -365,9 +366,9 @@
                                         <input type="text" placeholder="Address Line 2" id="address_line2" name="phone"
                                                maxlength="60"
                                                formControlName="address_line2"
-                                               [ngClass]="address_line2?.errors && submitted ? 'form-control border-0 is-invalid' : 'form-control border-0'">
+                                               [ngClass]="address_line2?.invalid && submitted ? 'form-control border-0 is-invalid' : 'form-control border-0'">
                                         <label for="address_line2">Suburb</label>
-                                        <div class="custom-invalid-feedback" *ngIf="address_line2?.errors && submitted">
+                                        <div class="custom-invalid-feedback" *ngIf="address_line2?.invalid && (address_line2?.dirty || address_line2?.untouched) && submitted">
                                             enter suburb
                                         </div>
                                     </div>
@@ -395,10 +396,10 @@
                       						<textarea class="form-control border-0" placeholder="Leave a message here"
                                                       id="message" maxlength="400"
                                                       formControlName="message"
-                                                      [ngClass]="message?.errors && submitted ? 'form-control border-0 is-invalid' : 'form-control border-0'">
+                                                      [ngClass]="message?.invalid && submitted ? 'form-control border-0 is-invalid' : 'form-control border-0'">
 											</textarea>
                                         <label for="message">Message</label>
-                                        <div class="custom-invalid-feedback" *ngIf="message?.errors && submitted">enter a
+                                        <div class="custom-invalid-feedback" *ngIf="message?.invalid && (message?.dirty || message?.untouched) && submitted">enter a
                                             message
                                         </div>
                                     </div>

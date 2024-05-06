@@ -170,18 +170,25 @@ export class IndexComponent implements OnInit, OnDestroy {
                     this.submitted = true
                 },
             })
+        } else {
+            this.submitted = true;
         }
     }
 
-    submitCaptcha(captchaResponse: any) {
-        this.service.submitRecaptcha(captchaResponse).subscribe({
-            next: (data) => {
-                this.captchaResponse = true
-            }, error: (err) => {
-                //allow form submission anyway - errors are logged in ContactFormService
-                this.captchaResponse = true
-            },
-        })
+    submitCaptcha(response: any) {
+        //timeout or repactcha.reset() produces a null response
+        if (response == null) {
+            this.captchaResponse = false;
+        } else {
+            this.service.submitRecaptcha(response).subscribe({
+                next: (data) => {
+                    this.captchaResponse = true
+                }, error: (err) => {
+                    //allow form submission anyway - errors are logged in ContactFormService
+                    this.captchaResponse = true
+                },
+            })
+        }
     }
 
     resetForm() {
