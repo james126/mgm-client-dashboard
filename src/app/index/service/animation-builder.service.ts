@@ -1,7 +1,8 @@
-import value from '*.json'
 import { Injectable } from '@angular/core';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class CustomAnimationBuilderService {
   private _trigger: String = '';
   private _beforeOpacity: number = -1;

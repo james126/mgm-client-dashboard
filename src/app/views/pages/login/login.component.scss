@@ -1,0 +1,15 @@
+$cui-card-border-radius: 0.375rem;
+$cui-border-radius: 0.375rem;
+$cui-btn-border-radius: 0.375rem;
+
+.card {
+  border-radius: $cui-card-border-radius;
+}
+
+.input-group-text, .form-control {
+  border-radius: $cui-border-radius;
+}
+
+.btn {
+  border-radius: $cui-btn-border-radius;
+}

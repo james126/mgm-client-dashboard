@@ -5,12 +5,13 @@
     <c-carousel #anmtn id="carousel">
         <c-carousel-indicators></c-carousel-indicators>
         <c-carousel-inner>
-            <c-carousel-item *ngFor="let slide of landingSlides">
+            <c-carousel-item *ngFor="let slide of landingSlides" id="header-carousel">
                     <img
                         alt="{{slide.line1}}"
                         class="d-block w-100"
                         src="{{slide.src}}"
                         loading="eager"
+                        id="header-carousel-img"
                     >
                 <c-carousel-caption>
                     <div style="width:100%;position:absolute;top:50%;transform: translate(0,-50%);">
@@ -411,7 +412,7 @@
                                     </button>
                                 </div>
 
-                                <div class="d-flex justify-content-center">
+                                <div class="d-flex justify-content-center" style="transform:scale(0.8)">
                                     <re-captcha (resolved)="submitCaptcha($event)" #recaptcha [siteKey]="siteKey"></re-captcha>
                                 </div>
 

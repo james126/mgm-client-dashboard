@@ -97,9 +97,9 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "inlineStyleLanguage": "scss",
-            "assets": ["src/favicon.ico", "src/assets"],
+            "assets": ["src/assets"],
             "styles": ["src/scss/styles.scss"],
-            "scripts": []
+            "include": ["**/*.spec.ts"]
           }
         }
       }

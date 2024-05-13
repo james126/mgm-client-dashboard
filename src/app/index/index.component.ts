@@ -19,7 +19,7 @@ import { AnimationBuilder, AnimationPlayer } from '@angular/animations'
     #content-wrap {
       padding-bottom: 4.5rem; /* Footer height */
     }`],
-    providers: [ContactFormService],
+    providers: [ContactFormService]
 })
 export class IndexComponent implements OnInit, OnDestroy {
     @ViewChild('recaptcha', { static: false, read: RecaptchaComponent }) repactcha?: RecaptchaComponent
