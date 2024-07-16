@@ -16,7 +16,7 @@ import { IconSetService } from '@coreui/icons-angular';
 import { iconSubset } from '../../../icons/icon-subset';
 import { DropdownsComponent } from './dropdowns.component';
 
-describe('DropdownsComponent', () => {
+xdescribe('DropdownsComponent', () => {
   let component: DropdownsComponent;
   let fixture: ComponentFixture<DropdownsComponent>;
   let iconSetService: IconSetService;

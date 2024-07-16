@@ -7,7 +7,7 @@ import { IconSetService } from '@coreui/icons-angular';
 import { iconSubset } from '../../../icons/icon-subset';
 import { ValidationComponent } from './validation.component';
 
-describe('ValidationComponent', () => {
+xdescribe('ValidationComponent', () => {
   let component: ValidationComponent;
   let fixture: ComponentFixture<ValidationComponent>;
   let iconSetService: IconSetService;

@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core'
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class CarouselService {
     private _testimonialSlides: any[] = new Array(2).fill({ id: -1, src: '', title: '', name: '', location: '' })
     private _landingSlides: any[] = new Array(3).fill({ id: -1, src: '', line1: '', line2: '' })

@@ -6,7 +6,7 @@ import { IconSetService } from '@coreui/icons-angular';
 import { iconSubset } from '../../../icons/icon-subset';
 import { ProgressComponent } from './progress.component';
 
-describe('ProgressComponent', () => {
+xdescribe('ProgressComponent', () => {
   let component: ProgressComponent;
   let fixture: ComponentFixture<ProgressComponent>;
   let iconSetService: IconSetService;

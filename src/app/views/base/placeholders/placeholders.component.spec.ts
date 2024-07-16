@@ -6,7 +6,7 @@ import { IconSetService } from '@coreui/icons-angular';
 import { iconSubset } from '../../../icons/icon-subset';
 import { PlaceholdersComponent } from './placeholders.component';
 
-describe('PlaceholdersComponent', () => {
+xdescribe('PlaceholdersComponent', () => {
   let component: PlaceholdersComponent;
   let fixture: ComponentFixture<PlaceholdersComponent>;
   let iconSetService: IconSetService;

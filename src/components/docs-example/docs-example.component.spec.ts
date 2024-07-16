@@ -2,7 +2,7 @@
 //
 // import { DocsExampleComponent } from './docs-example.component';
 //
-// describe('DocsExampleComponent', () => {
+// xdescribe('DocsExampleComponent', () => {
 //   let component: DocsExampleComponent;
 //   let fixture: ComponentFixture<DocsExampleComponent>;
 //

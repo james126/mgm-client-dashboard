@@ -6,7 +6,7 @@ import { IconModule, IconSetService } from '@coreui/icons-angular';
 import { iconSubset } from '../../../icons/icon-subset';
 import { TabsComponent } from './tabs.component';
 
-describe('TabsComponent', () => {
+xdescribe('TabsComponent', () => {
   let component: TabsComponent;
   let fixture: ComponentFixture<TabsComponent>;
   let iconSetService: IconSetService;

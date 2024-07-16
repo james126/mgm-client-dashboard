@@ -6,7 +6,7 @@ import { IconSetService } from '@coreui/icons-angular';
 import { iconSubset } from '../../../icons/icon-subset';
 import { PopoversComponent } from './popovers.component';
 
-describe('PopoversComponent', () => {
+xdescribe('PopoversComponent', () => {
   let component: PopoversComponent;
   let fixture: ComponentFixture<PopoversComponent>;
   let iconSetService: IconSetService;

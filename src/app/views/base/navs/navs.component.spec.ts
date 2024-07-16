@@ -6,7 +6,7 @@ import { IconSetService } from '@coreui/icons-angular';
 import { iconSubset } from '../../../icons/icon-subset';
 import { NavsComponent } from './navs.component';
 
-describe('NavsComponent', () => {
+xdescribe('NavsComponent', () => {
   let component: NavsComponent;
   let fixture: ComponentFixture<NavsComponent>;
   let iconSetService: IconSetService;

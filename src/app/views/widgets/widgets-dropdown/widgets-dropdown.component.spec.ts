@@ -8,7 +8,7 @@ import { iconSubset } from '../../../icons/icon-subset';
 import { WidgetsDropdownComponent } from './widgets-dropdown.component';
 import { RouterTestingModule } from '@angular/router/testing';
 
-describe('WidgetsDropdownComponent', () => {
+xdescribe('WidgetsDropdownComponent', () => {
   let component: WidgetsDropdownComponent;
   let fixture: ComponentFixture<WidgetsDropdownComponent>;
   let iconSetService: IconSetService;

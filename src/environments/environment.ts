@@ -7,5 +7,6 @@ export const environment = {
 	apiLogout: 'https://server.mrgrassmaster.com:8443/mr-grass-master-2.2/admin/logout',
 	serverLoggingUrl: 'https://server.mrgrassmaster.com:8443/mr-grass-master-2.2/client-logging',
 	apiRecaptcha: 'https://server.mrgrassmaster.com:8443/mr-grass-master-2.2/api/recaptcha',
-	siteKey: '6LcEd_soAAAAADd0IusI1vMlLeLdwXQp7XH8W-80'
+	contactFormSiteKey: '6LfYXAEqAAAAACaG0qch5f1tjvorit0GCg8S6_dM',
+	loginSiteKey: '6LfSYAEqAAAAAPZIkAooGuL5VcIz9qpctmwNMRi3'
 }

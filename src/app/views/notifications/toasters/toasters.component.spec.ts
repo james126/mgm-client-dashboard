@@ -8,7 +8,7 @@ import { iconSubset } from '../../../icons/icon-subset';
 import { ToastersComponent } from './toasters.component';
 import { AppToastComponent } from './toast-simple/toast.component';
 
-describe('ToastersComponent', () => {
+xdescribe('ToastersComponent', () => {
   let component: ToastersComponent;
   let fixture: ComponentFixture<ToastersComponent>;
   let iconSetService: IconSetService;

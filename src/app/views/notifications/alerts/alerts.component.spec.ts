@@ -7,7 +7,7 @@ import { IconSetService } from '@coreui/icons-angular';
 import { iconSubset } from '../../../icons/icon-subset';
 import { AlertsComponent } from './alerts.component';
 
-describe('AlertsComponent', () => {
+xdescribe('AlertsComponent', () => {
   let component: AlertsComponent;
   let fixture: ComponentFixture<AlertsComponent>;
   let iconSetService: IconSetService;

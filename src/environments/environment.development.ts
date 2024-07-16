@@ -7,5 +7,6 @@ export const environment = {
 	apiLogout: 'http://localhost:8080/admin/logout',
 	serverLoggingUrl: 'http://localhost:8080/client-logging',
 	apiRecaptcha: 'http://localhost:8080/api/recaptcha',
-	siteKey: '6LcEd_soAAAAADd0IusI1vMlLeLdwXQp7XH8W-80'
+	contactFormSiteKey: '6LfBYAEqAAAAAKc88zdsVV9tvxrJiih1L9cnfo1d',
+	loginSiteKey: '6LfBYAEqAAAAAKc88zdsVV9tvxrJiih1L9cnfo1d'
 };

@@ -1,17 +1,13 @@
 import { Injectable } from '@angular/core';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class CustomAnimationBuilderService {
+@Injectable()
+export class AnimationBuilderService {
   private _trigger: String = '';
   private _beforeOpacity: number = -1;
   private _beforeTransform: string = '';
   private _timing: string = '';
   private _afterOpacity: number = -1;
   private _afterTransform: string = '';
-
-  constructor() {  }
 
   get trigger(): String {
     return this._trigger

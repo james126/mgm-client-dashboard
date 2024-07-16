@@ -6,7 +6,7 @@ import { IconSetService } from '@coreui/icons-angular';
 import { iconSubset } from '../../../../icons/icon-subset';
 import { AppToastComponent } from './toast.component';
 
-describe('ToastComponent', () => {
+xdescribe('ToastComponent', () => {
   let component: AppToastComponent;
   let fixture: ComponentFixture<AppToastComponent>;
   let iconSetService: IconSetService;

@@ -1,5 +1,6 @@
-import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http'
 import { Injectable } from "@angular/core";
+import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { NGXLogger } from "ngx-logger";
 import { catchError, EMPTY, map } from "rxjs";
 import { environment } from '../../../environments/environment';
@@ -29,14 +30,10 @@ export class ContactFormService {
 		return this.http.post(this.apiRecaptcha, token, {
 			headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 			observe: 'response',
-		}).pipe(map((res) => {
-			this.logger.log('Submitted recaptcha ' + res.status);
-			if (res.status != 200) {
-				throw new Error("Error submitting recaptcha to server with response: " + res.status)
-			}
-		}), catchError((error: HttpErrorResponse) => {
-			this.logger.error(error);
-			return EMPTY;
-		}))
+		})
+	}
+
+	error(error: HttpErrorResponse) {
+		this.logger.error(error);
 	}
 }

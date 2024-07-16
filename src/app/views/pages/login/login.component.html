@@ -26,8 +26,9 @@
                   />
                 </c-input-group>
                 <c-row>
-                    <c-col class="mb-2" style="transform:scale(0.8);transform-origin:0;">
-                            <re-captcha (resolved)="submitCaptcha($event)" #recaptcha [siteKey]="siteKey"></re-captcha></c-col>
+                    <c-col class="mb-2">
+                            <re-captcha #recaptcha  (resolved)="submitCaptcha($event)" [siteKey]="siteKey"></re-captcha>
+                    </c-col>
                   <c-col xs="6">
                     <button cButton class="px-4" color="primary">
                       Login

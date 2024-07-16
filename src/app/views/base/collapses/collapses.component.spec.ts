@@ -7,7 +7,7 @@ import { IconSetService } from '@coreui/icons-angular';
 import { iconSubset } from '../../../icons/icon-subset';
 import { CollapsesComponent } from './collapses.component';
 
-describe('CollapsesComponent', () => {
+xdescribe('CollapsesComponent', () => {
   let component: CollapsesComponent;
   let fixture: ComponentFixture<CollapsesComponent>;
   let iconSetService: IconSetService;

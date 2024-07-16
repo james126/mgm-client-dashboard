@@ -2,17 +2,17 @@
     <mgm-header></mgm-header>
 
     <!--   Carousel start -->
-    <c-carousel #anmtn id="carousel">
+    <c-carousel #animate id="carousel">
         <c-carousel-indicators></c-carousel-indicators>
         <c-carousel-inner>
             <c-carousel-item *ngFor="let slide of landingSlides" id="header-carousel">
-                    <img
-                        alt="{{slide.line1}}"
-                        class="d-block w-100"
-                        src="{{slide.src}}"
-                        loading="eager"
-                        id="header-carousel-img"
-                    >
+                <img
+                    alt="{{slide.line1}}"
+                    class="d-block w-100"
+                    src="{{slide.src}}"
+                    loading="eager"
+                    id="header-carousel-img"
+                >
                 <c-carousel-caption>
                     <div style="width:100%;position:absolute;top:50%;transform: translate(0,-50%);">
                         <h1 class="display-6 text-light animated slideInDown">{{ slide.line1 }}</h1>
@@ -30,7 +30,7 @@
     <div class="container-fluid facts py-6 pt-lg-0">
         <div class="container py-6 pt-lg-0">
             <div class="row gx-0">
-                <div #anmtn id="fact1" class="col-lg-4">
+                <div #animate id="fact1" class="col-lg-4">
                     <div class="bg-white shadow d-flex align-items-center h-100 p-4" style="min-height: 150px;">
                         <div class="d-flex">
                             <div class="flex-shrink-0 btn-lg-square index-primary-background-color">
@@ -43,7 +43,7 @@
                         </div>
                     </div>
                 </div>
-                <div #anmtn id="fact2" class="col-lg-4">
+                <div #animate id="fact2" class="col-lg-4">
                     <div class="bg-white shadow d-flex align-items-center h-100 p-4" style="min-height: 150px;">
                         <div class="d-flex">
                             <div class="flex-shrink-0 btn-lg-square index-primary-background-color">
@@ -56,7 +56,7 @@
                         </div>
                     </div>
                 </div>
-                <div #anmtn id="fact3" class="col-lg-4">
+                <div #animate id="fact3" class="col-lg-4">
                     <div class="bg-white shadow d-flex align-items-center h-100 p-4" style="min-height: 150px;">
                         <div class="d-flex">
                             <div class="flex-shrink-0 btn-lg-square index-primary-background-color">
@@ -78,7 +78,7 @@
     <div class="container-xxl py-6" id="about">
         <div class="container">
             <div class="row g-5">
-                <div #anmtn id="about1" class="col-lg-6">
+                <div #animate id="about1" class="col-lg-6">
                     <div class="position-relative overflow-hidden h-100" style="min-height: 400px;">
                         <div style="min-height: 450px;">
                             <iframe class="position-relative w-100 h-100"
@@ -89,7 +89,7 @@
                         </div>
                     </div>
                 </div>
-                <div #anmtn id="about2" class="col-lg-6">
+                <div #animate id="about2" class="col-lg-6">
                     <div class="h-100">
                         <h5 class="index-primary-color text-uppercase mb-2">About Us</h5>
                         <h1 class="mb-4 index-heading-color">High quality services at a competitive price</h1>
@@ -124,14 +124,14 @@
 
     <!-- Services start -->
     <div class="container-xxl my-6 py-6 mb-5" id="services">
-        <div #anmtn id="regular-services" class="container">
+        <div #animate id="regular-services" class="container">
             <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
                 <h5 class="index-primary-color text-uppercase mb-2">Regular Services</h5>
                 <h1 class="mb-4 index-heading-color">General Garden Maintenance</h1>
             </div>
 
             <div class="row g-4 justify-content-center" id="service-row-1">
-                <div #anmtn id="service1" class="col-lg-4 col-md-6">
+                <div #animate id="service1" class="col-lg-4 col-md-6">
                     <div class="courses-item d-flex flex-column bg-white overflow-hidden h-100">
                         <div class="text-center p-4 pt-0">
                             <div class="d-inline-block index-primary-background-color text-white fs-5 py-1 px-4 mb-4">Available</div>
@@ -157,7 +157,7 @@
                     </div>
                 </div>
 
-                <div #anmtn id="service2" class="col-lg-4 col-md-6">
+                <div #animate id="service2" class="col-lg-4 col-md-6">
                     <div class="courses-item d-flex flex-column bg-white overflow-hidden h-100">
                         <div class="text-center p-4 pt-0">
                             <div class="d-inline-block index-primary-background-color text-white fs-5 py-1 px-4 mb-4">Available</div>
@@ -182,7 +182,7 @@
                     </div>
                 </div>
 
-                <div #anmtn id="service3" class="col-lg-4 col-md-6">
+                <div #animate id="service3" class="col-lg-4 col-md-6">
                     <div class="courses-item d-flex flex-column bg-white overflow-hidden h-100">
                         <div class="text-center p-4 pt-0">
                             <div class="d-inline-block index-primary-background-color text-white fs-5 py-1 px-4 mb-4">Available</div>
@@ -208,7 +208,7 @@
                 </div>
             </div>
 
-            <div #anmtn id="service-row-2" class="row g-4 justify-content-center">
+            <div #animate id="service-row-2" class="row g-4 justify-content-center">
                 <div class="col-lg-4 col-md-6">
                     <div class="courses-item d-flex flex-column bg-white overflow-hidden h-100">
                         <div class="text-center p-4 pt-0">
@@ -233,7 +233,7 @@
                     </div>
                 </div>
 
-                <div #anmtn id="service5" class="col-lg-4 col-md-6">
+                <div #animate id="service5" class="col-lg-4 col-md-6">
                     <div class="courses-item d-flex flex-column bg-white overflow-hidden h-100">
                         <div class="text-center p-4 pt-0">
                             <div class="d-inline-block index-primary-background-color text-white fs-5 py-1 px-4 mb-4">Unavailable</div>
@@ -258,7 +258,7 @@
                     </div>
                 </div>
 
-                <div #anmtn id="service6" class="col-lg-4 col-md-6">
+                <div #animate id="service6" class="col-lg-4 col-md-6">
                     <div class="courses-item d-flex flex-column bg-white overflow-hidden h-100">
                         <div class="text-center p-4 pt-0">
                             <div class="d-inline-block index-primary-background-color text-white fs-5 py-1 px-4 mb-4">Available</div>
@@ -286,7 +286,7 @@
             <!-- Services end -->
 
             <!-- Contact start -->
-            <div #anmtn id="contact" class="row justify-content-center">
+            <div #animate id="contact" class="row justify-content-center">
                 <div class="col-lg-8 mb-0">
                     <div class="bg-primary text-center p-5">
                         <h1 class="mb-4">Contact Us Now</h1>
@@ -298,10 +298,10 @@
                                 <div class="col-sm-6">
                                     <div class="form-floating">
                                         <input type="text" id="first_name" placeholder="First Name" maxlength="50" required
-                                               formControlName="first_name"
+                                               formControlName="first_name" data-testid="first-name-input"
                                                [ngClass]="first_name?.invalid && submitted ? 'form-control border-0 is-invalid' : 'form-control border-0'">
                                         <label for="first_name">First Name</label>
-                                        <div class="custom-invalid-feedback"
+                                        <div class="custom-invalid-feedback" data-testid="first-name-invalid-feedback"
                                              *ngIf="first_name?.invalid && (first_name?.dirty || first_name?.untouched) && submitted">
                                             enter first name
                                         </div>
@@ -405,18 +405,23 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="col-12">
-                                    <button class="btn btn-dark w-100 py-3" type="submit" id="submit-button"
+                            <div class="d-flex justify-content-center">
+                                <re-captcha #recaptcha formControlName="recaptcha"
+                                            (resolved)="submitRecaptcha($event)" ngDefaultControl
+                                            (errored)="erroredRecaptcha($event)" errorMode="handled"></re-captcha>
+                            </div>
+
+                            <div class="d-flex justify-content-center">
+                                <div class="col-sm-6">
+                                    <button class="btn btn-dark w-100 py-3" type="submit" id="submit-button" data-testid="submit-button"
+                                            [disabled]="!recaptchaValid"
                                             (click)="submitForm()">Submit
                                     </button>
                                 </div>
-
-                                <div class="d-flex justify-content-center" style="transform:scale(0.8)">
-                                    <re-captcha (resolved)="submitCaptcha($event)" #recaptcha [siteKey]="siteKey"></re-captcha>
-                                </div>
-
                             </div>
+
                         </form>
                     </div>
                 </div>
@@ -430,7 +435,7 @@
         <div class="container">
             <div class="row g-5">
                 <div class="col-lg-6">
-                    <div #anmtn id="values-heading">
+                    <div #animate id="values-heading">
                         <h5 class="index-primary-color text-uppercase mb-2">Why Choose Us</h5>
                         <h1 class="mb-4 index-heading-color">Old School Values</h1>
                         <p class="mb-5 index-font-color">We value integrity and set high standards for ourselves and our
@@ -439,7 +444,7 @@
                         </p>
                     </div>
                     <div class="row gy-5 gx-4">
-                        <div #anmtn id="values1" class="col-sm-6">
+                        <div #animate id="values1" class="col-sm-6">
                             <div class="d-flex align-items-center mb-3">
                                 <div class="flex-shrink-0 btn-square index-primary-background-color me-3">
                                     <i class="fa fa-check text-white"></i>
@@ -448,7 +453,7 @@
                             </div>
                             <span class="index-font-color">Do it right the first time, every time</span>
                         </div>
-                        <div #anmtn id="values2" class="col-sm-6">
+                        <div #animate id="values2" class="col-sm-6">
                             <div class="d-flex align-items-center mb-3">
                                 <div class="flex-shrink-0 btn-square index-primary-background-color me-3">
                                     <i class="fa fa-check text-white"></i>
@@ -457,7 +462,7 @@
                             </div>
                             <span class="index-font-color">Industry certified Landscaping and Horticulture specialists</span>
                         </div>
-                        <div #anmtn id="values3" class="col-sm-6">
+                        <div #animate id="values3" class="col-sm-6">
                             <div class="d-flex align-items-center mb-3">
                                 <div class="flex-shrink-0 btn-square index-primary-background-color me-3">
                                     <i class="fa fa-check text-white"></i>
@@ -466,7 +471,7 @@
                             </div>
                             <span class="index-font-color">Non-toxic weed control keeps pets safe</span>
                         </div>
-                        <div #anmtn id="values4" class="col-sm-6">
+                        <div #animate id="values4" class="col-sm-6">
                             <div class="d-flex align-items-center mb-3">
                                 <div class="flex-shrink-0 btn-square index-primary-background-color me-3">
                                     <i class="fa fa-check text-white"></i>
@@ -477,7 +482,7 @@
                         </div>
                     </div>
                 </div>
-                <div #anmtn id="values5" class="col-lg-6">
+                <div #animate id="values5" class="col-lg-6">
                     <div class="position-relative overflow-hidden pe-5 pt-5 h-100" style="min-height: 400px;">
                         <img class="position-absolute w-100 h-100" src="/assets/index/image/chipper.jpg" alt=""
                              style="object-fit: cover;">
@@ -493,11 +498,11 @@
     <!-- Testimonial start -->
     <div class="container-xxl py-6">
         <div class="container">
-            <span #anmtn id="testimonial1" class="mb-4 text-center mx-auto mb-5" style="max-width: 500px;">
+            <span #animate id="testimonial1" class="mb-4 text-center mx-auto mb-5" style="max-width: 500px;">
                 <h5 class="index-primary-color text-uppercase mb-2">Testimonials</h5>
                 <h1 class="index-heading-color">What Our Clients Say</h1>
             </span>
-            <div #anmtn id="testimonial2" class="row justify-content-center">
+            <div #animate id="testimonial2" class="row justify-content-center">
                 <div class="col-lg-8 wow fadeInUp" data-wow-delay="0.1s">
 
                     <c-carousel [dark]="true" [animate]="false" transition="crossfade" [interval]="2500">

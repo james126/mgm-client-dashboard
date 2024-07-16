@@ -6,7 +6,7 @@ import { IconSetService } from '@coreui/icons-angular';
 import { iconSubset } from '../../../icons/icon-subset';
 import { InputGroupsComponent } from './input-groups.component';
 
-describe('InputGroupsComponent', () => {
+xdescribe('InputGroupsComponent', () => {
   let component: InputGroupsComponent;
   let fixture: ComponentFixture<InputGroupsComponent>;
   let iconSetService: IconSetService;

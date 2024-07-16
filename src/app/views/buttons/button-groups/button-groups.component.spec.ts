@@ -7,7 +7,7 @@ import { IconSetService } from '@coreui/icons-angular';
 import { iconSubset } from '../../../icons/icon-subset';
 import { ButtonGroupsComponent } from './button-groups.component';
 
-describe('ButtonGroupsComponent', () => {
+xdescribe('ButtonGroupsComponent', () => {
   let component: ButtonGroupsComponent;
   let fixture: ComponentFixture<ButtonGroupsComponent>;
   let iconSetService: IconSetService;

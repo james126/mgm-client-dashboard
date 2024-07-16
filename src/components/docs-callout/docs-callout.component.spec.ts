@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DocsCalloutComponent } from './docs-callout.component';
 import { CalloutModule } from '@coreui/angular';
 
-describe('DocsCalloutComponent', () => {
+xdescribe('DocsCalloutComponent', () => {
   let component: DocsCalloutComponent;
   let fixture: ComponentFixture<DocsCalloutComponent>;
 

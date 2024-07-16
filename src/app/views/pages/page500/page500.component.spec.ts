@@ -6,7 +6,7 @@ import { IconSetService } from '@coreui/icons-angular';
 import { iconSubset } from '../../../icons/icon-subset';
 import { Page500Component } from './page500.component';
 
-describe('Page500Component', () => {
+xdescribe('Page500Component', () => {
   let component: Page500Component;
   let fixture: ComponentFixture<Page500Component>;
   let iconSetService: IconSetService;

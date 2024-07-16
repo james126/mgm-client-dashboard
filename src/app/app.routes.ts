@@ -83,5 +83,4 @@ export const routes: Routes = [
             title: 'Register Page',
         },
     },
-    { path: '**', redirectTo: 'index' },
 ]

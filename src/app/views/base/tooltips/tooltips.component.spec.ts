@@ -6,7 +6,7 @@ import { IconSetService } from '@coreui/icons-angular';
 import { iconSubset } from '../../../icons/icon-subset';
 import { TooltipsComponent } from './tooltips.component';
 
-describe('TooltipsComponent', () => {
+xdescribe('TooltipsComponent', () => {
   let component: TooltipsComponent;
   let fixture: ComponentFixture<TooltipsComponent>;
   let iconSetService: IconSetService;

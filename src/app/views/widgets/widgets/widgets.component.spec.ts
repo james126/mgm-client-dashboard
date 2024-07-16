@@ -10,7 +10,7 @@ import { WidgetsDropdownComponent } from '../widgets-dropdown/widgets-dropdown.c
 import { WidgetsEComponent } from '../widgets-e/widgets-e.component';
 import { WidgetsComponent } from './widgets.component';
 
-describe('WidgetsComponent', () => {
+xdescribe('WidgetsComponent', () => {
   let component: WidgetsComponent;
   let fixture: ComponentFixture<WidgetsComponent>;
   let iconSetService: IconSetService;

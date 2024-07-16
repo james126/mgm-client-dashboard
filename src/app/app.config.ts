@@ -11,7 +11,6 @@ import { ServerCustomisedService } from './utility/ServerCustomisedService'
 import { DropdownModule, SidebarModule } from '@coreui/angular'
 import { IconSetService } from '@coreui/icons-angular'
 import { routes } from './app.routes'
-import { RecaptchaModule } from 'ng-recaptcha'
 
 export const appConfig: ApplicationConfig = {
     providers: [provideRouter(routes, withRouterConfig({

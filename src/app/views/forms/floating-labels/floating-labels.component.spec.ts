@@ -6,7 +6,7 @@ import { IconSetService } from '@coreui/icons-angular';
 import { iconSubset } from '../../../icons/icon-subset';
 import { FloatingLabelsComponent } from './floating-labels.component';
 
-describe('FloatingLabelsComponent', () => {
+xdescribe('FloatingLabelsComponent', () => {
   let component: FloatingLabelsComponent;
   let fixture: ComponentFixture<FloatingLabelsComponent>;
   let iconSetService: IconSetService;

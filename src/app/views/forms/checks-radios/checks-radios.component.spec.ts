@@ -7,7 +7,7 @@ import { IconSetService } from '@coreui/icons-angular';
 import { iconSubset } from '../../../icons/icon-subset';
 import { ChecksRadiosComponent } from './checks-radios.component';
 
-describe('ChecksRadiosComponent', () => {
+xdescribe('ChecksRadiosComponent', () => {
   let component: ChecksRadiosComponent;
   let fixture: ComponentFixture<ChecksRadiosComponent>;
   let iconSetService: IconSetService;

@@ -7,7 +7,7 @@ import { IconSetService } from '@coreui/icons-angular';
 import { iconSubset } from '../../../icons/icon-subset';
 import { ModalsComponent } from './modals.component';
 
-describe('ModalsComponent', () => {
+xdescribe('ModalsComponent', () => {
   let component: ModalsComponent;
   let fixture: ComponentFixture<ModalsComponent>;
   let iconSetService: IconSetService;

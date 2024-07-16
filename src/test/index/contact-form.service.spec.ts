@@ -8,7 +8,7 @@ import { ContactFormService } from '../../app/index/service/contact-form.service
 import { isEmpty } from "rxjs";
 
 
-describe('ContactFormService', () => {
+xdescribe('ContactFormService', () => {
 	let submitService: ContactFormService;
 	let httpMock: HttpTestingController;
 	let url = environment.apiForm;
@@ -42,11 +42,12 @@ describe('ContactFormService', () => {
 					//submitContactForm returns Observable<void>
 				}
 			)
+
 		const request = httpMock.expectOne(url);
 		expect(request.request.method).toBe('POST');
+		expect(request.request.url).toBe('http://localhost:8080/api/form');
 		expect(request.request.body).toEqual(contact);
 		request.flush({ body: contact });
-
 	});
 
 

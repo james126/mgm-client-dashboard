@@ -31,7 +31,7 @@ import { LoginService } from './login.service'
 export class LoginComponent {
     @ViewChild('recaptcha', { static: false, read: RecaptchaComponent }) repactcha?: RecaptchaComponent
     captchaResponse: boolean = false
-    siteKey: string = environment.siteKey
+    siteKey: string = environment.contactFormSiteKey
 
     formValues = {
         username: '',

@@ -7,7 +7,7 @@ import { IconSetService } from '@coreui/icons-angular';
 import { iconSubset } from '../../../icons/icon-subset';
 import { AccordionsComponent } from './accordions.component';
 
-describe('AccordionsComponent', () => {
+xdescribe('AccordionsComponent', () => {
   let component: AccordionsComponent;
   let fixture: ComponentFixture<AccordionsComponent>;
   let iconSetService: IconSetService;

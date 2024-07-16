@@ -8,10 +8,13 @@ module.exports = function (config) {
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
+      require('karma-safari-launcher'),
+      require('karma-firefox-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage'),
       require('@angular-devkit/build-angular/plugins/karma')
     ],
+    browsers: ['Chrome', 'Safari', 'Firefox'],
     client: {
       jasmine: {
         // you can add configuration options for Jasmine here

@@ -4,7 +4,8 @@
   "compilerOptions": {
     "outDir": "./out-tsc/app",
     "types": [
-      "@angular/localize"
+      "@angular/localize",
+      "@types/grecaptcha"
     ],
     "paths": {
       "@docs-components/*": ["./src/components/*"]
