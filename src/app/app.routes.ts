@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router'
-import { IndexComponent } from './index/index.component'
+import { LandingComponent } from './views/pages/landing/landing.component'
 import { DefaultLayoutComponent } from './layout'
 
 export const routes: Routes = [
     {
-        path: 'index', component: IndexComponent,
+        path: 'landing', component: LandingComponent,
     },
     {
         path: '',
@@ -83,4 +83,5 @@ export const routes: Routes = [
             title: 'Register Page',
         },
     },
+    { path: '**', redirectTo: 'landing' },
 ]

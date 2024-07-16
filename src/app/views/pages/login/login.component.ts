@@ -22,7 +22,7 @@ import { LoginService } from './login.service'
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
+    // styleUrls: ['./login.component.scss'],
     standalone: true,
     imports: [ContainerComponent, RowComponent, ColComponent, CardGroupComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent,
         InputGroupTextDirective, IconDirective, FormControlDirective, ButtonDirective, NgStyle, RecaptchaModule],

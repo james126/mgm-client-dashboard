@@ -11,18 +11,18 @@ import { cilCheck } from '@coreui/icons'
 import { AnimationBuilder, AnimationPlayer } from '@angular/animations'
 
 @Component({
-    selector: 'mgm-index',
-    templateUrl: './index.component.html',
-    styleUrls: ['./index.component.scss'],
+    selector: 'landing',
+    templateUrl: './landing.component.html',
+    styleUrls: ['./landing.component.scss'],
     providers: [
         {
             provide: NG_VALUE_ACCESSOR,
-            useExisting: forwardRef(() => IndexComponent),
+            useExisting: forwardRef(() => LandingComponent),
             multi: true,
         }
     ]
 })
-export class IndexComponent implements OnInit, OnDestroy {
+export class LandingComponent implements OnInit, OnDestroy {
     @ViewChild('recaptcha', { static: false, read: RecaptchaComponent }) private repactcha?: RecaptchaComponent
     @ViewChildren('animation', { read: ElementRef }) private animationElement!: QueryList<ElementRef<HTMLElement>>;
 

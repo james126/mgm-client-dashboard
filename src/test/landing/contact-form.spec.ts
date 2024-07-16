@@ -1,31 +1,30 @@
-import { AnimationBuilder } from '@angular/animations'
-import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http'
+
+import { HttpResponse } from '@angular/common/http'
 import { HttpClientTestingModule } from "@angular/common/http/testing";
 import { DebugElement } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms'
 import { RouterTestingModule } from '@angular/router/testing'
 import { CarouselModule } from '@coreui/angular'
-import { Contact } from '../../app/index/dto/contact'
-import { HeaderComponent } from '../../app/index/header/header.component'
+import { HeaderComponent } from 'src/app/views/pages/landing/header/header.component'
 import { RecaptchaModule } from 'ng-recaptcha'
-import { FooterComponent } from '../../app/index/footer/footer.component'
-import { IndexComponent } from '../../app/index/index.component';
-import { AnimationBuilderService } from '../../app/index/service/animation-builder.service'
-import { AnimationService } from '../../app/index/service/animation.service'
-import { CarouselService } from '../../app/index/service/carousel.service'
-import { ContactFormService } from '../../app/index/service/contact-form.service';
+import { FooterComponent } from 'src/app/views/pages/landing/footer/footer.component'
+import { LandingComponent } from 'src/app/views/pages/landing/landing.component';
+import { AnimationBuilderService } from 'src/app/views/pages/landing/service/animation-builder.service'
+import { AnimationService } from 'src/app/views/pages/landing/service/animation.service'
+import { CarouselService } from 'src/app/views/pages/landing/service/carousel.service'
+import { ContactFormService } from 'src/app/views/pages/landing/service/contact-form.service';
 import { MockComponent, MockDirective, MockModule } from 'ng-mocks'
 import { IconDirective } from '@coreui/icons-angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
 import { NGXLogger } from 'ngx-logger';
 import { NGXLoggerMock } from 'ngx-logger/testing';
-import { Observable, of } from 'rxjs'
+import { of } from 'rxjs'
 
 describe('Contact Form ReCaptcha', () => {
-    let fixture: ComponentFixture<IndexComponent>;
-    let component: IndexComponent;
+    let fixture: ComponentFixture<LandingComponent>;
+    let component: LandingComponent;
     let debugElement: DebugElement;
 
     //
@@ -43,14 +42,14 @@ describe('Contact Form ReCaptcha', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [RouterTestingModule, RecaptchaModule, HttpClientTestingModule, MockModule(CarouselModule), ReactiveFormsModule, MockModule(BrowserAnimationsModule)],
-            declarations: [IndexComponent,
+            declarations: [LandingComponent,
                 MockComponent(HeaderComponent),
                 MockComponent(FooterComponent),
                 MockDirective(IconDirective)],
             providers: [{ provide: ContactFormService, useValue: fakeSubmitRecaptcha }, { provide: NGXLogger, useClass: NGXLoggerMock }, AnimationBuilderService, AnimationService, CarouselService]
         }).compileComponents();
 
-        fixture = TestBed.createComponent(IndexComponent);
+        fixture = TestBed.createComponent(LandingComponent);
         component = fixture.componentInstance;
         debugElement = fixture.debugElement;
         fixture.detectChanges();

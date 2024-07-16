@@ -7,8 +7,8 @@ import { NgOptimizedImage } from '@angular/common'
 import { IconDirective } from '@coreui/icons-angular'
 import { RECAPTCHA_SETTINGS, RecaptchaFormsModule, RecaptchaModule, RecaptchaSettings } from 'ng-recaptcha'
 import { CopyrightDirective } from './footer/copyright.directive'
-import { IndexRoutingModule } from './index-routing.module'
-import { IndexComponent } from './index.component'
+import { LandingRoutingModule } from './landing-routing.module'
+import { LandingComponent } from './landing.component'
 import { FooterComponent } from "./footer/footer.component";
 import { HeaderComponent } from "./header/header.component";
 import { LogoComponent } from './logo/logo.component'
@@ -21,7 +21,7 @@ import { environment } from 'src/environments/environment';
 
 @NgModule({
     declarations: [
-        IndexComponent, HeaderComponent, FooterComponent, CopyrightDirective, LogoComponent
+        LandingComponent, HeaderComponent, FooterComponent, CopyrightDirective, LogoComponent
     ],
     imports: [
         CommonModule,
@@ -29,7 +29,7 @@ import { environment } from 'src/environments/environment';
         RouterLink,
         RecaptchaModule,
         RecaptchaFormsModule,
-        IndexRoutingModule,
+        LandingRoutingModule,
         IconDirective,
         CarouselModule,
         GridModule,
@@ -40,11 +40,11 @@ import { environment } from 'src/environments/environment';
         NgOptimizedImage
     ],
     exports: [
-        IndexComponent, HeaderComponent, FooterComponent
+        LandingComponent, HeaderComponent, FooterComponent
     ],
     providers: [ContactFormService, CarouselService, AnimationBuilderService, AnimationService, {
         provide: RECAPTCHA_SETTINGS,
         useValue: { siteKey: environment.contactFormSiteKey, theme: "dark" } as RecaptchaSettings
     }]
 })
-export class IndexModule { }
+export class LandingModule { }

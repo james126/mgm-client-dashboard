@@ -6,7 +6,7 @@ import {
 } from '@angular/router'
 import { LoggerModule, NgxLoggerLevel, TOKEN_LOGGER_SERVER_SERVICE } from 'ngx-logger'
 import { environment } from '../environments/environment'
-import { IndexModule } from './index/index.module'
+import { LandingModule } from './views/pages/landing/landing.module'
 import { ServerCustomisedService } from './utility/ServerCustomisedService'
 import { DropdownModule, SidebarModule } from '@coreui/angular'
 import { IconSetService } from '@coreui/icons-angular'
@@ -36,6 +36,6 @@ export const appConfig: ApplicationConfig = {
             },
         })),
         importProvidersFrom(HttpClientModule),
-        importProvidersFrom(IndexModule)
+        importProvidersFrom(LandingModule)
     ]
 }

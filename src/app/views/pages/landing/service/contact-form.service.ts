@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { NGXLogger } from "ngx-logger";
 import { catchError, EMPTY, map } from "rxjs";
-import { environment } from '../../../environments/environment';
+import { environment } from 'src/environments/environment';
 import { Contact } from "../dto/contact";
 
 @Injectable()

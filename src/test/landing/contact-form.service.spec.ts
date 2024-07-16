@@ -3,8 +3,8 @@ import { TestBed } from '@angular/core/testing';
 import { NGXLogger } from "ngx-logger";
 import { NGXLoggerMock } from "ngx-logger/testing";
 import { environment } from "../../environments/environment";
-import { Contact } from "../../app/index/dto/contact";
-import { ContactFormService } from '../../app/index/service/contact-form.service';
+import { Contact } from "src/app/views/pages/landing/dto/contact";
+import { ContactFormService } from 'src/app/views/pages/landing/service/contact-form.service';
 import { isEmpty } from "rxjs";
 
 
