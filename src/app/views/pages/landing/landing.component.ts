@@ -1,4 +1,3 @@
-import { HttpResponse } from '@angular/common/http'
 import { Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren, forwardRef } from '@angular/core'
 import { FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms'
 import { Router } from '@angular/router'

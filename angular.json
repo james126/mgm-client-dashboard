@@ -76,12 +76,12 @@
               "buildTarget": "mgm-client-dashboard:build:production"
             },
             "development": {
-              "buildTarget": "mgm-client-dashboard:build:development"
+              "buildTarget": "mgm-client-dashboard:build:development",
             }
           },
           "options": {
-						"port": 80
-					},
+			"port": 80
+		  },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {

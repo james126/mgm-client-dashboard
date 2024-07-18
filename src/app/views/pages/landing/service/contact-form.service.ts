@@ -8,14 +8,16 @@ import { Contact } from "../dto/contact";
 
 @Injectable()
 export class ContactFormService {
-	private apiForm = environment.apiForm;
-	private apiRecaptcha = environment.apiRecaptcha;
+	private recaptchaUrl = '';
+	private contactFormUrl = '';
 
 	constructor(private http: HttpClient, private logger: NGXLogger) {
+		this.contactFormUrl = environment.server + environment.contactForm;
+		this.recaptchaUrl = environment.server + environment.recaptcha;
 	}
 
 	submitContactForm(body: Contact) {
-		return this.http.post(this.apiForm, body, {
+		return this.http.post(this.contactFormUrl, body, {
 			headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 			observe: 'response',
 		}).pipe(map((res) => {
@@ -27,7 +29,7 @@ export class ContactFormService {
 	}
 
 	submitRecaptcha(token: String) {
-		return this.http.post(this.apiRecaptcha, token, {
+		return this.http.post(this.recaptchaUrl, token, {
 			headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
 			observe: 'response',
 		})

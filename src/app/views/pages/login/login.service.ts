@@ -6,7 +6,7 @@ import { environment } from '../../../../environments/environment'
 
 @Injectable()
 export class LoginService {
-    private apiRecaptcha = environment.apiRecaptcha
+    private apiRecaptcha = environment.recaptcha
 
     constructor(private http: HttpClient, private logger: NGXLogger) {
     }

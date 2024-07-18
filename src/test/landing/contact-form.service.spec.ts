@@ -5,13 +5,15 @@ import { NGXLoggerMock } from "ngx-logger/testing";
 import { environment } from "../../environments/environment";
 import { Contact } from "src/app/views/pages/landing/dto/contact";
 import { ContactFormService } from 'src/app/views/pages/landing/service/contact-form.service';
-import { isEmpty } from "rxjs";
+import { concat, isEmpty } from "rxjs";
 
 
 xdescribe('ContactFormService', () => {
 	let submitService: ContactFormService;
 	let httpMock: HttpTestingController;
-	let url = environment.apiForm;
+	let server = environment.serverUrl;
+	let path = '/contact-form'
+	let url = '';
 	let contact: Contact
 
 	beforeEach(() => {
@@ -31,6 +33,8 @@ xdescribe('ContactFormService', () => {
 		contact.address_line1 = '16 Pinero Place';
 		contact.address_line2 = 'Bucklands Beach'
 		contact.message = 'Lawnmowing quote'
+
+		url = server+path;
 	})
 
 
@@ -45,7 +49,7 @@ xdescribe('ContactFormService', () => {
 
 		const request = httpMock.expectOne(url);
 		expect(request.request.method).toBe('POST');
-		expect(request.request.url).toBe('http://localhost:8080/api/form');
+		expect(request.request.url).toBe(url);
 		expect(request.request.body).toEqual(contact);
 		request.flush({ body: contact });
 	});

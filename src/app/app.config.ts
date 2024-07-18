@@ -15,16 +15,18 @@ import { routes } from './app.routes'
 export const appConfig: ApplicationConfig = {
     providers: [provideRouter(routes, withRouterConfig({
             onSameUrlNavigation: 'reload',
-        }), withInMemoryScrolling({
+        }),
+        withInMemoryScrolling({
             scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled',
-        }), withEnabledBlockingInitialNavigation(),
+        }),
+        withEnabledBlockingInitialNavigation(),
         withViewTransitions(),
         withDebugTracing()),
         importProvidersFrom(SidebarModule, DropdownModule),
         IconSetService,
         provideAnimations(),
         importProvidersFrom(LoggerModule.forRoot({
-            serverLoggingUrl: `${environment.serverLoggingUrl}`,
+            serverLoggingUrl: environment.server+environment.logging,
             level: NgxLoggerLevel.INFO,
             serverLogLevel: NgxLoggerLevel.ERROR,
             disableConsoleLogging: false,
