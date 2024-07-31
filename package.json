@@ -33,6 +33,8 @@
     "@coreui/icons": "^3.0.1",
     "@coreui/icons-angular": "~5.0.0",
     "@coreui/utils": "^2.0.2",
+    "@fortawesome/angular-fontawesome": "^0.14.0",
+    "@fortawesome/free-regular-svg-icons": "^6.6.0",
     "chart.js": "^4.4.2",
     "karma-firefox-launcher": "^2.1.3",
     "karma-safari-launcher": "^1.0.0",

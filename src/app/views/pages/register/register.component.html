@@ -13,24 +13,39 @@
                                 <span cInputGroupText>
                                   <svg cIcon name="cilUser"></svg>
                                 </span>
-                                <input formControlName="username" cFormControl placeholder="Username" />
+                                <input formControlName="username" cFormControl placeholder="Username" data-testid="username" />
                             </c-input-group>
                             <control-errors controlName="username" id="username-errors">
                                 <ng-template let-errors>
-                                    <ng-container *ngIf="errors.required">
-                                        Enter a username
+                                    <ng-container *ngIf="errors.required" data-testid="errors.required">
+                                        <div>
+                                            <span class="control-error-mark">❗</span>
+                                            Enter a username
+                                        </div>
                                     </ng-container>
                                     <ng-container *ngIf="errors.pattern">
-                                        Must contain only letters or numbers.
+                                        <div>
+                                            <span class="control-error-mark">❗</span>
+                                            Must contain only letters or numbers
+                                        </div>
                                     </ng-container>
                                     <ng-container *ngIf="errors.maxlength">
-                                        Max length 30 characters.
+                                        <div>
+                                            <span class="control-error-mark">❗</span>
+                                            Max length 30 characters
+                                        </div>
                                     </ng-container>
                                     <ng-container *ngIf="errors.minlength">
-                                        Min length 5 characters.
+                                        <div>
+                                            <span class="control-error-mark">❗</span>
+                                            Min length 5 characters
+                                        </div>
                                     </ng-container>
                                     <ng-container *ngIf="errors.taken">
-                                        Username taken, select another.
+                                        <div>
+                                            <span class="control-error-mark">❗</span>
+                                            Username taken, select another
+                                        </div>
                                     </ng-container>
                                 </ng-template>
                             </control-errors>
@@ -38,28 +53,138 @@
                             <!-- EMAIL -->
                             <c-input-group class="mb-3">
                                 <span cInputGroupText>&#64;</span>
-                                <input formControlName="email" cFormControl placeholder="Email" />
+                                <input formControlName="email" cFormControl placeholder="Email" data-testid="email"/>
                             </c-input-group>
+                            <control-errors controlName="email" id="email-errors">
+                                <ng-template let-errors>
+                                    <ng-container *ngIf="errors.required" data-testid="errors.required">
+                                        <div>
+                                            <span class="control-error-mark">❗</span>
+                                            Enter an email address
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="errors.email">
+                                        <div>
+                                            <span class="control-error-mark">❗</span>
+                                            Must be a valid email address
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="errors.maxlength">
+                                        <div>
+                                            <span class="control-error-mark">❗</span>
+                                            Max length 40 characters
+                                        </div>
+                                    </ng-container>
+                                </ng-template>
+                            </control-errors>
 
                             <!-- PASSWORD -->
                             <c-input-group class="mb-3">
                                 <span cInputGroupText>
                                   <svg cIcon name="cilLockLocked"></svg>
                                 </span>
-                                <input formControlName="password" cFormControl placeholder="Password" type="password" />
+                                <input formControlName="password" cFormControl placeholder="Password" data-testid="password" matInput showHideInput id="pass1"
+                                       [type]="show1 ? 'txt' : 'password'"/>
+                                <button cButton type="button" variant="outline" data-testid="pass-toggle" (click)="togglePass('pass1')">
+                                    {{ show1 ? '👁️' : '🔒' }}
+                                </button>
                             </c-input-group>
+                            <control-errors controlName="password" id="password-errors">
+                                <ng-template let-errors>
+                                    <ng-container *ngIf="errors.required" data-testid="errors.required">
+                                        <div>
+                                            <span class="control-error-mark">❗</span>
+                                            Enter a password
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="errors.maxlength">
+                                        <div>
+                                            <span class="control-error-mark">❗</span>
+                                            Max length 20 characters
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="errors.minlength">
+                                        <div>
+                                            <span class="control-error-mark">❗</span>
+                                            Min length 10 characters
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="errors.invalidPassword">
+                                        <div>
+                                            <span class="control-error-mark">❗</span>
+                                            Invalid password
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="errors.requiresUppercase">
+                                        <div>
+                                            <span class="control-error-mark">❗</span>
+                                            Requires an uppercase character
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="errors.requiresLowercase">
+                                        <div>
+                                            <span class="control-error-mark">❗</span>
+                                            Requires a lowercase character
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="errors.requiresNumeric">
+                                        <div>
+                                            <span class="control-error-mark">❗</span>
+                                            Requires a numeric character
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="errors.requiresSpecial">
+                                        <div>
+                                            <span class="control-error-mark">❗</span>
+                                            Requires a special character
+                                        </div>
+                                    </ng-container>
+                                </ng-template>
+                            </control-errors>
 
                             <!-- REPEATED PASSWORD -->
                             <c-input-group class="mb-4">
                                 <span cInputGroupText>
                                   <svg cIcon name="cilLockLocked"></svg>
                                 </span>
-                                <input formControlName="repeatedPassword" cFormControl placeholder="Repeat password" type="password" />
+                                <input formControlName="repeatPassword" cFormControl placeholder="Repeat password" data-testid="repeatPassword" id="pass2"
+                                    [type]="show2 ? 'txt' : 'password'"/>
+                                <button cButton type="button" variant="outline" (click)="togglePass('pass2')">
+                                    {{ show2 ? '👁️' : '🔒' }}
+                                </button>
                             </c-input-group>
+                            <control-errors controlName="repeatPassword" id="repeatPassword-errors">
+                                <ng-template let-errors>
+                                    <ng-container *ngIf="errors.required" data-testid="errors.required">
+                                        <div>
+                                            <span class="control-error-mark">❗</span>
+                                            Enter password again
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="errors.maxlength">
+                                        <div>
+                                            <span class="control-error-mark">❗</span>
+                                            Max length 20 characters
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="errors.minlength">
+                                        <div>
+                                            <span class="control-error-mark">❗</span>
+                                            Min length 10 characters
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="errors.invalid">
+                                        <div>
+                                            <span class="control-error-mark">❗</span>
+                                            Repeated password doesn't equal password
+                                        </div>
+                                    </ng-container>
+                                </ng-template>
+                            </control-errors>
 
                             <!-- SUBMIT -->
                             <div class="d-grid">
-                                <button cButton (click)="onSubmit()" color="success">Create Account</button>
+                                <button cButton (click)="onSubmit()" color="success" data-testid="submit" [disabled]="register.invalid">Create Account</button>
                             </div>
                         </form>
                     </c-card-body>

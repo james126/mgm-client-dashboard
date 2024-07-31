@@ -1,14 +1,13 @@
-import { CommonModule, NgIf } from '@angular/common'
-import { AfterContentInit, Component, ContentChild, Input, OnDestroy, OnInit, Optional, TemplateRef, ViewChild } from '@angular/core'
+import { CommonModule, } from '@angular/common'
+import { AfterContentInit, Component, ContentChild, Input, OnDestroy, OnInit, Optional, TemplateRef } from '@angular/core'
 import { AbstractControl, ControlContainer, ValidationErrors } from '@angular/forms'
-import { RegisterComponent } from '../../register.component'
-import { findFormControl } from '../../util/findFormControl';
-import { Subscription, startWith } from 'rxjs';
+import { findFormControl } from '../util/findFormControl';
+import { Subscription, startWith, timer } from 'rxjs'
 
 @Component({
   selector: 'control-errors',
   standalone: true,
-  imports: [RegisterComponent, CommonModule],
+  imports: [CommonModule],
   templateUrl: './control-errors.component.html',
   styleUrl: './control-errors.component.scss'
 })
@@ -50,7 +49,6 @@ export class ControlErrorsComponent implements OnInit, AfterContentInit, OnDestr
 
   private getErrorMessages(): void {
     if (this.control?.errors){
-      console.log('this.control.errors: ', this.control.errors)
       this.errorMessages = {
         $implicit: this.control.errors
       }

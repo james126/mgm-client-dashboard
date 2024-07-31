@@ -11,7 +11,7 @@ import { concat, isEmpty } from "rxjs";
 xdescribe('ContactFormService', () => {
 	let submitService: ContactFormService;
 	let httpMock: HttpTestingController;
-	let server = environment.serverUrl;
+	let server = environment.server;
 	let path = '/contact-form'
 	let url = '';
 	let contact: Contact

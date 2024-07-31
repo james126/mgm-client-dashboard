@@ -1,0 +1,9 @@
+<p
+    *ngIf="control
+    && control.invalid
+    && (control.touched || control.dirty)
+    && (control.updateOn == 'blur')"
+    class="error-text"
+>
+    <ng-container *ngTemplateOutlet="template; context: errorMessages"></ng-container>
+</p>
