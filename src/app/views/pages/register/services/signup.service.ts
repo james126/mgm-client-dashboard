@@ -1,6 +1,9 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
+import { error } from '@angular/compiler-cli/src/transformers/util'
 import { Injectable } from '@angular/core';
-import { Observable, map, of } from 'rxjs';
+import { NGXLogger, NgxLoggerLevel } from 'ngx-logger'
+import { Observable, map, of, catchError, EMPTY, throwError } from 'rxjs'
 import { environment } from '../../../../../environments/environment'
 
 export interface PasswordStrength {
@@ -22,30 +25,43 @@ export class SignupService {
   private emailTakenUrl = '';
   private signupUrl = ''
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private logger: NGXLogger) {
     this.usernameTakenUrl = environment.server + environment.usernameTaken;
     this.emailTakenUrl = environment.server + environment.emailTaken;
     this.signupUrl = environment.server + environment.signUp;
   }
 
-  public isUsernameTaken(username: string): Observable<boolean> {
+  public isUsernameTaken(username: string): Observable<boolean | HttpErrorResponse> {
     let params = new HttpParams().set('username', username);
-    return this.http.get<{ usernameTaken: boolean }>(this.usernameTakenUrl, { params })
-        .pipe(map((result) => result.usernameTaken));
-  }
+    return this.http.get<{ usernameTaken: boolean }>(this.usernameTakenUrl, { params }).pipe(
+        map(result => result.usernameTaken),
+        catchError((err, caught) => {
+          this.handleError(err, this.logger);
+          return of(err)
+        })
+    )}
 
-  public isEmailTaken(email: string): Observable<boolean> {
+  public isEmailTaken(email: string): Observable<boolean | HttpErrorResponse> {
     let params = new HttpParams().set('email', email);
-    return this.http.get<{ emailTaken: boolean }>(this.emailTakenUrl, { params })
-        .pipe(map((result) => result.emailTaken));
-  }
+    return this.http.get<{ emailTaken: boolean }>(this.emailTakenUrl, { params }).pipe(
+        map(result => result.emailTaken),
+        catchError((err, caught) => {
+          this.handleError(err, this.logger);
+          return of(err)
+        })
+    )}
 
-  public signup(data: SignupData): Observable<{ success: true }> {
-    return this.post<{ success: true }>(this.signupUrl, data);
-  }
+  public signup(data: SignupData): Observable<boolean | HttpErrorResponse> {
+    return this.http.post<{ success: true }>(this.signupUrl, data).pipe(
+        map(result => result.success),
+        catchError((err, caught) => {
+          this.handleError(err, this.logger);
+          return of(err)
+        })
+    )}
 
-  private post<Response>(path: string, data: any): Observable<Response> {
-    return this.http.post<Response>(path, data);
+  private handleError(error: HttpErrorResponse, logger: NGXLogger) {
+    this.logger.error(error);
   }
 
   public getPasswordStrength(value: string): Observable<PasswordStrength> {

@@ -8,7 +8,7 @@ import { ContactFormService } from 'src/app/views/pages/landing/service/contact-
 import { concat, isEmpty } from "rxjs";
 
 
-xdescribe('ContactFormService', () => {
+describe('ContactFormService', () => {
 	let submitService: ContactFormService;
 	let httpMock: HttpTestingController;
 	let server = environment.server;

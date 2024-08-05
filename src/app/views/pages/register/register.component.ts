@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http'
 import { Component, ElementRef } from '@angular/core'
 import { AbstractControl, AsyncValidatorFn, FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms'
 import { IconDirective } from '@coreui/icons-angular'
@@ -15,7 +16,7 @@ import {
     ButtonDirective,
 } from '@coreui/angular'
 import { ControlErrorsComponent } from './components/control-errors.component'
-import { map, switchMap, timer, of } from 'rxjs'
+import { map, switchMap, timer, of, catchError } from 'rxjs'
 import { PasswordStrength, SignupService } from './services/signup.service'
 import { CommonModule } from '@angular/common'
 
@@ -114,14 +115,17 @@ export class RegisterComponent {
     private validateUsername(username: string): ReturnType<AsyncValidatorFn> {
         return timer(VALIDATION_DELAY).pipe(
             switchMap((delay) => this.signupService.isUsernameTaken(username)),
-            map((usernameTaken) => (usernameTaken ? { taken: true } : null)),
+            map(res =>
+                    (res instanceof  HttpErrorResponse) ? { serverError : true } : (res ? { taken: true } : null)
+            )
         )
     }
 
     private validateEmail(email: string): ReturnType<AsyncValidatorFn> {
         return timer(VALIDATION_DELAY).pipe(
             switchMap((delay) => this.signupService.isEmailTaken(email)),
-            map((emailTaken) => (emailTaken ? { taken: true } : null)),
+            map(res =>
+                (res instanceof  HttpErrorResponse) ? { serverError : true } : (res ? { taken: true } : null))
         )
     }
 
@@ -143,7 +147,7 @@ export class RegisterComponent {
             () => {
                 this.signupService.signup(this.getFormValues()).subscribe({
                     next: (res) => {
-                        this.status = res.success ? 'success' : 'error'
+                        this.status = (res instanceof HttpErrorResponse) ? 'error' : res ? 'success' : 'error'
                     },
                     error: () => {
                         this.status = 'error'

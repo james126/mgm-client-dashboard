@@ -1,4 +1,5 @@
 
+import { HttpErrorResponse } from '@angular/common/http'
 import { DebugElement  } from '@angular/core'
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing'
 import { ReactiveFormsModule } from '@angular/forms'
@@ -8,6 +9,7 @@ import { IconModule } from '@coreui/icons-angular'
 import { IconSetService } from '@coreui/icons-angular'
 import _default from 'chart.js/dist/plugins/plugin.tooltip'
 import { of, throwError } from 'rxjs'
+import { environment } from 'src/environments/environment.development'
 import { ControlErrorsComponent } from '../../app/views/pages/register/components/control-errors.component'
 import { RegisterComponent, VALIDATION_DELAY } from '../../app/views/pages/register/register.component'
 import { PasswordStrength, SignupService } from '../../app/views/pages/register/services/signup.service'
@@ -39,7 +41,7 @@ describe('RegisterComponent', () => {
         signupService = jasmine.createSpyObj<SignupService>('SignupService', {
                 isUsernameTaken: of(false),
                 isEmailTaken: of(false),
-                signup: of({ success: true }),
+                signup: of( true),
                 getPasswordStrength: of(strength),
             }
         )
@@ -123,7 +125,6 @@ describe('RegisterComponent', () => {
 
             expect(valid).toBe(true);
         });
-
     }))
 
     it('Asynchronous validators - username taken', fakeAsync(() => {
@@ -138,7 +139,7 @@ describe('RegisterComponent', () => {
         expect(signupService.signup).not.toHaveBeenCalled();
     }))
 
-    it('Asynchronous validators - password weak', fakeAsync(() => {
+    it('Async validator - password weak', fakeAsync(() => {
         let submitButton =  debugElement.query(By.css(`[data-testid="submit"]`));
 
         let weakPassword: PasswordStrength = {
@@ -161,6 +162,30 @@ describe('RegisterComponent', () => {
         expect(expectedErrors).not.toBeNull()
         expect(actualErrors).toEqual(expectedErrors!);
         expect(submitButton.nativeElement.disabled).toBeTrue()
+    }))
+
+    it('Async validator - server error displays message', fakeAsync(() => {
+        const mockErrorResponse = new HttpErrorResponse({
+            error: 'Server Error',
+            status: 500,
+            statusText: 'Internal Server Error',
+            url: `${environment.server}${environment.usernameTaken}?userName=${username}`
+        });
+
+        signupService.isUsernameTaken.and.returnValue(of(mockErrorResponse))
+
+        fillForm();
+        tick(VALIDATION_DELAY);
+        fixture.detectChanges();
+
+        let el = debugElement.query(By.css(`#username-errors`));
+        let errorText = el.nativeElement.textContent;
+
+        let string = '^.{1} Server error, try again later $';
+        let regex = new RegExp(string)
+        let valid = regex.test(el.nativeElement.textContent)
+
+        expect(valid).toBe(true);
     }))
 
     it('Toggle password display', fakeAsync(() => {

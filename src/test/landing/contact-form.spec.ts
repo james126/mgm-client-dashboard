@@ -119,15 +119,15 @@ xdescribe('Contact Form ReCaptcha', () => {
         expect(true).toBe(true);
     })
 
-    xit('don\'t submit invalid contact form', () => {
+    xit('successful form submission', () => {
 
     })
 
-    xit('successful contact form submission', () => {
+    xit('invalid form', () => {
 
     })
 
-    xit('contact form submission failure', () => {
+    xit('form submission failure', () => {
 
     })
 });

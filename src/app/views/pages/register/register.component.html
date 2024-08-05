@@ -47,6 +47,12 @@
                                             Username taken, select another
                                         </div>
                                     </ng-container>
+                                    <ng-container *ngIf="errors.serverError">
+                                        <div>
+                                            <span class="control-error-mark">❗</span>
+                                            Server error, try again later
+                                        </div>
+                                    </ng-container>
                                 </ng-template>
                             </control-errors>
 
@@ -73,6 +79,12 @@
                                         <div>
                                             <span class="control-error-mark">❗</span>
                                             Max length 40 characters
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="errors.serverError">
+                                        <div>
+                                            <span class="control-error-mark">❗</span>
+                                            Server error, try again later
                                         </div>
                                     </ng-container>
                                 </ng-template>

@@ -1,5 +1,5 @@
 import { HttpClientModule } from '@angular/common/http'
-import { ApplicationConfig, importProvidersFrom } from '@angular/core'
+import { ApplicationConfig, ModuleWithProviders, importProvidersFrom } from '@angular/core'
 import { provideAnimations } from '@angular/platform-browser/animations'
 import {
     provideRouter, withDebugTracing, withEnabledBlockingInitialNavigation, withInMemoryScrolling, withRouterConfig, withViewTransitions,
@@ -15,11 +15,9 @@ import { routes } from './app.routes'
 export const appConfig: ApplicationConfig = {
     providers: [provideRouter(routes, withRouterConfig({
             onSameUrlNavigation: 'reload',
-        }),
-        withInMemoryScrolling({
+        }), withInMemoryScrolling({
             scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled',
-        }),
-        withEnabledBlockingInitialNavigation(),
+        }), withEnabledBlockingInitialNavigation(),
         withViewTransitions(),
         withDebugTracing()),
         importProvidersFrom(SidebarModule, DropdownModule),
