@@ -6,7 +6,7 @@ import { NGXLogger } from 'ngx-logger'
 import { LoggerTestingModule, NGXLoggerMock } from 'ngx-logger/testing'
 import { environment } from 'src/environments/environment.development'
 import { SignupService } from '../../app/views/pages/register/services/signup.service'
-import { username } from './register-dummy-data'
+import { username } from './util/register-dummy-data'
 
 describe('SignupService', () => {
     let signupService: SignupService

@@ -39,9 +39,9 @@ module.exports = function (config) {
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
-    autoWatch: true, //run on test changes
+    autoWatch: false, //run on test changes
     browsers: ['Chrome'],
-    singleRun: true, //run on test changes
-    restartOnFileChange: false //run on test changes
+    singleRun: false,
+    restartOnFileChange: false
   });
 };

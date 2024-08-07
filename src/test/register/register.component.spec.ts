@@ -13,9 +13,10 @@ import { environment } from 'src/environments/environment.development'
 import { ControlErrorsComponent } from '../../app/views/pages/register/components/control-errors.component'
 import { RegisterComponent, VALIDATION_DELAY } from '../../app/views/pages/register/register.component'
 import { PasswordStrength, SignupService } from '../../app/views/pages/register/services/signup.service'
-import { email, password, repeatPassword, signupData, username } from './register-dummy-data'
-import { dispatchFakeEvent, formatErrors, updateTrigger, } from './resgister-component-helper'
+import { email, password, repeatPassword, signupData, username } from './util/register-dummy-data'
+import { dispatchFakeEvent, updateTrigger, } from './util/update-form-helper'
 import { iconSubset } from 'src/app/icons/icon-subset'
+import { formatErrors } from './util/resgister-component-helper'
 
 describe('RegisterComponent', () => {
     let component: RegisterComponent

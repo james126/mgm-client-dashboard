@@ -12,7 +12,8 @@ import { Subscription, startWith, timer } from 'rxjs'
   styleUrl: './control-errors.component.scss'
 })
 export class ControlErrorsComponent implements OnInit, AfterContentInit, OnDestroy{
-  public control?: AbstractControl;
+  @Input()
+  public control?: AbstractControl = undefined;
 
   @Input()
   public controlName?: string;
@@ -34,10 +35,12 @@ export class ControlErrorsComponent implements OnInit, AfterContentInit, OnDestr
   }
 
   ngOnInit(): void {
-    this.control = findFormControl(
-        this.controlName,
-        this.controlContainer,
-    );
+    if (this.control == undefined) {
+      this.control = findFormControl(
+          this.controlName,
+          this.controlContainer,
+      );
+    }
   }
 
   ngAfterContentInit(): void {
