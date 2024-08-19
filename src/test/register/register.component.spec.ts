@@ -1,36 +1,37 @@
 
 import { HttpErrorResponse } from '@angular/common/http'
-import { DebugElement  } from '@angular/core'
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing'
+import { DebugElement, } from '@angular/core'
+import { ComponentFixture, TestBed, fakeAsync, tick, flush } from '@angular/core/testing'
 import { ReactiveFormsModule } from '@angular/forms'
 import { By } from '@angular/platform-browser'
 import { ButtonModule, CardModule, FormModule, GridModule } from '@coreui/angular'
 import { IconModule } from '@coreui/icons-angular'
 import { IconSetService } from '@coreui/icons-angular'
 import _default from 'chart.js/dist/plugins/plugin.tooltip'
+import { RECAPTCHA_V3_SITE_KEY  } from 'ng-recaptcha'
 import { of, throwError } from 'rxjs'
-import { environment } from 'src/environments/environment.development'
+import { environment } from 'src/environments/environment.test'
 import { ControlErrorsComponent } from '../../app/views/pages/register/components/control-errors.component'
 import { RegisterComponent, VALIDATION_DELAY } from '../../app/views/pages/register/register.component'
-import { PasswordStrength, SignupService } from '../../app/views/pages/register/services/signup.service'
-import { email, password, repeatPassword, signupData, username } from './util/register-dummy-data'
-import { dispatchFakeEvent, updateTrigger, } from './util/update-form-helper'
+import { PasswordStrength, SignupResult, SignupService } from '../../app/views/pages/register/services/signup.service'
+import { email, password, repeatPassword, signupData, username } from './util/dummy-data'
+import { dispatchFakeEvent, updateTrigger } from './util/update-form-helper'
 import { iconSubset } from 'src/app/icons/icon-subset'
-import { formatErrors } from './util/resgister-component-helper'
+import { formatErrors } from './util/format-errors-helper'
 
 describe('RegisterComponent', () => {
     let component: RegisterComponent
     let fixture: ComponentFixture<RegisterComponent>
     let debugElement: DebugElement
-    let signupService: jasmine.SpyObj<SignupService>;
-    let strength: PasswordStrength;
-    let iconSetService: IconSetService;
+    let signupService: jasmine.SpyObj<SignupService>
+    let strength: PasswordStrength
+    let iconSetService: IconSetService
 
     const fillForm = () => {
-        updateTrigger(fixture,"username", username);
-        updateTrigger(fixture, "email", email);
-        updateTrigger(fixture, "password", password);
-        updateTrigger(fixture, "repeatPassword", repeatPassword);
+        updateTrigger(fixture, 'username', username)
+        updateTrigger(fixture, 'email', email)
+        updateTrigger(fixture, 'password', password)
+        updateTrigger(fixture, 'repeatPassword', repeatPassword)
     }
 
     beforeEach(async () => {
@@ -42,14 +43,16 @@ describe('RegisterComponent', () => {
         signupService = jasmine.createSpyObj<SignupService>('SignupService', {
                 isUsernameTaken: of(false),
                 isEmailTaken: of(false),
-                signup: of( true),
+                signup: of(new SignupResult(true, null)),
                 getPasswordStrength: of(strength),
+                submitRecaptcha: of(1)
             }
         )
 
         await TestBed.configureTestingModule({
             imports: [CardModule, FormModule, GridModule, ButtonModule, IconModule, ReactiveFormsModule, ControlErrorsComponent, IconModule],
-            providers: [IconSetService, RegisterComponent, { provide: SignupService, useValue: signupService }],
+            providers: [IconSetService, RegisterComponent, { provide: SignupService, useValue: signupService },
+                { provide: RECAPTCHA_V3_SITE_KEY, useValue: environment.recaptchaV3 }],
             declarations: [],
         }).compileComponents();
 
@@ -60,6 +63,9 @@ describe('RegisterComponent', () => {
         component = fixture.componentInstance
         debugElement = fixture.debugElement;
         fixture.detectChanges();
+
+        spyOn(component, 'getToken').and.returnValue(of("123"))
+        component.submit.unsubscribe();
     })
 
     it('Successful form submission', fakeAsync(() => {
@@ -68,12 +74,13 @@ describe('RegisterComponent', () => {
 
         fillForm();
         tick(VALIDATION_DELAY);
-        fixture.detectChanges(); //updates DOM
+        fixture.detectChanges();
 
         expect(submitButton.nativeElement.disabled).toBeFalse()
 
         submitButton.triggerEventHandler('click', null);
-        tick(VALIDATION_DELAY);
+        tick(1000);
+        fixture.detectChanges() //updates DOM
 
         expect(signupService.signup).toHaveBeenCalledWith(signupData);
         expect(component.status).toBe('success')
@@ -180,7 +187,6 @@ describe('RegisterComponent', () => {
         fixture.detectChanges();
 
         let el = debugElement.query(By.css(`#username-errors`));
-        let errorText = el.nativeElement.textContent;
 
         let string = '^.{1} Server error, try again later $';
         let regex = new RegExp(string)

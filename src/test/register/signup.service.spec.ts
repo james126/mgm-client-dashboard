@@ -6,7 +6,7 @@ import { NGXLogger } from 'ngx-logger'
 import { LoggerTestingModule, NGXLoggerMock } from 'ngx-logger/testing'
 import { environment } from 'src/environments/environment.development'
 import { SignupService } from '../../app/views/pages/register/services/signup.service'
-import { username } from './util/register-dummy-data'
+import { username } from './util/dummy-data'
 
 describe('SignupService', () => {
     let signupService: SignupService
@@ -26,7 +26,7 @@ describe('SignupService', () => {
         usernameUrl = `${environment.server}${environment.usernameTaken}?userName=${username}`
     })
 
-    it('check is username taken', () => {
+    it('Check if username taken', () => {
         const response = {
             usernameTaken: true,
             status: HttpStatusCode.Ok,
@@ -51,7 +51,7 @@ describe('SignupService', () => {
         expect(actualResult).toBe(response.usernameTaken)
     })
 
-    it('handles response errors', () => {
+    it('Handles response errors', () => {
         const status = 500
         const statusText = 'Internal Server Error'
         const errorEvent = new ProgressEvent('Server Error')

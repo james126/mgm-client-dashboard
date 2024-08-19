@@ -11,6 +11,7 @@ import { ServerCustomisedService } from './utility/ServerCustomisedService'
 import { DropdownModule, SidebarModule } from '@coreui/angular'
 import { IconSetService } from '@coreui/icons-angular'
 import { routes } from './app.routes'
+import { RECAPTCHA_SETTINGS, RECAPTCHA_V3_SITE_KEY, RecaptchaSettings } from 'ng-recaptcha'
 
 export const appConfig: ApplicationConfig = {
     providers: [provideRouter(routes, withRouterConfig({
@@ -36,6 +37,7 @@ export const appConfig: ApplicationConfig = {
             },
         })),
         importProvidersFrom(HttpClientModule),
-        importProvidersFrom(LandingModule)
+        importProvidersFrom(LandingModule),
+        { provide: RECAPTCHA_V3_SITE_KEY, useValue: environment.recaptchaV3 }
     ]
 }

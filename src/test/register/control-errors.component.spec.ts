@@ -67,7 +67,7 @@ describe('ControlErrorsComponent', () => {
             await setup(HostComponent)
         })
 
-        describe('valid username input', () => {
+        describe('Valid username input', () => {
             it('no errors', () => {
                 updateTrigger(fixture, 'username', 'something')
                 fixture.detectChanges()
@@ -75,10 +75,12 @@ describe('ControlErrorsComponent', () => {
             })
         })
 
-        describe('invalid username input', () => {
+        describe('Invalid username input', () => {
             it('no errors', () => {
                 updateTrigger(fixture, 'username', '')
                 fixture.detectChanges()
+                var a = 'apple';
+                var b: string = 'pear'
                 expect(fixture.nativeElement.textContent).toBe('❗ Enter a username ')
             })
         })

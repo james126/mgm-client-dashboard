@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http'
-import { Component, ElementRef } from '@angular/core'
-import { AbstractControl, AsyncValidatorFn, FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms'
+import { Component, OnDestroy } from '@angular/core'
+import { AbstractControl, AsyncValidatorFn, FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
 import { IconDirective } from '@coreui/icons-angular'
 import {
     ContainerComponent,
@@ -15,21 +15,18 @@ import {
     FormControlDirective,
     ButtonDirective,
 } from '@coreui/angular'
+import _default from 'chart.js/dist/core/core.interaction'
 import { ControlErrorsComponent } from './components/control-errors.component'
-import { map, switchMap, timer, of, catchError } from 'rxjs'
-import { PasswordStrength, SignupService } from './services/signup.service'
+import { map, switchMap, timer, of, Observable, catchError, Subscription } from 'rxjs'
+import { PasswordStrength, SignupResult, SignupService } from './services/signup.service'
 import { CommonModule } from '@angular/common'
-
-const { email, maxLength, minLength, pattern, required } = Validators
+import { RecaptchaModule, ReCaptchaV3Service } from 'ng-recaptcha'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { faEye, faEyeSlash, IconDefinition } from '@fortawesome/free-regular-svg-icons'
 import { formatErrors } from './util/format-validation-errors'
 
-/**
- * Wait before sending requests to the server
- */
+const { email, maxLength, minLength, pattern, required } = Validators
 export const VALIDATION_DELAY = 1000
-
 @Component({
     selector: 'app-register',
     templateUrl: './register.component.html',
@@ -37,37 +34,39 @@ export const VALIDATION_DELAY = 1000
     standalone: true,
     imports: [ContainerComponent, RowComponent, ColComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent,
         InputGroupTextDirective, IconDirective, FormControlDirective, ButtonDirective, ControlErrorsComponent, ReactiveFormsModule, CommonModule,
-        ControlErrorsComponent, FontAwesomeModule],
+        RecaptchaModule, ControlErrorsComponent, FontAwesomeModule],
+    providers: [ReCaptchaV3Service],
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnDestroy{
     public register: FormGroup
-    public status: 'idle' | 'success' | 'error' = 'idle'
+    public status: String
     public faEye: IconDefinition
     public faEyeSlash: IconDefinition
     public show1: boolean
     public show2: boolean
+    public submit: Subscription
 
-    constructor(private signupService: SignupService, private formBuilder: NonNullableFormBuilder) {
+    constructor(private signupService: SignupService, private formBuilder: NonNullableFormBuilder, private recaptchaV3Service: ReCaptchaV3Service) {
         this.register = this.formBuilder.group({
             username: ['', {
-                validators:  [required, pattern('[a-zA-Z0-9.]+'), maxLength(20), minLength(5)],
+                validators: [required, pattern('[a-zA-Z0-9.]+'), maxLength(20), minLength(5)],
                 asyncValidators: [(control: FormControl) => this.validateUsername(control.value)],
-                updateOn: 'blur'
+                updateOn: 'blur',
             }],
-            email: [ '', {
+            email: ['', {
                 validators: [required, email, maxLength(40)],
                 asyncValidators: [(control: AbstractControl) => this.validateEmail(control.value)],
-                updateOn: 'blur'
+                updateOn: 'blur',
             }],
             password: ['', {
                 validators: [required, maxLength(20), minLength(10)],
                 asyncValidators: [(control: AbstractControl) => this.validatePassword(control.value)],
-                updateOn: 'blur'
+                updateOn: 'blur',
             }],
             repeatPassword: ['', {
                 validators: [required, maxLength(20), minLength(10)],
                 asyncValidators: [(control: AbstractControl) => this.validateRepeatedPassword(control.value)],
-                updateOn: 'blur'
+                updateOn: 'blur',
             }],
         })
 
@@ -75,6 +74,8 @@ export class RegisterComponent {
         this.faEyeSlash = faEyeSlash
         this.show1 = false
         this.show2 = false
+        this.status = 'idle'
+        this.submit = new Subscription();
     }
 
     public togglePass(field: String) {
@@ -101,8 +102,8 @@ export class RegisterComponent {
      which is Observable<ValidationErrors | null>.
      */
     private validateRepeatedPassword(repeatPass: any): ReturnType<AsyncValidatorFn> {
-        if (this.register.get('password') == undefined){
-            return of(null);
+        if (this.register.get('password') == undefined) {
+            return of(null)
         }
         const pass = this.register.get('password')
 
@@ -116,8 +117,8 @@ export class RegisterComponent {
         return timer(VALIDATION_DELAY).pipe(
             switchMap((delay) => this.signupService.isUsernameTaken(username)),
             map(res =>
-                    (res instanceof  HttpErrorResponse) ? { serverError : true } : (res ? { taken: true } : null)
-            )
+                (res instanceof HttpErrorResponse) ? { serverError: true } : (res ? { taken: true } : null),
+            ),
         )
     }
 
@@ -125,7 +126,7 @@ export class RegisterComponent {
         return timer(VALIDATION_DELAY).pipe(
             switchMap((delay) => this.signupService.isEmailTaken(email)),
             map(res =>
-                (res instanceof  HttpErrorResponse) ? { serverError : true } : (res ? { taken: true } : null))
+                (res instanceof HttpErrorResponse) ? { serverError: true } : (res ? { taken: true } : null)),
         )
     }
 
@@ -141,19 +142,43 @@ export class RegisterComponent {
         return obj
     }
 
-    onSubmit(): void {
-        if (!this.register.valid) return
-        timer(VALIDATION_DELAY).subscribe(
-            () => {
-                this.signupService.signup(this.getFormValues()).subscribe({
-                    next: (res) => {
-                        this.status = (res instanceof HttpErrorResponse) ? 'error' : res ? 'success' : 'error'
-                    },
-                    error: () => {
+//Cancellation: switchMap has a cancellation effect. It will unsubscribe from the previous inner observable when a new value is emitted by the source observable. map does not have this behavior.
+    public onSubmit() {
+        if (this.register.valid) {
+            this.submit = timer(VALIDATION_DELAY).pipe(
+                switchMap((delay: 0) => this.getToken()),
+                switchMap((token: string) => this.signupService.submitRecaptcha(token)),
+                switchMap((score: number | HttpErrorResponse) => {
+                    if (score instanceof HttpErrorResponse) {
+                        return 'error'
+                    } else if (score < 0.7) {
+                        return 'error'
+                    } else {
+                        return this.signupService.signup(this.getFormValues())
+                    }
+                }),
+                catchError(() => of("error"))
+            ).subscribe({
+                next: (value: string | SignupResult) => {
+                    if (value.constructor === SignupResult) {
+                        if (value.outcome) {
+                            this.status = 'success'
+                        } else {
+                            this.status = 'error'
+                        }
+                    } else {
                         this.status = 'error'
-                    },
-                })
-            },
-        )
+                    }
+                }
+            })
+        }
+    }
+
+    public getToken(): Observable<string>{
+        return this.recaptchaV3Service.execute('submit');
+    }
+
+    ngOnDestroy(): void {
+        this.submit.unsubscribe();
     }
 }

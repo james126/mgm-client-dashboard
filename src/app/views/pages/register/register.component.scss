@@ -12,5 +12,9 @@ $border-color: rgb(206, 212, 218);
 
 }
 
+body.recaptcha .grecaptcha-badge {
+  visibility: visible;
+}
+
 
 
