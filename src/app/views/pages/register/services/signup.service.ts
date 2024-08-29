@@ -34,7 +34,7 @@ export class SignupService {
     private signupUrl = ''
     private recaptchaUrl = ''
 
-    constructor(private http: HttpClient, private logger: NGXLogger) {
+    constructor(private http: HttpClient, private logger: NGXLogger,) {
         this.usernameTakenUrl = environment.server + environment.usernameTaken
         this.emailTakenUrl = environment.server + environment.emailTaken
         this.signupUrl = environment.server + environment.signUp

@@ -1,6 +1,7 @@
+import { ViewportScroller } from '@angular/common'
 import { Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren, forwardRef } from '@angular/core'
 import { FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms'
-import { Router } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { AnimationService } from './service/animation.service'
 import { CarouselService } from './service/carousel.service'
 import { ContactFormService } from './service/contact-form.service'
@@ -8,6 +9,7 @@ import { Contact } from './dto/contact'
 import { RecaptchaComponent } from 'ng-recaptcha'
 import { cilCheck } from '@coreui/icons'
 import { AnimationBuilder, AnimationPlayer } from '@angular/animations'
+import { LandingFragmentService } from './service/fragment.service'
 
 @Component({
     selector: 'landing',
@@ -46,7 +48,8 @@ export class LandingComponent implements OnInit, OnDestroy {
     private _submitted: boolean = false
 
     constructor(private contactFormService: ContactFormService, private router: Router, private animationBuilder: AnimationBuilder,
-        private animmationService: AnimationService, private carouselService: CarouselService) {
+        private animmationService: AnimationService, private carouselService: CarouselService, private fragService: LandingFragmentService,
+        private viewportScroller: ViewportScroller) {
         this._contactForm = new FormGroup({
             first_name: new FormControl(this.formValues.first_name, [
                 Validators.required,
@@ -90,7 +93,7 @@ export class LandingComponent implements OnInit, OnDestroy {
             recaptcha: new FormControl(null, [
                 Validators.required
             ]),
-        })
+        });
     }
 
     ngOnInit(): void {
@@ -113,9 +116,18 @@ export class LandingComponent implements OnInit, OnDestroy {
                 },
                 { threshold: 0 }
             );
+
         this.animationElement.forEach((e, index) => {
             this.observerable!.observe(e.nativeElement);
         })
+
+        this.fragService.getFragment().subscribe((frag) => {
+            setTimeout(() => {
+                const element: HTMLElement | null = document.getElementById(frag);
+                element?.scrollIntoView({ behavior: 'smooth' });
+            }, 500);
+
+        });
     }
 
     submitForm() {
@@ -180,6 +192,7 @@ export class LandingComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.observerable?.disconnect(); //removes all observers
+        this.fragService.getFragment().unsubscribe();
     }
 
     get recaptchaValid(): boolean {

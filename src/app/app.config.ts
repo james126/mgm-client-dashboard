@@ -11,13 +11,14 @@ import { ServerCustomisedService } from './utility/ServerCustomisedService'
 import { DropdownModule, SidebarModule } from '@coreui/angular'
 import { IconSetService } from '@coreui/icons-angular'
 import { routes } from './app.routes'
-import { RECAPTCHA_SETTINGS, RECAPTCHA_V3_SITE_KEY, RecaptchaSettings } from 'ng-recaptcha'
+import { RECAPTCHA_V3_SITE_KEY} from 'ng-recaptcha'
 
 export const appConfig: ApplicationConfig = {
     providers: [provideRouter(routes, withRouterConfig({
             onSameUrlNavigation: 'reload',
         }), withInMemoryScrolling({
-            scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled',
+            scrollPositionRestoration: 'enabled',
+            anchorScrolling: 'enabled',
         }), withEnabledBlockingInitialNavigation(),
         withViewTransitions(),
         withDebugTracing()),

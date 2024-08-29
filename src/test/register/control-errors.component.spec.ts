@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing'
 import { FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
 import { By } from '@angular/platform-browser'
 import { FormControlDirective, InputGroupComponent } from '@coreui/angular'
-import { ControlErrorsComponent } from '../../app/views/pages/register/components/control-errors.component'
+import { ControlErrorsComponent } from '../../app/views/pages/register/components/control-errors/control-errors.component'
 import { Type } from 'ng-mocks'
 const { required } = Validators
 import { updateTrigger } from './util/update-form-helper'

@@ -1,7 +1,7 @@
 import { CommonModule, } from '@angular/common'
 import { AfterContentInit, Component, ContentChild, Input, OnDestroy, OnInit, Optional, TemplateRef } from '@angular/core'
 import { AbstractControl, ControlContainer, ValidationErrors } from '@angular/forms'
-import { findFormControl } from '../util/findFormControl';
+import { findFormControl } from '../../util/findFormControl';
 import { Subscription, startWith, timer } from 'rxjs'
 
 @Component({

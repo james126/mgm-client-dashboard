@@ -1,13 +1,33 @@
 <div class="bg-light dark:bg-transparent min-vh-100 d-flex flex-row align-items-center">
     <c-container>
         <c-row class="justify-content-center">
+
+            <c-modal [ngSwitch]="this.getStatus()" id="liveDemoModal" data-testid="modal" [visible]="visible" (visibleChange)="handleLiveChange($event)">
+                <c-modal-header>
+                    <h5 *ngSwitchCase="'Idle'" cModalTitle>Submission Error</h5>
+                    <h5 *ngSwitchCase="'Success'" cModalTitle>Thank You</h5>
+                    <h5 *ngSwitchCase="'Error'" cModalTitle>Submission Error</h5>
+                    <button (click)="toggleModalVisibility()" cButtonClose></button>
+                </c-modal-header>
+                <c-modal-body *ngSwitchCase="'Idle'">Please try again later!</c-modal-body>
+                <c-modal-body *ngSwitchCase="'Success'">Registration successful!</c-modal-body>
+                <c-modal-body *ngSwitchCase="'Error'">Please try again later!</c-modal-body>
+                <c-modal-footer>
+                    <button (click)="toggleModalVisibility()" cButton color="secondary">
+                        Close
+                    </button>
+                    <button (click)="forceNavigate('')" cButton color="primary">Home</button>
+                </c-modal-footer>
+            </c-modal>
+
             <c-col lg="7" md="9" xl="6">
                 <c-card class="mx-4">
                     <c-card-body class="p-4">
                         <form [formGroup]="register">
-                            <h1>Register</h1>
-                            <p class="text-body-secondary">Create your account</p>
-
+                            <h1>Register Now</h1>
+                            <p class="text-body-secondary">Create an account or
+                                <a (click)="forceNavigate('contact')" class="pe-auto">send us a message</a>
+                            </p>
                             <!-- USERNAME -->
                             <c-input-group class="mb-3">
                                 <span cInputGroupText>
@@ -196,7 +216,7 @@
 
                             <!-- SUBMIT -->
                             <div class="d-grid">
-                                <button cButton (click)="onSubmit()" color="success" data-testid="submit" [disabled]="register.invalid">Create Account</button>
+                                <button cButton [disabled]="register.invalid" (click)="onSubmit()" color="primary" data-testid="submit" >Create Account</button>
                             </div>
 
                         </form>
