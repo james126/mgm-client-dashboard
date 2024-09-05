@@ -1,4 +1,4 @@
-import { SignupData } from '../../../app/views/pages/register/services/signup.service'
+import { SignupData } from '../../../app/views/pages/register/service/signup.service'
 
 export const username = 'quickBrownFox';
 export const password = 'Under#Tree1';

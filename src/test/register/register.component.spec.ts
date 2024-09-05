@@ -4,6 +4,7 @@ import { ComponentFixture, TestBed, fakeAsync, tick, flush } from '@angular/core
 import { ReactiveFormsModule } from '@angular/forms'
 import { By } from '@angular/platform-browser'
 import { provideAnimations } from '@angular/platform-browser/animations'
+import { RouterModule } from '@angular/router'
 import {
     ButtonModule,
     CardModule,
@@ -16,14 +17,14 @@ import { IconSetService } from '@coreui/icons-angular'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import _default from 'chart.js/dist/plugins/plugin.tooltip'
 import { RECAPTCHA_V3_SITE_KEY } from 'ng-recaptcha'
-import { BehaviorSubject, of, throwError } from 'rxjs'
+import { of, throwError } from 'rxjs'
 import { environment } from 'src/environments/environment.test'
 import { LandingFragmentService } from '../../app/views/pages/landing/service/fragment.service'
-import { ControlErrorsComponent } from '../../app/views/pages/register/components/control-errors/control-errors.component'
-import { RegisterComponent, VALIDATION_DELAY } from '../../app/views/pages/register/register.component'
-import { PasswordStrength, SignupResult, SignupService } from '../../app/views/pages/register/services/signup.service'
+import { ControlErrorsComponent } from '../../app/views/pages/register/component/control-errors/control-errors.component'
+import { RegisterComponent, ASYNC_DELAY } from '../../app/views/pages/register/register.component'
+import { PasswordStrength, SignupResult, SignupService } from '../../app/views/pages/register/service/signup.service'
 import { email, password, repeatPassword, signupData, username } from './util/dummy-data'
-import { dispatchFakeEvent, updateTrigger } from './util/update-form-helper'
+import { dispatchFakeEvent, updateTrigger } from '../util/update-form-helper'
 import { iconSubset } from 'src/app/icons/icon-subset'
 import { formatErrors } from './util/format-errors-helper'
 
@@ -58,17 +59,11 @@ describe('RegisterComponent', () => {
             },
         )
 
-        fragService = jasmine.createSpyObj<LandingFragmentService>('LandingFragmentService', {
-            setFragment: undefined,
-            getFragment: undefined
-        })
-
         await TestBed.configureTestingModule({
             imports: [CardModule, FormModule, GridModule, ButtonModule, IconModule, ReactiveFormsModule, ControlErrorsComponent, IconModule,
-                FontAwesomeModule, ModalModule],
+                FontAwesomeModule, ModalModule, RouterModule.forRoot([])],
             providers: [IconSetService, RegisterComponent, { provide: SignupService, useValue: signupService },
-                { provide: RECAPTCHA_V3_SITE_KEY, useValue: environment.recaptchaV3 }, provideAnimations(),
-                { provide: LandingFragmentService, useValue: fragService }],
+                { provide: RECAPTCHA_V3_SITE_KEY, useValue: environment.recaptchaV3 }, provideAnimations()],
             declarations: [],
         }).compileComponents()
 
@@ -88,13 +83,13 @@ describe('RegisterComponent', () => {
         expect(submitButton.nativeElement.disabled).toBeTrue()
 
         fillForm()
-        tick(VALIDATION_DELAY)
+        tick(ASYNC_DELAY)
         fixture.detectChanges()
 
         expect(submitButton.nativeElement.disabled).toBeFalse()
 
         submitButton.triggerEventHandler('click', null)
-        tick(VALIDATION_DELAY)
+        tick(ASYNC_DELAY)
         fixture.detectChanges() //updates DOM
 
         expect(signupService.signup).toHaveBeenCalledWith(signupData)
@@ -104,7 +99,7 @@ describe('RegisterComponent', () => {
 
     it('Invalid form', fakeAsync(() => {
         let submitButton = debugElement.query(By.css(`[data-testid="submit"]`))
-        tick(VALIDATION_DELAY) // Wait for async validators
+        tick(ASYNC_DELAY) // Wait for async validators
 
         submitButton.triggerEventHandler('click', null)
 
@@ -120,11 +115,11 @@ describe('RegisterComponent', () => {
 
         let submitButton = debugElement.query(By.css(`[data-testid="submit"]`))
         fillForm()
-        tick(VALIDATION_DELAY)
+        tick(ASYNC_DELAY)
         fixture.detectChanges()
 
         submitButton.triggerEventHandler('click', null)
-        tick(VALIDATION_DELAY)
+        tick(ASYNC_DELAY)
         expect(component.getStatus()).toBe('Error')
     }))
 
@@ -139,7 +134,7 @@ describe('RegisterComponent', () => {
         // Mark required fields as touched
         requiredFields.forEach((testId) => {
             dispatchFakeEvent(fixture, testId)
-            tick(VALIDATION_DELAY)
+            tick(ASYNC_DELAY)
             fixture.detectChanges()
 
             let el = debugElement.query(By.css(`#${testId}-errors`))
@@ -155,7 +150,7 @@ describe('RegisterComponent', () => {
         let submitButton = debugElement.query(By.css(`[data-testid="submit"]`))
         signupService.isUsernameTaken.and.returnValue(of(true))
         fillForm()
-        tick(VALIDATION_DELAY)
+        tick(ASYNC_DELAY)
         fixture.detectChanges()
 
         expect(submitButton.nativeElement.disabled).toBeTrue()
@@ -173,11 +168,11 @@ describe('RegisterComponent', () => {
         signupService.getPasswordStrength.and.returnValue(of(weakPassword))
 
         fillForm()
-        tick(VALIDATION_DELAY)
+        tick(ASYNC_DELAY)
         fixture.detectChanges()
 
         updateTrigger(fixture, 'password', 'aaaaaaaaaa')
-        tick(VALIDATION_DELAY)
+        tick(ASYNC_DELAY)
         fixture.detectChanges()
 
         const actualErrors = formatErrors(weakPassword.suggestions)
@@ -199,7 +194,7 @@ describe('RegisterComponent', () => {
         signupService.isUsernameTaken.and.returnValue(of(mockErrorResponse))
 
         fillForm()
-        tick(VALIDATION_DELAY)
+        tick(ASYNC_DELAY)
         fixture.detectChanges()
 
         let el = debugElement.query(By.css(`#username-errors`))
@@ -216,7 +211,7 @@ describe('RegisterComponent', () => {
         let toggle = debugElement.query(By.css(`[data-testid="pass-toggle"]`))
 
         fillForm()
-        tick(VALIDATION_DELAY)
+        tick(ASYNC_DELAY)
         fixture.detectChanges()
         expect(password.attributes['type']).toBe('password')
 
@@ -229,18 +224,18 @@ describe('RegisterComponent', () => {
         expect(password.attributes['type']).toBe('password')
     }))
 
-    it('Display successful submission popup', fakeAsync(() => {
+    it('Successful submission popup', fakeAsync(() => {
         let submitButton = debugElement.query(By.css(`[data-testid="submit"]`))
         expect(submitButton.nativeElement.disabled).toBeTrue()
 
         fillForm()
-        tick(VALIDATION_DELAY)
+        tick(ASYNC_DELAY)
         fixture.detectChanges()
 
         expect(submitButton.nativeElement.disabled).toBeFalse()
 
         submitButton.triggerEventHandler('click', null)
-        tick(VALIDATION_DELAY)
+        tick(ASYNC_DELAY)
         fixture.detectChanges() //updates DOM
 
         let modalText = debugElement.query(By.css(`[data-testid="modal"]`)).nativeElement.innerText
@@ -249,16 +244,16 @@ describe('RegisterComponent', () => {
         flush() //finish any async operations
     }))
 
-    it('Display unsuccessful submission popup', fakeAsync(async () => {
+    it('Unsuccessful submission popup', fakeAsync(async () => {
         signupService.signup.and.returnValue(throwError(() => 'server error'))
 
         let submitButton = debugElement.query(By.css(`[data-testid="submit"]`))
         fillForm()
-        tick(VALIDATION_DELAY)
+        tick(ASYNC_DELAY)
         fixture.detectChanges()
 
         submitButton.triggerEventHandler('click', null)
-        tick(VALIDATION_DELAY)
+        tick(ASYNC_DELAY)
         fixture.detectChanges()
 
         let modalText = debugElement.query(By.css(`[data-testid="modal"]`)).nativeElement.innerText

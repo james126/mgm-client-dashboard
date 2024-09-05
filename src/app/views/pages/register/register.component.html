@@ -16,7 +16,7 @@
                     <button (click)="toggleModalVisibility()" cButton color="secondary">
                         Close
                     </button>
-                    <button (click)="forceNavigate('')" cButton color="primary">Home</button>
+                    <button routerLink="login" cButton color="primary">Login</button>
                 </c-modal-footer>
             </c-modal>
 
@@ -25,8 +25,8 @@
                     <c-card-body class="p-4">
                         <form [formGroup]="register">
                             <h1>Register Now</h1>
-                            <p class="text-body-secondary">Create an account or
-                                <a (click)="forceNavigate('contact')" class="pe-auto">send us a message</a>
+                            <p class="text-body-secondary">Already have an account?
+                                <a routerLink="/login" class="pe-auto">Login here</a>
                             </p>
                             <!-- USERNAME -->
                             <c-input-group class="mb-3">
@@ -117,7 +117,7 @@
                                 </span>
                                 <input formControlName="password" cFormControl placeholder="Password" data-testid="password" matInput showHideInput id="pass1"
                                        [type]="show1 ? 'txt' : 'password'"/>
-                                <button cButton type="button" variant="outline" data-testid="pass-toggle" (click)="togglePass('pass1')">
+                                <button cButton type="button" variant="outline" data-testid="pass-toggle" (click)="togglePass('pass1')" class="toggle-button-focus">
                                     {{ show1 ? '👁️' : '🔒' }}
                                 </button>
                             </c-input-group>
@@ -181,7 +181,7 @@
                                 </span>
                                 <input formControlName="repeatPassword" cFormControl placeholder="Repeat password" data-testid="repeatPassword" id="pass2"
                                     [type]="show2 ? 'txt' : 'password'"/>
-                                <button cButton type="button" variant="outline" (click)="togglePass('pass2')">
+                                <button cButton type="button" variant="outline" (click)="togglePass('pass2')" class="toggle-button-focus">
                                     {{ show2 ? '👁️' : '🔒' }}
                                 </button>
                             </c-input-group>

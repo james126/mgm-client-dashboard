@@ -48,8 +48,7 @@ export class LandingComponent implements OnInit, OnDestroy {
     private _submitted: boolean = false
 
     constructor(private contactFormService: ContactFormService, private router: Router, private animationBuilder: AnimationBuilder,
-        private animmationService: AnimationService, private carouselService: CarouselService, private fragService: LandingFragmentService,
-        private viewportScroller: ViewportScroller) {
+        private animmationService: AnimationService, private carouselService: CarouselService) {
         this._contactForm = new FormGroup({
             first_name: new FormControl(this.formValues.first_name, [
                 Validators.required,
@@ -121,13 +120,14 @@ export class LandingComponent implements OnInit, OnDestroy {
             this.observerable!.observe(e.nativeElement);
         })
 
-        this.fragService.getFragment().subscribe((frag) => {
-            setTimeout(() => {
-                const element: HTMLElement | null = document.getElementById(frag);
-                element?.scrollIntoView({ behavior: 'smooth' });
-            }, 500);
-
-        });
+        /* No longer used - routes to landing page and then scrolls to a section, section value passed from template */
+        // this.fragService.getFragment().subscribe((frag) => {
+        //     setTimeout(() => {
+        //         const element: HTMLElement | null = document.getElementById(frag);
+        //         element?.scrollIntoView({ behavior: 'smooth' });
+        //     }, 500);
+        //
+        // });
     }
 
     submitForm() {
@@ -192,7 +192,6 @@ export class LandingComponent implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
         this.observerable?.disconnect(); //removes all observers
-        this.fragService.getFragment().unsubscribe();
     }
 
     get recaptchaValid(): boolean {

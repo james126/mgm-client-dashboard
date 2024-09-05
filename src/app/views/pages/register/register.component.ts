@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http'
-import { Component, OnDestroy } from '@angular/core'
+import { Component } from '@angular/core'
 import { AbstractControl, AsyncValidatorFn, FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
 import { IconDirective } from '@coreui/icons-angular'
 import {
@@ -16,19 +16,16 @@ import {
     ButtonDirective, ButtonCloseDirective, ModalModule, NavLinkDirective,
 } from '@coreui/angular'
 import _default from 'chart.js/dist/core/core.interaction'
-import { LandingFragmentService } from '../landing/service/fragment.service'
-import { ControlErrorsComponent } from './components/control-errors/control-errors.component'
-import { map, switchMap, timer, of, Observable, Subscription, catchError } from 'rxjs'
-import { PasswordStrength, SignupResult, SignupService } from './services/signup.service'
+import { ControlErrorsComponent } from './component/control-errors/control-errors.component'
+import { map, switchMap, timer, of, Observable, catchError } from 'rxjs'
+import { PasswordStrength, SignupResult, SignupService } from './service/signup.service'
 import { CommonModule } from '@angular/common'
 import { RecaptchaModule, ReCaptchaV3Service } from 'ng-recaptcha'
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
-import { faEye, faEyeSlash, IconDefinition } from '@fortawesome/free-regular-svg-icons'
 import { formatErrors } from './util/format-validation-errors'
-import { Router, RouterLink } from '@angular/router'
+import { RouterLink } from '@angular/router'
 
 const { email, maxLength, minLength, pattern, required } = Validators
-export const VALIDATION_DELAY = 1000
+export const ASYNC_DELAY = 1000
 
 @Component({
     selector: 'app-register',
@@ -37,20 +34,17 @@ export const VALIDATION_DELAY = 1000
     standalone: true,
     imports: [ContainerComponent, RowComponent, ColComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent,
         InputGroupTextDirective, IconDirective, FormControlDirective, ButtonDirective, ControlErrorsComponent, ReactiveFormsModule, CommonModule,
-        RecaptchaModule, ControlErrorsComponent, FontAwesomeModule, ButtonCloseDirective, ModalModule, NavLinkDirective, RouterLink],
+        RecaptchaModule, ControlErrorsComponent, ButtonCloseDirective, ModalModule, NavLinkDirective, RouterLink],
     providers: [ReCaptchaV3Service],
 })
 export class RegisterComponent{
     public register: FormGroup
     public status: Map<string, boolean>
-    public faEye: IconDefinition
-    public faEyeSlash: IconDefinition
     public show1: boolean
     public show2: boolean
     public visible: boolean;
 
-    constructor(private signupService: SignupService, private formBuilder: NonNullableFormBuilder, private recaptchaV3Service: ReCaptchaV3Service,
-        public router: Router, private fragService: LandingFragmentService) {
+    constructor(private signupService: SignupService, private formBuilder: NonNullableFormBuilder, private recaptchaV3Service: ReCaptchaV3Service) {
         this.register = this.formBuilder.group({
             username: ['', {
                 validators: [required, pattern('[a-zA-Z0-9.]+'), maxLength(20), minLength(5)],
@@ -74,20 +68,19 @@ export class RegisterComponent{
             }],
         })
 
-        this.faEye = faEye
-        this.faEyeSlash = faEyeSlash
         this.show1 = false
         this.show2 = false
         this.status = new Map<string, boolean>([["Idle", true],["Success", false], ["Error", false]]);
         this.visible = false;
     }
 
-    forceNavigate(name: string) {
-        this.router.navigate(['/landing']);
-        if (name != ''){
-            this.fragService.setFragment(name);
-        }
-    }
+    /* No longer used - routes to landing page and then scrolls to a section, section value passed from template */
+    // forceNavigate(name: string) {
+    //     this.router.navigate(['/landing']);
+    //     if (name != ''){
+    //         this.fragService.setFragment(name);
+    //     }
+    // }
 
     public togglePass(field: String) {
         switch (field) {
@@ -101,7 +94,7 @@ export class RegisterComponent{
     }
 
     private validatePassword(password: string): ReturnType<AsyncValidatorFn> {
-        return timer(VALIDATION_DELAY).pipe(
+        return timer(ASYNC_DELAY).pipe(
             switchMap((delay) => this.signupService.getPasswordStrength(password)),
             map((value: PasswordStrength) => (value.valid ? null : formatErrors(value.suggestions))))
     }
@@ -118,14 +111,14 @@ export class RegisterComponent{
         }
         const pass = this.register.get('password')
 
-        return timer(VALIDATION_DELAY).pipe(
+        return timer(ASYNC_DELAY).pipe(
             map((delay) => (pass!.valid && pass!.value === repeatPass)),
             map((valid: boolean) => (valid ? null : { invalid: true })),
         )
     }
 
     private validateUsername(username: string): ReturnType<AsyncValidatorFn> {
-        return timer(VALIDATION_DELAY).pipe(
+        return timer(ASYNC_DELAY).pipe(
             switchMap((delay) => this.signupService.isUsernameTaken(username)),
             map(res =>
                 (res instanceof HttpErrorResponse) ? { serverError: true } : (res ? { taken: true } : null),
@@ -134,7 +127,7 @@ export class RegisterComponent{
     }
 
     private validateEmail(email: string): ReturnType<AsyncValidatorFn> {
-        return timer(VALIDATION_DELAY).pipe(
+        return timer(ASYNC_DELAY).pipe(
             switchMap((delay) => this.signupService.isEmailTaken(email)),
             map(res =>
                 (res instanceof HttpErrorResponse) ? { serverError: true } : (res ? { taken: true } : null)),
@@ -156,7 +149,7 @@ export class RegisterComponent{
 //Cancellation: switchMap has a cancellation effect. It will unsubscribe from the previous inner observable when a new value is emitted by the source observable. map does not have this behavior.
     public onSubmit() {
         if (this.register.valid) {
-            timer(VALIDATION_DELAY).pipe(
+            timer(ASYNC_DELAY).pipe(
                 switchMap((delay: 0) => this.getToken()),
                 switchMap((token: string) => this.signupService.submitRecaptcha(token)),
                 switchMap((score: number | HttpErrorResponse) =>
@@ -169,6 +162,9 @@ export class RegisterComponent{
                     } else {
                         this.setStatus('Error')
                     }
+                },
+                error: () => {
+                    this.setStatus('Error')
                 },
                 complete: () => {
                     this.toggleModalVisibility();

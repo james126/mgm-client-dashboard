@@ -17,11 +17,11 @@ export interface SignupData {
 
 export class SignupResult {
     outcome!: boolean;
-    response: HttpErrorResponse | null;
+    error: HttpErrorResponse | null;
 
-    constructor(outcome: boolean, response: HttpErrorResponse | null) {
+    constructor(outcome: boolean, error: HttpErrorResponse | null) {
         this.outcome = outcome
-        this.response = response
+        this.error = error
     }
 }
 
@@ -34,7 +34,7 @@ export class SignupService {
     private signupUrl = ''
     private recaptchaUrl = ''
 
-    constructor(private http: HttpClient, private logger: NGXLogger,) {
+    constructor(private http: HttpClient, private logger: NGXLogger) {
         this.usernameTakenUrl = environment.server + environment.usernameTaken
         this.emailTakenUrl = environment.server + environment.emailTaken
         this.signupUrl = environment.server + environment.signUp
@@ -68,7 +68,7 @@ export class SignupService {
             map(result => new SignupResult(result.success, null)),
             catchError((err, caught) => {
                 this.handleError(err, this.logger)
-                return of(err)
+                return of(new SignupResult(false, err))
             })
         )
     }

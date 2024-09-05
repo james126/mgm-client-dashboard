@@ -1,4 +1,4 @@
-<div class="bg-light dark:bg-transparent min-vh-100 min-vw-100 d-flex flex-row align-items-center">
+<div class="bg-light dark:bg-transparent min-vh-100 d-flex flex-row align-items-center">
   <c-container breakpoint="md">
     <c-row class="justify-content-center">
       <c-col lg="10" xl="8">
@@ -14,21 +14,17 @@
                   </span>
                   <input autoComplete="username" cFormControl placeholder="Username" />
                 </c-input-group>
-                <c-input-group class="mb-2">
+                <c-input-group class="mb-4">
                   <span cInputGroupText>
                     <svg cIcon name="cilLockLocked"></svg>
                   </span>
-                  <input
-                    autoComplete="current-password"
-                    cFormControl
-                    placeholder="Password"
-                    type="password"
-                  />
+                    <input formControlName="password" cFormControl placeholder="Password" data-testid="password" matInput showHideInput id="pass1"
+                           [type]="show1 ? 'txt' : 'password'"/>
+                    <button cButton type="button" variant="outline" data-testid="pass-toggle" (click)="togglePass()" class="toggle-button-focus">
+                        {{ show1 ? '👁️' : '🔒' }}
+                    </button>
                 </c-input-group>
                 <c-row>
-                    <c-col class="mb-2">
-                            <re-captcha #recaptcha  (resolved)="submitCaptcha($event)" [siteKey]="siteKey"></re-captcha>
-                    </c-col>
                   <c-col xs="6">
                     <button cButton class="px-4" color="primary">
                       Login
@@ -48,10 +44,10 @@
               <div>
                 <h2>Sign up</h2>
                 <p>
-                  Contact us today to find out how we can transform your garden. Free quotes available on request.
+                  Don't have an account?
                 </p>
                 <button [active]="true" cButton class="mt-3" color="primary" routerLink="/register">
-                  Let's Go!
+                  Register Now!
                 </button>
               </div>
             </c-card-body>

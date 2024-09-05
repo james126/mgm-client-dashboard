@@ -1,5 +1,7 @@
-import { Component, ViewChild } from '@angular/core'
+import { Component } from '@angular/core'
 import { NgStyle } from '@angular/common'
+import { AbstractControl, FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
+import { RouterModule } from '@angular/router'
 import { IconDirective } from '@coreui/icons-angular'
 import {
     ContainerComponent,
@@ -15,48 +17,39 @@ import {
     FormControlDirective,
     ButtonDirective,
 } from '@coreui/angular'
-import { RecaptchaComponent, RecaptchaModule } from 'ng-recaptcha'
-import { environment } from '../../../../environments/environment'
-import { LoginService } from './login.service'
+
+const { email, maxLength, minLength, pattern, required } = Validators
+export const ASYNC_DELAY = 1000
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    // styleUrls: ['./login.component.scss'],
+    styleUrls: ['./login.component.scss'],
     standalone: true,
     imports: [ContainerComponent, RowComponent, ColComponent, CardGroupComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent,
-        InputGroupTextDirective, IconDirective, FormControlDirective, ButtonDirective, NgStyle, RecaptchaModule],
-    providers: [LoginService]
+        InputGroupTextDirective, IconDirective, FormControlDirective, ButtonDirective, NgStyle, RouterModule, ReactiveFormsModule],
 })
 export class LoginComponent {
-    @ViewChild('recaptcha', { static: false, read: RecaptchaComponent }) repactcha?: RecaptchaComponent
-    captchaResponse: boolean = false
-    siteKey: string = environment.contactFormSiteKey
+    public login: FormGroup
+    public show1: boolean
 
-    formValues = {
-        username: '',
-        email: '',
-        password: '',
+    constructor(private formBuilder: NonNullableFormBuilder,) {
+        this.login = this.formBuilder.group({
+            username: ['', {
+                validators: [required, pattern('[a-zA-Z0-9.]+'), maxLength(20), minLength(5)],
+                updateOn: 'blur',
+            }],
+
+            password: ['', {
+                validators: [required, maxLength(20), minLength(10)],
+                updateOn: 'blur',
+            }],
+        })
+
+        this.show1 = false
     }
 
-    constructor(private service: LoginService) {
+    public togglePass() {
+        this.show1 = !this.show1
     }
-
-    submitCaptcha(response: any) {
-        //timeout or repactcha.reset() produces a null response
-        if (response == null) {
-            this.captchaResponse = false
-        } else {
-            this.service.submitRecaptcha(response).subscribe({
-                next: (data) => {
-                    this.captchaResponse = true
-                }, error: (err) => {
-                    //allow form submission anyway - errors are logged in ContactFormService
-                    this.captchaResponse = true
-                },
-            })
-        }
-    }
-
 }
-

@@ -8,8 +8,8 @@ $border-color: rgb(206, 212, 218);
   background-color: lightgray;
 }
 
-.btn-outline-primary:hover {
-
+.toggle-button-focus:focus {
+  box-shadow: none !important;
 }
 
 body.recaptcha .grecaptcha-badge {
