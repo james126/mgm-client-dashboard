@@ -1,99 +1,228 @@
+import { HttpErrorResponse } from '@angular/common/http'
 import { DebugElement } from '@angular/core'
 import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing'
+import { ReactiveFormsModule } from '@angular/forms'
 import { By } from '@angular/platform-browser'
-
+import { provideAnimations } from '@angular/platform-browser/animations'
+import { RouterModule } from '@angular/router'
 import { ButtonModule, CardModule, FormModule, GridModule } from '@coreui/angular'
-import { of } from 'rxjs'
-import { LoginComponent } from '../../app/views/pages/login/login.component'
+import { RECAPTCHA_V3_SITE_KEY } from 'ng-recaptcha'
+import { of, throwError } from 'rxjs'
+import { LoginComponent  } from '../../app/views/pages/login/login.component'
 import { IconModule } from '@coreui/icons-angular'
 import { IconSetService } from '@coreui/icons-angular'
 import { iconSubset } from '../../app/icons/icon-subset'
-import { ASYNC_DELAY } from '../../app/views/pages/register/register.component'
-import { SignupResult, SignupService } from '../../app/views/pages/register/service/signup.service'
-import { email, password, repeatPassword, signupData, username } from '../register/util/dummy-data'
+import { LoginData, LoginResult, LoginService } from '../../app/views/pages/login/service/login.service'
+import { ASYNC_DELAY } from '../../app/views/pages/login/login.component'
+import { environment } from '../../environments/environment.test'
+import { loginData } from '../login/util/dummy-data'
 import { updateTrigger } from '../util/update-form-helper'
 
-xdescribe('LoginComponent', () => {
+describe('LoginComponent', () => {
     let component: LoginComponent
     let fixture: ComponentFixture<LoginComponent>
     let debugElement: DebugElement
+    let loginService: jasmine.SpyObj<LoginService>
     let iconSetService: IconSetService
+    let testData: LoginData
 
     const fillForm = () => {
-        updateTrigger(fixture, 'username', username)
-        updateTrigger(fixture, 'email', email)
-        updateTrigger(fixture, 'password', password)
-        updateTrigger(fixture, 'repeatPassword', repeatPassword)
+        updateTrigger(fixture, 'username', testData.username)
+        updateTrigger(fixture, 'password', testData.password)
     }
 
     beforeEach(async () => {
-        await TestBed.configureTestingModule({
-            imports: [FormModule, CardModule, GridModule, ButtonModule, IconModule, LoginComponent],
-            providers: [IconSetService],
-        })
-            .compileComponents()
+        loginService = jasmine.createSpyObj<LoginService>('LoginService', {
+                login: of(new LoginResult(true, null)),
+                submitRecaptcha: of(1),
+                forgotPass: of(true),
+                validateInputLengths: true
+            },
+        )
 
-        // beforeEach(() => {
-        //   loginService = jasmine.createSpyObj<SignupService>('SignupService', {
-        //         login: of(new SignupResult(true, null)),
-        //         submitRecaptcha: of(1),
-        //       },
-        //   )
+        await TestBed.configureTestingModule({
+            imports: [FormModule, CardModule, GridModule, ButtonModule, IconModule, LoginComponent, ReactiveFormsModule,
+                RouterModule.forRoot([])],
+            providers: [IconSetService, LoginComponent, { provide: LoginService, useValue: loginService },
+                { provide: RECAPTCHA_V3_SITE_KEY, useValue: environment.recaptchaV3 }, provideAnimations()],
+        }).compileComponents()
 
         iconSetService = TestBed.inject(IconSetService)
         iconSetService.icons = { ...iconSubset }
+        testData = loginData
 
         fixture = TestBed.createComponent(LoginComponent)
         component = fixture.componentInstance
+        debugElement = fixture.debugElement
         fixture.detectChanges()
+        spyOn(component, 'getToken').and.returnValue(of('123'))
     })
 
-    xit('Successful login submission', fakeAsync(() => {
+    it('Submit login - successful', fakeAsync(() => {
         let submitButton = debugElement.query(By.css(`[data-testid="submit"]`))
         expect(submitButton.nativeElement.disabled).toBeTrue()
 
         fillForm()
         tick(ASYNC_DELAY)
         fixture.detectChanges()
-
         expect(submitButton.nativeElement.disabled).toBeFalse()
 
         submitButton.triggerEventHandler('click', null)
         tick(ASYNC_DELAY)
         fixture.detectChanges() //updates DOM
 
-        // expect(signupService.signup).toHaveBeenCalledWith(signupData)
-        // expect(component.getStatus()).toBe('Success')
+        expect(loginService.login).toHaveBeenCalledWith(testData)
+        expect(component.loginStatus).toBe("Success")
         flush() //finish any async operations
     }))
 
-    xit('Invalid form', fakeAsync(() => {
+    it('Submit login - invalid form', fakeAsync(() => {
+        let submitButton = debugElement.query(By.css(`[data-testid="submit"]`))
+        loginService.validateInputLengths.and.returnValue(false);
+
+        updateTrigger(fixture, 'username', 'sam')
+        updateTrigger(fixture, 'password', testData.password)
+        tick(ASYNC_DELAY)
+        fixture.detectChanges()
+
+        submitButton.triggerEventHandler('click', null)
+        tick(ASYNC_DELAY)
+        fixture.detectChanges()
+
+        expect(component.loginStatus).toBe("Invalid")
+        flush() //finish any async operations
+    }))
+
+    it('Submit login - server error', fakeAsync(() => {
+        loginService.login.and.returnValue(throwError(() => 'server error'))
+        let submitButton = debugElement.query(By.css(`[data-testid="submit"]`))
+
+        fillForm()
+        tick(ASYNC_DELAY)
+        fixture.detectChanges()
+
+        submitButton.triggerEventHandler('click', null)
+        tick(ASYNC_DELAY)
+        fixture.detectChanges()
+        expect(component.loginStatus).toBe("Error")
+        flush() //finish any async operations
+    }))
+
+    it('Login popup - HttpErrorResponse', fakeAsync(() => {
+        const mockErrorResponse = new HttpErrorResponse({
+            error: 'Server Error',
+            status: 500,
+            statusText: 'Internal Server Error',
+            url: `${environment.server}${environment.login}`,
+        })
+        loginService.login.and.returnValue(of(mockErrorResponse))
+        let submitButton = debugElement.query(By.css(`[data-testid="submit"]`))
+
+        fillForm()
+        tick(ASYNC_DELAY)
+        fixture.detectChanges()
+
+        submitButton.triggerEventHandler('click', null)
+        tick(ASYNC_DELAY)
+        fixture.detectChanges()
+        expect(component.loginStatus).toBe("Error")
+        flush() //finish any async operations
+    }))
+
+    it('Toggle password display', fakeAsync(() => {
+        let password = debugElement.query(By.css(`[data-testid="password"]`))
+        let toggle = debugElement.query(By.css(`[data-testid="pass-toggle"]`))
+
+        fillForm()
+        tick(ASYNC_DELAY)
+        fixture.detectChanges()
+        expect(password.attributes['type']).toBe('password')
+
+        toggle.triggerEventHandler('click', null)
+        fixture.detectChanges()
+        expect(password.attributes['type']).toBe('txt')
+
+        toggle.triggerEventHandler('click', null)
+        fixture.detectChanges()
+        expect(password.attributes['type']).toBe('password')
+    }))
+
+    it('Required input fields checked', fakeAsync(() => {
+        let submitButton = debugElement.query(By.css(`[data-testid="submit"]`))
+
+        updateTrigger(fixture, 'password', testData.password)
+        tick(ASYNC_DELAY)
+        fixture.detectChanges()
+
+        submitButton.triggerEventHandler('click', null)
+        tick(ASYNC_DELAY)
+        fixture.detectChanges()
+
+        expect(component.login.get('username')?.hasError('required')).toBe(true)
+        expect(component.loginStatus).toBe("Invalid")
+        flush() //finish any async operations
+    }))
+
+    it('Login popup - invalid username/password', fakeAsync(() => {
+        let submitButton = debugElement.query(By.css(`[data-testid="submit"]`))
+        loginService.login.and.returnValue( of(new LoginResult(false, null)));
+
+        fillForm()
+        tick(ASYNC_DELAY)
+        fixture.detectChanges()
+
+        submitButton.triggerEventHandler('click', null)
+        tick(ASYNC_DELAY)
+        fixture.detectChanges()
+
+        expect(component.loginStatus).toBe("Invalid")
+        let modalText = debugElement.query(By.css(`[data-testid="login-modal"]`)).nativeElement.innerText
+        expect(modalText.includes('Invalid username or password')).toBe(true)
+        flush() //finish any async operations
+    }))
+
+    it('Login popup - server error', fakeAsync(() => {
+        loginService.login.and.throwError('server error')
+        let submitButton = debugElement.query(By.css(`[data-testid="submit"]`))
+
+        fillForm()
+        tick(ASYNC_DELAY)
+        fixture.detectChanges()
+
+        submitButton.triggerEventHandler('click', null)
+        tick(ASYNC_DELAY)
+        fixture.detectChanges()
+
+        expect(component.loginStatus).toBe("Error")
+        let modalText = debugElement.query(By.css(`[data-testid="login-modal"]`)).nativeElement.innerText
+        expect(modalText.includes('Login Error')).toBe(true)
+        flush() //finish any async operations
+    }))
+
+    it('Forgot password - reset password popup', fakeAsync(() => {
+        let forgotPassword = debugElement.query(By.css(`[data-testid="forgot-password-link"]`))
+        forgotPassword.triggerEventHandler('click', null)
+        fixture.detectChanges()
+
+        let loginModal = debugElement.query(By.css(`[data-testid="login-modal"]`))
+        let passwordResetModal = debugElement.query(By.css(`[data-testid="reset-password-modal"]`))
+
+        expect(loginModal.nativeElement.getAttribute('ng-reflect-visible')).toBe('false');
+        expect(passwordResetModal.nativeElement.getAttribute('ng-reflect-visible')).toBe('true');
+        expect(passwordResetModal.nativeElement.innerText.includes('Reset Password')).toBe(true)
+        flush();
+    }))
+
+    xit('Reset password - email required', fakeAsync(() => {
 
     }))
 
-    xit('Submission failure - server error', fakeAsync(() => {
+    xit('Reset password - success popup', fakeAsync(() => {
 
     }))
 
-    xit('Submission failure - synchronous validators username', fakeAsync(() => {
+    xit('Reset password - error popup', fakeAsync(() => {
 
     }))
-
-    xit('Required fields', fakeAsync(() => {
-
-    }))
-
-    xit('Toggle password display', fakeAsync(() => {
-
-    }))
-
-    xit('Successful login popup', fakeAsync(() => {
-
-    }))
-
-    xit('Unsuccessful login popup', fakeAsync(() => {
-
-    }))
-
 })
 

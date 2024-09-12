@@ -9,6 +9,7 @@ export const environment = {
     signUp: '/sign-up',
     logging: '/client-logging',
     recaptcha: '/recaptcha',
+    forgotPass: '/forgot-pass',
     contactFormSiteKey: '6LfBYAEqAAAAAKc88zdsVV9tvxrJiih1L9cnfo1d',
     recaptchaV3: '6LdYASEqAAAAAGS0xlyDWNlHa9FRxrFNMcmejVTb',
     loginSiteKey: '6LfBYAEqAAAAAKc88zdsVV9tvxrJiih1L9cnfo1d'

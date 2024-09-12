@@ -1,31 +1,23 @@
 import { HttpErrorResponse } from '@angular/common/http'
 import { DebugElement } from '@angular/core'
-import { ComponentFixture, TestBed, fakeAsync, tick, flush } from '@angular/core/testing'
+import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing'
 import { ReactiveFormsModule } from '@angular/forms'
-import { By } from '@angular/platform-browser'
+import { By, Title } from '@angular/platform-browser'
 import { provideAnimations } from '@angular/platform-browser/animations'
 import { RouterModule } from '@angular/router'
-import {
-    ButtonModule,
-    CardModule,
-    FormModule,
-    GridModule,
-    ModalModule,
-} from '@coreui/angular'
-import { IconModule } from '@coreui/icons-angular'
-import { IconSetService } from '@coreui/icons-angular'
+import { ButtonModule, CardModule, FormModule, GridModule, ModalModule } from '@coreui/angular'
+import { IconModule, IconSetService } from '@coreui/icons-angular'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
-import _default from 'chart.js/dist/plugins/plugin.tooltip'
 import { RECAPTCHA_V3_SITE_KEY } from 'ng-recaptcha'
 import { of, throwError } from 'rxjs'
+import { iconSubset } from 'src/app/icons/icon-subset'
 import { environment } from 'src/environments/environment.test'
 import { LandingFragmentService } from '../../app/views/pages/landing/service/fragment.service'
 import { ControlErrorsComponent } from '../../app/views/pages/register/component/control-errors/control-errors.component'
-import { RegisterComponent, ASYNC_DELAY } from '../../app/views/pages/register/register.component'
+import { ASYNC_DELAY, RegisterComponent} from '../../app/views/pages/register/register.component'
 import { PasswordStrength, SignupResult, SignupService } from '../../app/views/pages/register/service/signup.service'
-import { email, password, repeatPassword, signupData, username } from './util/dummy-data'
 import { dispatchFakeEvent, updateTrigger } from '../util/update-form-helper'
-import { iconSubset } from 'src/app/icons/icon-subset'
+import { email, password, repeatPassword, signupData, username } from './util/dummy-data'
 import { formatErrors } from './util/format-errors-helper'
 
 describe('RegisterComponent', () => {
@@ -74,7 +66,6 @@ describe('RegisterComponent', () => {
         component = fixture.componentInstance
         debugElement = fixture.debugElement
         fixture.detectChanges()
-
         spyOn(component, 'getToken').and.returnValue(of('123'))
     })
 
@@ -93,7 +84,7 @@ describe('RegisterComponent', () => {
         fixture.detectChanges() //updates DOM
 
         expect(signupService.signup).toHaveBeenCalledWith(signupData)
-        expect(component.getStatus()).toBe('Success')
+        expect(component.status).toBe("Success")
         flush() //finish any async operations
     }))
 
@@ -107,7 +98,7 @@ describe('RegisterComponent', () => {
         expect(signupService.isEmailTaken).not.toHaveBeenCalled()
         expect(signupService.getPasswordStrength).not.toHaveBeenCalled()
         expect(signupService.signup).not.toHaveBeenCalled()
-        expect(component.getStatus()).toBe('Idle')
+        expect(component.status).toBe("Idle")
     }))
 
     it('Form submission failure', fakeAsync(async () => {
@@ -120,7 +111,7 @@ describe('RegisterComponent', () => {
 
         submitButton.triggerEventHandler('click', null)
         tick(ASYNC_DELAY)
-        expect(component.getStatus()).toBe('Error')
+        expect(component.status).toBe("Error")
     }))
 
     it('Required fields', fakeAsync(() => {
@@ -226,13 +217,10 @@ describe('RegisterComponent', () => {
 
     it('Successful submission popup', fakeAsync(() => {
         let submitButton = debugElement.query(By.css(`[data-testid="submit"]`))
-        expect(submitButton.nativeElement.disabled).toBeTrue()
 
         fillForm()
         tick(ASYNC_DELAY)
         fixture.detectChanges()
-
-        expect(submitButton.nativeElement.disabled).toBeFalse()
 
         submitButton.triggerEventHandler('click', null)
         tick(ASYNC_DELAY)

@@ -2,7 +2,7 @@
     <c-container>
         <c-row class="justify-content-center">
 
-            <c-modal [ngSwitch]="this.getStatus()" id="liveDemoModal" data-testid="modal" [visible]="visible" (visibleChange)="handleLiveChange($event)">
+            <c-modal alignment="center" [ngSwitch]="status" data-testid="modal" [visible]="visible" (visibleChange)="handleChange($event)">
                 <c-modal-header>
                     <h5 *ngSwitchCase="'Idle'" cModalTitle>Submission Error</h5>
                     <h5 *ngSwitchCase="'Success'" cModalTitle>Thank You</h5>
@@ -16,7 +16,9 @@
                     <button (click)="toggleModalVisibility()" cButton color="secondary">
                         Close
                     </button>
-                    <button routerLink="login" cButton color="primary">Login</button>
+                    <button routerLink="login" *ngSwitchCase="'Success'" cButton color="primary">Login</button>
+                    <button routerLink="landing" *ngSwitchCase="'Idle'" cButton color="primary">Home</button>
+                    <button routerLink="landing" *ngSwitchCase="'Error'" cButton color="primary">Home</button>
                 </c-modal-footer>
             </c-modal>
 
@@ -33,7 +35,7 @@
                                 <span cInputGroupText>
                                   <svg cIcon name="cilUser"></svg>
                                 </span>
-                                <input formControlName="username" cFormControl placeholder="Username" data-testid="username" />
+                                <input #username [valid]="usernameValid" formControlName="username" cFormControl placeholder="Username" data-testid="username" id="username" />
                             </c-input-group>
                             <control-errors controlName="username" id="username-errors">
                                 <ng-template let-errors>
@@ -79,7 +81,7 @@
                             <!-- EMAIL -->
                             <c-input-group class="mb-3">
                                 <span cInputGroupText>&#64;</span>
-                                <input formControlName="email" cFormControl placeholder="Email" data-testid="email"/>
+                                <input #email [valid]="emailValid" formControlName="email" cFormControl placeholder="Email" data-testid="email" id="email"/>
                             </c-input-group>
                             <control-errors controlName="email" id="email-errors">
                                 <ng-template let-errors>
@@ -115,7 +117,7 @@
                                 <span cInputGroupText>
                                   <svg cIcon name="cilLockLocked"></svg>
                                 </span>
-                                <input formControlName="password" cFormControl placeholder="Password" data-testid="password" matInput showHideInput id="pass1"
+                                <input #password [valid]="passwordValid" formControlName="password" cFormControl placeholder="Password" data-testid="password" matInput showHideInput id="pass1"
                                        [type]="show1 ? 'txt' : 'password'"/>
                                 <button cButton type="button" variant="outline" data-testid="pass-toggle" (click)="togglePass('pass1')" class="toggle-button-focus">
                                     {{ show1 ? '👁️' : '🔒' }}
@@ -179,7 +181,7 @@
                                 <span cInputGroupText>
                                   <svg cIcon name="cilLockLocked"></svg>
                                 </span>
-                                <input formControlName="repeatPassword" cFormControl placeholder="Repeat password" data-testid="repeatPassword" id="pass2"
+                                <input #repeatPassword [valid]="repeatPasswordValid" formControlName="repeatPassword" cFormControl placeholder="Repeat password" data-testid="repeatPassword" id="pass2"
                                     [type]="show2 ? 'txt' : 'password'"/>
                                 <button cButton type="button" variant="outline" (click)="togglePass('pass2')" class="toggle-button-focus">
                                     {{ show2 ? '👁️' : '🔒' }}

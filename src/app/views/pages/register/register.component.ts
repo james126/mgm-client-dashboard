@@ -1,6 +1,7 @@
+import { group } from '@angular/animations'
 import { HttpErrorResponse } from '@angular/common/http'
-import { Component } from '@angular/core'
-import { AbstractControl, AsyncValidatorFn, FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core'
+import { AbstractControl, AsyncValidatorFn, FormArray, FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
 import { IconDirective } from '@coreui/icons-angular'
 import {
     ContainerComponent,
@@ -16,8 +17,10 @@ import {
     ButtonDirective, ButtonCloseDirective, ModalModule, NavLinkDirective,
 } from '@coreui/angular'
 import _default from 'chart.js/dist/core/core.interaction'
+import { NGXLogger } from 'ngx-logger'
+import { username } from '../../../../test/register/util/dummy-data'
 import { ControlErrorsComponent } from './component/control-errors/control-errors.component'
-import { map, switchMap, timer, of, Observable, catchError } from 'rxjs'
+import { map, switchMap, timer, of, Observable, catchError, Subscription, fromEvent, debounceTime } from 'rxjs'
 import { PasswordStrength, SignupResult, SignupService } from './service/signup.service'
 import { CommonModule } from '@angular/common'
 import { RecaptchaModule, ReCaptchaV3Service } from 'ng-recaptcha'
@@ -26,6 +29,11 @@ import { RouterLink } from '@angular/router'
 
 const { email, maxLength, minLength, pattern, required } = Validators
 export const ASYNC_DELAY = 1000
+export enum Status{
+    Idle = "Idle",
+    Success = "Success",
+    Error = "Error"
+}
 
 @Component({
     selector: 'app-register',
@@ -37,9 +45,23 @@ export const ASYNC_DELAY = 1000
         RecaptchaModule, ControlErrorsComponent, ButtonCloseDirective, ModalModule, NavLinkDirective, RouterLink],
     providers: [ReCaptchaV3Service],
 })
-export class RegisterComponent{
+export class RegisterComponent implements AfterViewInit, OnDestroy{
+    @ViewChild('username', { static: true }) usernameInput!: ElementRef
+    public usernameValid: boolean | undefined
+    @ViewChild('email', { static: true }) emailInput!: ElementRef
+    public emailValid: boolean | undefined
+    @ViewChild('password', { static: true }) passwordInput!: ElementRef
+    public passwordValid: boolean | undefined
+    @ViewChild('repeatPassword', { static: true }) repeatPasswordInput!: ElementRef
+    public repeatPasswordValid: boolean | undefined
+
+    public username$: Subscription | undefined
+    public email$: Subscription | undefined
+    public password$: Subscription | undefined
+    public repeatPassword$: Subscription | undefined
+
     public register: FormGroup
-    public status: Map<string, boolean>
+    public status: Status
     public show1: boolean
     public show2: boolean
     public visible: boolean;
@@ -49,29 +71,87 @@ export class RegisterComponent{
             username: ['', {
                 validators: [required, pattern('[a-zA-Z0-9.]+'), maxLength(20), minLength(5)],
                 asyncValidators: [(control: FormControl) => this.validateUsername(control.value)],
-                updateOn: 'blur',
+                updateOn: 'change',
             }],
             email: ['', {
                 validators: [required, email, maxLength(40)],
                 asyncValidators: [(control: AbstractControl) => this.validateEmail(control.value)],
-                updateOn: 'blur',
+                updateOn: 'change',
             }],
             password: ['', {
                 validators: [required, maxLength(20), minLength(10)],
                 asyncValidators: [(control: AbstractControl) => this.validatePassword(control.value)],
-                updateOn: 'blur',
+                updateOn: 'change',
             }],
             repeatPassword: ['', {
                 validators: [required, maxLength(20), minLength(10)],
                 asyncValidators: [(control: AbstractControl) => this.validateRepeatedPassword(control.value)],
-                updateOn: 'blur',
+                updateOn: 'change',
             }],
         })
 
         this.show1 = false
         this.show2 = false
-        this.status = new Map<string, boolean>([["Idle", true],["Success", false], ["Error", false]]);
+        this.status = Status.Idle
         this.visible = false;
+    }
+
+    ngAfterViewInit(): void {
+        this.username$ = fromEvent(this.usernameInput.nativeElement, 'focus')
+            .pipe(debounceTime(1000))
+            .subscribe(() => {
+                const value = this.usernameInput.nativeElement.value.trim()
+                const valid = this.register.controls['username'].errors
+                if (value.length == 0) {
+                    this.usernameValid = undefined
+                } else if (!valid) {
+                    this.usernameValid = true
+                } else {
+                    this.usernameValid = false
+                }
+            })
+
+        this.email$ = fromEvent(this.emailInput.nativeElement, 'focus')
+            .pipe(debounceTime(1000))
+            .subscribe(() => {
+                const value = this.emailInput.nativeElement.value.trim()
+                const valid = this.register.controls['email'].valid
+                if (value.length == 0) {
+                    this.emailValid = undefined
+                } else if (valid) {
+                    this.emailValid = true
+                } else {
+                    this.emailValid = false
+                }
+            })
+
+        this.password$ = fromEvent(this.passwordInput.nativeElement, 'focus')
+            .pipe(debounceTime(1000))
+            .subscribe(() => {
+                const value = this.passwordInput.nativeElement.value.trim()
+                const valid = this.register.controls['password'].valid
+                if (value.length == 0) {
+                    this.passwordValid = undefined
+                } else if (valid) {
+                    this.passwordValid = true
+                } else {
+                    this.passwordValid = false
+                }
+            })
+
+        this.repeatPassword$ = fromEvent(this.repeatPasswordInput.nativeElement, 'focus')
+            .pipe(debounceTime(1000))
+            .subscribe(() => {
+                const value = this.repeatPasswordInput.nativeElement.value.trim()
+                const valid = this.register.controls['repeatPassword'].valid
+                if (value.length == 0) {
+                    this.repeatPasswordValid = undefined
+                } else if (valid) {
+                    this.repeatPasswordValid = true
+                } else {
+                    this.repeatPasswordValid = false
+                }
+            })
     }
 
     /* No longer used - routes to landing page and then scrolls to a section, section value passed from template */
@@ -134,18 +214,6 @@ export class RegisterComponent{
         )
     }
 
-    /**
-     * Gets all form control values except repeatPassword
-     * @private
-     */
-    private getFormValues() {
-        let obj = { username: '', password: '', email: '' }
-        obj.username = this.register.get('username')!.value
-        obj.password = this.register.get('password')!.value
-        obj.email = this.register.get('email')!.value
-        return obj
-    }
-
 //Cancellation: switchMap has a cancellation effect. It will unsubscribe from the previous inner observable when a new value is emitted by the source observable. map does not have this behavior.
     public onSubmit() {
         if (this.register.valid) {
@@ -158,13 +226,13 @@ export class RegisterComponent{
             ).subscribe({
                 next: (value: string | SignupResult) => {
                     if (value.constructor === SignupResult && value.outcome) {
-                        this.setStatus('Success')
+                        this.status = Status.Success
                     } else {
-                        this.setStatus('Error')
+                        this.status = Status.Error
                     }
                 },
                 error: () => {
-                    this.setStatus('Error')
+                    this.status = Status.Error
                 },
                 complete: () => {
                     this.toggleModalVisibility();
@@ -178,30 +246,36 @@ export class RegisterComponent{
         return this.recaptchaV3Service.execute('submit');
     }
 
+    /**
+     * Gets all form control values except repeatPassword
+     * @private
+     */
+    private getFormValues() {
+        let obj = { username: '', password: '', email: '' }
+        obj.username = this.register.get('username')!.value
+        obj.password = this.register.get('password')!.value
+        obj.email = this.register.get('email')!.value
+        return obj
+    }
+
     toggleModalVisibility() {
         this.visible = !this.visible;
     }
 
-    handleLiveChange(event: any) {
+    /*
+    Unused Modal fucnction
+    Required for c-modal element
+    event: true when modal switched from invisible to visible
+           false when modal switched from visible to invisible
+     */
+    handleChange(event: boolean) {
         this.visible=event;
     }
 
-    private setStatus(status: string){
-        this.status.forEach((value, key) => {
-            if (status == key){
-                this.status.set(key, true);
-            } else {
-                this.status.set(key, false);
-            }
-        })
-    }
-
-    public getStatus(){
-        for (let item of this.status){
-            if (item[1]){
-                return item[0];
-            }
-        }
-        return 'Error';
+    ngOnDestroy(): void {
+        this.username$?.unsubscribe();
+        this.email$?.unsubscribe();
+        this.password$?.unsubscribe();
+        this.repeatPassword$?.unsubscribe();
     }
 }
