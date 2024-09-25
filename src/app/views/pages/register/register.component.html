@@ -1,7 +1,6 @@
 <div class="bg-light dark:bg-transparent min-vh-100 d-flex flex-row align-items-center">
     <c-container>
         <c-row class="justify-content-center">
-
             <c-modal alignment="center" [ngSwitch]="status" data-testid="modal" [visible]="visible" (visibleChange)="handleChange($event)">
                 <c-modal-header>
                     <h5 *ngSwitchCase="'Idle'" cModalTitle>Submission Error</h5>
@@ -9,9 +8,19 @@
                     <h5 *ngSwitchCase="'Error'" cModalTitle>Submission Error</h5>
                     <button (click)="toggleModalVisibility()" cButtonClose></button>
                 </c-modal-header>
-                <c-modal-body *ngSwitchCase="'Idle'">Please try again later!</c-modal-body>
-                <c-modal-body *ngSwitchCase="'Success'">Registration successful!</c-modal-body>
-                <c-modal-body *ngSwitchCase="'Error'">Please try again later!</c-modal-body>
+
+                <c-modal-body>
+                    <div class="d-flex justify-content-center">
+                        <fa-icon *ngSwitchCase="'Idle'" [icon]="faCircleExclamation" size="2x" class="faCircleExclamation"></fa-icon>
+                        <fa-icon *ngSwitchCase="'Success'" [icon]="faCircleCheck" size="2x" class="faCircleCheck"></fa-icon>
+                        <fa-icon *ngSwitchCase="'Error'" [icon]="faCircleExclamation" size="2x" class="faCircleExclamation"></fa-icon>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <p class="text-body-secondary mt-2 mb-0" *ngSwitchCase="'Idle'">Internal error, please try again later</p>
+                        <p class="text-body-secondary mt-2 mb-0" *ngSwitchCase="'Success'">Registration successful</p>
+                        <p class="text-body-secondary mt-2 mb-0" *ngSwitchCase="'Error'">Internal error, please try again later</p>
+                    </div>
+                </c-modal-body>
                 <c-modal-footer>
                     <button (click)="toggleModalVisibility()" cButton color="secondary">
                         Close

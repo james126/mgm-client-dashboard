@@ -11,7 +11,10 @@ import { ServerCustomisedService } from './utility/ServerCustomisedService'
 import { DropdownModule, SidebarModule } from '@coreui/angular'
 import { IconSetService } from '@coreui/icons-angular'
 import { routes } from './app.routes'
-import { RECAPTCHA_V3_SITE_KEY} from 'ng-recaptcha'
+import { RECAPTCHA_V3_SITE_KEY, RecaptchaModule, ReCaptchaV3Service } from 'ng-recaptcha'
+import { LoginService } from './views/pages/login/service/login.service'
+import { SignupService } from './views/pages/register/service/signup.service'
+import { LoginComponent } from './views/pages/login/login.component'
 
 export const appConfig: ApplicationConfig = {
     providers: [provideRouter(routes, withRouterConfig({
@@ -39,6 +42,6 @@ export const appConfig: ApplicationConfig = {
         })),
         importProvidersFrom(HttpClientModule),
         importProvidersFrom(LandingModule),
-        { provide: RECAPTCHA_V3_SITE_KEY, useValue: environment.recaptchaV3 }
+        { provide: RECAPTCHA_V3_SITE_KEY, useValue: environment.recaptchaV3 },
     ]
 }

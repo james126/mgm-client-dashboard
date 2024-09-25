@@ -1,9 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core'
+import { Component, importProvidersFrom, OnInit } from '@angular/core'
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 
 import { IconSetService } from '@coreui/icons-angular';
+import { ReCaptchaV3Service } from 'ng-recaptcha'
 import { iconSubset } from './icons/icon-subset';
+import { LoginService } from './views/pages/login/service/login.service'
+import { SignupService } from './views/pages/register/service/signup.service'
 
 export interface InputConfig {
   usernameMaxLength:  number,
@@ -18,7 +21,8 @@ export interface InputConfig {
   selector: 'app-root',
   template: '<router-outlet />',
   standalone: true,
-  imports: [RouterOutlet]
+  imports: [RouterOutlet],
+  providers: [LoginService, SignupService, ReCaptchaV3Service],
 })
 export class AppComponent implements OnInit {
   title = 'mr grass master';

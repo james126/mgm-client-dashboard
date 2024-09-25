@@ -16,6 +16,22 @@ body.recaptcha .grecaptcha-badge {
   visibility: visible;
 }
 
+.faCircleExclamation {
+  color: #a90505;
+}
 
+.faCircleCheck {
+  color: green;
+}
+
+.btn-custom:focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(243, 189, 0, 0.25);
+  opacity: 1 !important;
+  transition: opacity 1s ease !important;
+}
+.hidden {
+  opacity: 0;  /* Final opacity */
+}
 
 

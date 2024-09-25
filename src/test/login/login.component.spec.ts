@@ -12,7 +12,7 @@ import { LoginComponent  } from '../../app/views/pages/login/login.component'
 import { IconModule } from '@coreui/icons-angular'
 import { IconSetService } from '@coreui/icons-angular'
 import { iconSubset } from '../../app/icons/icon-subset'
-import { LoginData, LoginResult, LoginService } from '../../app/views/pages/login/service/login.service'
+import { LoginData, Result, LoginService } from '../../app/views/pages/login/service/login.service'
 import { ASYNC_DELAY } from '../../app/views/pages/login/login.component'
 import { environment } from '../../environments/environment.test'
 import { loginData } from '../login/util/dummy-data'
@@ -33,10 +33,10 @@ describe('LoginComponent', () => {
 
     beforeEach(async () => {
         loginService = jasmine.createSpyObj<LoginService>('LoginService', {
-                login: of(new LoginResult(true, null)),
+                login: of(new Result(true, null)),
                 submitRecaptcha: of(1),
-                forgotPass: of(true),
-                validateInputLengths: true
+                forgotPassEmail: of(true),
+                validateLoginInput: true
             },
         )
 
@@ -78,7 +78,7 @@ describe('LoginComponent', () => {
 
     it('Submit login - invalid form', fakeAsync(() => {
         let submitButton = debugElement.query(By.css(`[data-testid="submit"]`))
-        loginService.validateInputLengths.and.returnValue(false);
+        loginService.validateLoginInput.and.returnValue(false);
 
         updateTrigger(fixture, 'username', 'sam')
         updateTrigger(fixture, 'password', testData.password)
@@ -165,7 +165,7 @@ describe('LoginComponent', () => {
 
     it('Login popup - invalid username/password', fakeAsync(() => {
         let submitButton = debugElement.query(By.css(`[data-testid="submit"]`))
-        loginService.login.and.returnValue( of(new LoginResult(false, null)));
+        loginService.login.and.returnValue( of(new Result(false, null)));
 
         fillForm()
         tick(ASYNC_DELAY)
@@ -213,15 +213,39 @@ describe('LoginComponent', () => {
         flush();
     }))
 
-    xit('Reset password - email required', fakeAsync(() => {
+    xit('Reset password - email address - sucess', fakeAsync(() => {
 
     }))
 
-    xit('Reset password - success popup', fakeAsync(() => {
+    xit('Reset password - email address - invalid email', fakeAsync(() => {
 
     }))
 
-    xit('Reset password - error popup', fakeAsync(() => {
+    xit('Reset password - email address - server error', fakeAsync(() => {
+
+    }))
+
+    xit('Reset password - security code - success', fakeAsync(() => {
+
+    }))
+
+    xit('Reset password - security code - invalid code', fakeAsync(() => {
+
+    }))
+
+    xit('Reset password - security code - server error', fakeAsync(() => {
+
+    }))
+
+    xit('Reset password - enter new password - success', fakeAsync(() => {
+
+    }))
+
+    xit('Reset password - enter new password - invalid password', fakeAsync(() => {
+
+    }))
+
+    xit('Reset password - enter new password - server error', fakeAsync(() => {
 
     }))
 })

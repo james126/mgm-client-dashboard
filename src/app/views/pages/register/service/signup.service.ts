@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import { Injectable } from '@angular/core'
+import { ReCaptchaV3Service } from 'ng-recaptcha'
 import { NGXLogger } from 'ngx-logger'
 import { Observable, map, of, catchError } from 'rxjs'
 import { environment } from '../../../../../environments/environment'
@@ -34,7 +35,7 @@ export class SignupService {
     private signupUrl = ''
     private recaptchaUrl = ''
 
-    constructor(private http: HttpClient, private logger: NGXLogger) {
+    constructor(private http: HttpClient, private logger: NGXLogger, private recaptchaV3Service: ReCaptchaV3Service) {
         this.usernameTakenUrl = environment.server + environment.usernameTaken
         this.emailTakenUrl = environment.server + environment.emailTaken
         this.signupUrl = environment.server + environment.signUp
@@ -81,6 +82,10 @@ export class SignupService {
                 return of(err)
             })
         )
+    }
+
+    public getToken(): Observable<string>{
+        return this.recaptchaV3Service.execute('submit');
     }
 
     private handleError(error: HttpErrorResponse, logger: NGXLogger) {

@@ -17,12 +17,15 @@ import {
     InputGroupComponent,
     InputGroupTextDirective,
     FormControlDirective,
-    ButtonDirective, ButtonCloseDirective, ModalModule,
+    ButtonDirective, ButtonCloseDirective, ModalModule, GutterDirective,
 } from '@coreui/angular'
-import { RecaptchaModule, ReCaptchaV3Service } from 'ng-recaptcha'
 import { catchError, debounceTime, fromEvent, Observable, of, Subscription, switchMap, timer } from 'rxjs'
-import { ControlErrorsComponent } from '../register/component/control-errors/control-errors.component'
-import { LoginData, LoginResult, LoginService } from './service/login.service'
+import { LoginFeedbackComponent } from './component/login-feedback/login-feedback.component'
+import { ResetPasswordComponent } from './component/reset-password/reset-password.component'
+import { LoginData, Result, LoginService } from './service/login.service'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { IconDefinition } from '@fortawesome/free-regular-svg-icons'
+import { AlertComponent } from '@coreui/angular';
 
 const { required } = Validators
 export const ASYNC_DELAY = 1000
@@ -40,62 +43,49 @@ export enum Status {
     styleUrls: ['./login.component.scss'],
     standalone: true,
     imports: [ContainerComponent, RowComponent, ColComponent, CardGroupComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent,
-        InputGroupTextDirective, IconDirective, FormControlDirective, ButtonDirective, NgStyle, RouterModule, ReactiveFormsModule, RecaptchaModule, ButtonCloseDirective,
-        ModalModule, NgSwitchCase, NgSwitch, ControlErrorsComponent, NgIf],
-    providers: [ReCaptchaV3Service],
+        InputGroupTextDirective, IconDirective, FormControlDirective, ButtonDirective, NgStyle, RouterModule, ReactiveFormsModule, ButtonCloseDirective,
+        ModalModule, NgSwitchCase, NgSwitch, NgIf, FontAwesomeModule, AlertComponent, GutterDirective, LoginFeedbackComponent, ResetPasswordComponent],
+    providers: [],
 })
 export class LoginComponent implements OnInit, OnDestroy {
     @ViewChild('usernameInput', { static: true }) usernameInput!: ElementRef
     public usernameValid: boolean | undefined
     @ViewChild('passwordInput', { static: true }) passwordInput!: ElementRef
     public passwordValid: boolean | undefined
-    @ViewChild('emailInput', { static: true }) emailInput!: ElementRef
-    public emailValid: boolean | undefined
 
     public username$: Subscription | undefined
     public password$: Subscription | undefined
-    public email$: Subscription | undefined
-    public loginModalVisible: boolean;
-    public resetPassModalVisible: boolean;
-    public feedbackModuleVisible: boolean
     public login: FormGroup
-    public resetPassword: FormGroup
     public loginStatus: Status
-    public resetPassStatus: Status
-    public show1: boolean
+    public togglePassword: boolean
+    public icons: IconDefinition[] = []
 
-    constructor(private loginService: LoginService, private formBuilder: NonNullableFormBuilder, private recaptchaV3Service: ReCaptchaV3Service) {
+    public loginFeedbackVisible: boolean;
+    public resetPassVisible: boolean;
+
+    constructor(private loginService: LoginService, private formBuilder: NonNullableFormBuilder) {
         this.login = this.formBuilder.group({
             username: ['', {
                 validators: [required],
                 updateOn: 'change',
             }],
-
             password: ['', {
                 validators: [required],
                 updateOn: 'change',
             }],
         })
 
-        this.resetPassword = this.formBuilder.group({
-            email: ['', {
-                validators: [required],
-                updateOn: 'change',
-            }]
-        })
-
-        this.show1 = false
-        this.loginStatus = Status.Idle
-        this.resetPassStatus = Status.Idle
-        this.usernameValid = undefined
-        this.passwordValid = undefined
-        this.emailValid = undefined
         this.username$ = undefined;
         this.password$ = undefined;
-        this.email$ = undefined;
-        this.loginModalVisible = false;
-        this.resetPassModalVisible = false;
-        this.feedbackModuleVisible = false;
+        this.usernameValid = undefined
+        this.passwordValid = undefined
+
+        this.loginStatus = Status.Idle
+
+        this.togglePassword = false
+        this.loginFeedbackVisible = false;
+        this.resetPassVisible = false;
+        this.icons.push()
     }
 
     ngOnInit(): void {
@@ -120,25 +110,10 @@ export class LoginComponent implements OnInit, OnDestroy {
                     this.passwordValid = false
                 }
             })
-
-        this.email$ = fromEvent(this.emailInput.nativeElement, 'focus')
-            .pipe(debounceTime(1000))
-            .subscribe(() => {
-                const value = this.emailInput.nativeElement.value.trim()
-                let regex = new RegExp('\\S+[@]\\S+[.]\\S+')
-                let valid = regex.test(value)
-                if (value.length == 0) {
-                    this.emailValid = undefined
-                } else if (valid) {
-                    this.emailValid = true
-                } else {
-                    this.emailValid = false
-                }
-            })
     }
 
     public onSubmit() {
-        if (this.login.valid && this.loginService.validateInputLengths(this.login.get('username')!.value, this.login.get('password')!.value)) {
+        if (this.login.valid && this.loginService.validateLoginInput(this.login.get('username')!.value, this.login.get('password')!.value)) {
             timer(ASYNC_DELAY).pipe(
                 switchMap(() => this.getToken()),
                 switchMap((token: string) => this.loginService.submitRecaptcha(token)),
@@ -146,8 +121,8 @@ export class LoginComponent implements OnInit, OnDestroy {
                     (score instanceof HttpErrorResponse || score < 0.7) ? of('Error') : this.loginService.login(this.getFormValues())),
                 catchError(() => of('Error')),
             ).subscribe({
-                next: (value: string | LoginResult) => {
-                    if (value.constructor === LoginResult) {
+                next: (value: string | Result) => {
+                    if (value.constructor === Result) {
                         this.loginStatus = value.outcome ? Status.Success : Status.Invalid
                     } else {
                         this.loginStatus = Status.Error
@@ -158,38 +133,33 @@ export class LoginComponent implements OnInit, OnDestroy {
                 },
                 complete: () => {
                     if (this.loginStatus !== Status.Success) {
-                        this.toggleLoginModalVisibility();
+                        this.showLoginFeedbackModal(true);
                     }
                 },
             })
         } else {
             this.loginStatus = Status.Invalid
-            this.toggleLoginModalVisibility();
+            this.showLoginFeedbackModal(true);
         }
     }
 
     public forgotPass() {
-        this.resetPassword.get('email')?.reset();
-        this.toggleResetPassModalVisibility()
+        this.showResetPassModal(true)
     }
 
-    get username() {
-        return this.login.get('username')
-    }
-
-    get password() {
-        return this.login.get('password')
-    }
-
-
-
-//Method required for testing
     public getToken(): Observable<string> {
-        return this.recaptchaV3Service.execute('submit')
+        return this.loginService.getToken()
     }
 
-    public togglePass() {
-        this.show1 = !this.show1
+    showLoginFeedbackModal(visible: boolean) {
+        this.loginFeedbackVisible = visible;
+        if (!visible){
+            this.loginStatus = Status.Idle;
+        }
+    }
+
+    showResetPassModal(visible: boolean) {
+        this.resetPassVisible = visible;
     }
 
     private getFormValues() {
@@ -200,39 +170,20 @@ export class LoginComponent implements OnInit, OnDestroy {
         return data
     }
 
-    toggleLoginModalVisibility() {
-        this.loginModalVisible = !this.loginModalVisible;
+    public togglePass() {
+        this.togglePassword = !this.togglePassword
     }
 
-    toggleResetPassModalVisibility() {
-        this.resetPassModalVisible = !this.resetPassModalVisible;
+    get username() {
+        return this.login.get('username')
     }
 
-    toggleFeedbackModalVisibility() {
-        this.feedbackModuleVisible = !this.feedbackModuleVisible;
-    }
-
-    /*
-     Unused Modal fucnction
-     Required for c-modal element
-     event: true when modal switched from invisible to visible
-     false when modal switched from visible to invisible
-     */
-    handleLoginChange(event: boolean) {
-        //this.loginModalVisible=event;
-    }
-
-    handleResetPassChange(event: boolean) {
-        //this.loginModalVisible=event;
-    }
-
-    handleFeedbackChange(event: boolean) {
-        //this.loginModalVisible=event;
+    get password() {
+        return this.login.get('password')
     }
 
     ngOnDestroy(): void {
         this.username$?.unsubscribe();
         this.password$?.unsubscribe();
-        this.email$?.unsubscribe();
     }
 }

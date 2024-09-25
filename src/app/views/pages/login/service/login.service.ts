@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http'
-import { Injectable, input } from '@angular/core'
+import { Injectable } from '@angular/core'
+import { ReCaptchaV3Service } from 'ng-recaptcha'
 import { NGXLogger } from 'ngx-logger'
 import { catchError, map, Observable, of } from 'rxjs'
 import { environment } from '../../../../../environments/environment'
@@ -9,7 +10,7 @@ export interface LoginData {
   password: string;
 }
 
-export class LoginResult {
+export class Result {
   outcome!: boolean;
   error: HttpErrorResponse | null;
 
@@ -25,23 +26,26 @@ export class LoginResult {
 export class LoginService {
   private loginUrl = ''
   private recaptchaUrl = ''
-  private passUrl = ''
+  private forgotPassEmail = ''
 
-  constructor(private http: HttpClient, private logger: NGXLogger) {
+  constructor(private http: HttpClient, private logger: NGXLogger, private recaptchaV3Service: ReCaptchaV3Service) {
     this.loginUrl = environment.server + environment.login
     this.recaptchaUrl = environment.server + environment.recaptcha
-    this.passUrl = environment.server + environment.forgotPass
+    this.forgotPassEmail = environment.server + environment.forgotPassEmail
   }
 
-  public login(data: LoginData): Observable<LoginResult | any> {
-    return this.http.post<{ success: true }>(this.loginUrl, data).pipe(
-        map(result => new LoginResult(result.success, null)),
+  public login(data: LoginData): Observable<Result | any> {
+    return this.http.post<Result>(this.loginUrl, data).pipe(
         catchError((err, caught) => {
           this.handleError(err, this.logger)
           return of(err)
         })
     )
   }
+
+    public getToken(): Observable<string>{
+        return this.recaptchaV3Service.execute('submit');
+    }
 
   submitRecaptcha(token: String): Observable<number | HttpErrorResponse> {
     return this.http.post<{ score: number }>(this.recaptchaUrl, token).pipe(
@@ -53,12 +57,11 @@ export class LoginService {
     )
   }
 
-  forgotPass(username: String): Observable<boolean | HttpErrorResponse> {
-    return this.http.post<{ responseStatus: number }>(this.passUrl, username).pipe(
-        map(result => result.responseStatus),
+  forgotPassCheck(email: String): Observable<any> {
+    return this.http.post<Result>(this.forgotPassEmail, email).pipe(
         catchError((err, caught) => {
-          this.handleError(err, this.logger)
-          return of(err)
+            this.handleError(err, this.logger)
+            return of(err)
         })
     )
   }
@@ -67,7 +70,7 @@ export class LoginService {
     this.logger.error(error)
   }
 
-  validateInputLengths(username: string, password: string): boolean {
+  validateLoginInput(username: string, password: string): boolean {
           return (username.length >= 5)
               && (username.length <= 20)
               && (password.length >= 10)

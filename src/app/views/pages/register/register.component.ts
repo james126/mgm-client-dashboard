@@ -1,7 +1,7 @@
-import { group } from '@angular/animations'
+
 import { HttpErrorResponse } from '@angular/common/http'
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core'
-import { AbstractControl, AsyncValidatorFn, FormArray, FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core'
+import { AbstractControl, AsyncValidatorFn, FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
 import { IconDirective } from '@coreui/icons-angular'
 import {
     ContainerComponent,
@@ -17,8 +17,9 @@ import {
     ButtonDirective, ButtonCloseDirective, ModalModule, NavLinkDirective,
 } from '@coreui/angular'
 import _default from 'chart.js/dist/core/core.interaction'
-import { NGXLogger } from 'ngx-logger'
-import { username } from '../../../../test/register/util/dummy-data'
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
 import { ControlErrorsComponent } from './component/control-errors/control-errors.component'
 import { map, switchMap, timer, of, Observable, catchError, Subscription, fromEvent, debounceTime } from 'rxjs'
 import { PasswordStrength, SignupResult, SignupService } from './service/signup.service'
@@ -42,7 +43,7 @@ export enum Status{
     standalone: true,
     imports: [ContainerComponent, RowComponent, ColComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent,
         InputGroupTextDirective, IconDirective, FormControlDirective, ButtonDirective, ControlErrorsComponent, ReactiveFormsModule, CommonModule,
-        RecaptchaModule, ControlErrorsComponent, ButtonCloseDirective, ModalModule, NavLinkDirective, RouterLink],
+        RecaptchaModule, ControlErrorsComponent, ButtonCloseDirective, ModalModule, NavLinkDirective, RouterLink, FontAwesomeModule],
     providers: [ReCaptchaV3Service],
 })
 export class RegisterComponent implements AfterViewInit, OnDestroy{
@@ -66,7 +67,10 @@ export class RegisterComponent implements AfterViewInit, OnDestroy{
     public show2: boolean
     public visible: boolean;
 
-    constructor(private signupService: SignupService, private formBuilder: NonNullableFormBuilder, private recaptchaV3Service: ReCaptchaV3Service) {
+    readonly faCircleExclamation  = faCircleExclamation
+    readonly faCircleCheck  = faCircleCheck
+
+    constructor(private signupService: SignupService, private formBuilder: NonNullableFormBuilder) {
         this.register = this.formBuilder.group({
             username: ['', {
                 validators: [required, pattern('[a-zA-Z0-9.]+'), maxLength(20), minLength(5)],
@@ -111,20 +115,6 @@ export class RegisterComponent implements AfterViewInit, OnDestroy{
                 }
             })
 
-        this.email$ = fromEvent(this.emailInput.nativeElement, 'focus')
-            .pipe(debounceTime(1000))
-            .subscribe(() => {
-                const value = this.emailInput.nativeElement.value.trim()
-                const valid = this.register.controls['email'].valid
-                if (value.length == 0) {
-                    this.emailValid = undefined
-                } else if (valid) {
-                    this.emailValid = true
-                } else {
-                    this.emailValid = false
-                }
-            })
-
         this.password$ = fromEvent(this.passwordInput.nativeElement, 'focus')
             .pipe(debounceTime(1000))
             .subscribe(() => {
@@ -152,6 +142,20 @@ export class RegisterComponent implements AfterViewInit, OnDestroy{
                     this.repeatPasswordValid = false
                 }
             })
+
+        this.email$ = fromEvent(this.emailInput.nativeElement, 'focus')
+            .pipe(debounceTime(1000))
+            .subscribe(() => {
+                const value = this.emailInput.nativeElement.value.trim()
+                const valid = this.register.controls['email'].valid
+                if (value.length == 0) {
+                    this.emailValid = undefined
+                } else if (valid) {
+                    this.emailValid = true
+                } else {
+                    this.emailValid = false
+                }
+            })
     }
 
     /* No longer used - routes to landing page and then scrolls to a section, section value passed from template */
@@ -163,6 +167,9 @@ export class RegisterComponent implements AfterViewInit, OnDestroy{
     // }
 
     public togglePass(field: String) {
+        this.status = Status.Idle;
+        this.toggleModalVisibility();
+
         switch (field) {
             case 'pass1':
                 this.show1 = !this.show1
@@ -243,7 +250,7 @@ export class RegisterComponent implements AfterViewInit, OnDestroy{
 
     //Method required for testing
     public getToken(): Observable<string>{
-        return this.recaptchaV3Service.execute('submit');
+        return this.signupService.getToken();
     }
 
     /**
@@ -264,12 +271,16 @@ export class RegisterComponent implements AfterViewInit, OnDestroy{
 
     /*
     Unused Modal fucnction
-    Required for c-modal element
     event: true when modal switched from invisible to visible
            false when modal switched from visible to invisible
      */
     handleChange(event: boolean) {
-        this.visible=event;
+        // if (event){
+        //     setTimeout(() => {
+        //         this.modalButton?.nativeElement.classList.add('btn-custom');
+        //         this.cd.detectChanges();  // Manually trigger change detection if needed
+        //     }, 100);  // 100ms delay to ensure transition happens
+        // }
     }
 
     ngOnDestroy(): void {

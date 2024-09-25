@@ -1,0 +1,21 @@
+<c-modal alignment="center" data-testid="login-modal" [visible]="visible" (visibleChange)="handleChange($event)">
+    <c-modal-header>
+        <h5 cModalTitle>Login Error</h5>
+        <button (click)="hideFeedback()" cButtonClose></button>
+    </c-modal-header>
+    <c-modal-body>
+        <div class="d-flex justify-content-center ">
+            <fa-icon [icon]="faCircleExclamation" size="2x" class="faCircleExclamation"></fa-icon>
+        </div>
+        <div class="d-flex justify-content-center">
+            <p class="text-body-secondary mt-2 mb-0" *ngIf="status === 'Idle' || status === 'Error'">Internal error, please try again later</p>
+            <p class="text-body-secondary mt-2 mb-0" *ngIf=" status === 'Invalid'">Invalid username or password</p>
+        </div>
+    </c-modal-body>
+    <c-modal-footer>
+        <button (click)="hideFeedback()" cButton color="secondary">
+            Close
+        </button>
+        <button routerLink="landing" cButton color="primary">Home</button>
+    </c-modal-footer>
+</c-modal>
