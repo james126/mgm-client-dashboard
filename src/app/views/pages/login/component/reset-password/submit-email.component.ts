@@ -5,7 +5,6 @@ import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } fr
 import { RouterLink } from '@angular/router'
 import {
     AlertComponent,
-    AlertHeadingDirective,
     ButtonCloseDirective,
     ButtonDirective,
     FormControlDirective,
@@ -19,7 +18,6 @@ import {
     RowComponent,
 } from '@coreui/angular'
 import { FaIconComponent } from '@fortawesome/angular-fontawesome'
-import { faCircleCheck } from '@fortawesome/free-regular-svg-icons'
 import { catchError, debounceTime, fromEvent, Observable, of, Subscription, switchMap, timer } from 'rxjs'
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { ASYNC_DELAY } from '../../login.component'
@@ -35,7 +33,7 @@ export enum Status {
 }
 
 @Component({
-    selector: 'reset-password',
+    selector: 'reset-password-submit-email',
     standalone: true,
     imports: [ButtonCloseDirective,
         ButtonDirective,
@@ -52,10 +50,10 @@ export enum Status {
         NgIf,
         RouterLink,
         ReactiveFormsModule, InputGroupTextDirective],
-    templateUrl: './reset-password.component.html',
-    styleUrl: './reset-password.component.scss',
+    templateUrl: './submit-email.component.html',
+    styleUrl: './submit-email.component.scss',
 })
-export class ResetPasswordComponent implements OnInit, OnDestroy {
+export class SubmitEmailComponent implements OnInit, OnDestroy {
     @Input() visible: boolean;
     public internalVisible: boolean;
     @Output() changeVisible: EventEmitter<boolean> = new EventEmitter();

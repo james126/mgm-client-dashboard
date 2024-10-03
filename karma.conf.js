@@ -41,7 +41,7 @@ module.exports = function (config) {
     logLevel: config.LOG_INFO,
     autoWatch: false, //run on test changes
     browsers: ['Chrome'],
-    singleRun: false,
+    singleRun: true, //Karma will exit after running tests
     restartOnFileChange: false
   });
 };

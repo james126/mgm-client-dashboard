@@ -1,4 +1,4 @@
-import { NgIf, NgSwitch, NgSwitchCase } from '@angular/common'
+import { NgIf } from '@angular/common'
 import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { RouterLink } from '@angular/router'
 import { ButtonCloseDirective, ButtonDirective, ModalBodyComponent, ModalComponent, ModalFooterComponent, ModalHeaderComponent, ModalTitleDirective } from '@coreui/angular'
@@ -42,6 +42,7 @@ export class LoginFeedbackComponent  {
     }
 
     hideFeedback() {
+        this.status = Status.Idle;
         this.changeVisible.emit(false);
     }
 

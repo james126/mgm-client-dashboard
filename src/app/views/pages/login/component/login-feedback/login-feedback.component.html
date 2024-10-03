@@ -8,8 +8,8 @@
             <fa-icon [icon]="faCircleExclamation" size="2x" class="faCircleExclamation"></fa-icon>
         </div>
         <div class="d-flex justify-content-center">
-            <p class="text-body-secondary mt-2 mb-0" *ngIf="status === 'Idle' || status === 'Error'">Internal error, please try again later</p>
-            <p class="text-body-secondary mt-2 mb-0" *ngIf=" status === 'Invalid'">Invalid username or password</p>
+            <p class="text-body-secondary mt-2 mb-0" *ngIf="status == 'Idle' || status == 'Error'">Internal error, please try again later</p>
+            <p class="text-body-secondary mt-2 mb-0" *ngIf="status == 'Invalid'">Invalid username or password</p>
         </div>
     </c-modal-body>
     <c-modal-footer>

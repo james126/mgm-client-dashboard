@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http'
 import { DebugElement } from '@angular/core'
 import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing'
 import { ReactiveFormsModule } from '@angular/forms'
-import { By, Title } from '@angular/platform-browser'
+import { By } from '@angular/platform-browser'
 import { provideAnimations } from '@angular/platform-browser/animations'
 import { RouterModule } from '@angular/router'
 import { ButtonModule, CardModule, FormModule, GridModule, ModalModule } from '@coreui/angular'
@@ -12,8 +12,6 @@ import { RECAPTCHA_V3_SITE_KEY } from 'ng-recaptcha'
 import { of, throwError } from 'rxjs'
 import { iconSubset } from 'src/app/icons/icon-subset'
 import { environment } from 'src/environments/environment.test'
-import { LandingFragmentService } from '../../app/views/pages/landing/service/fragment.service'
-import { ControlErrorsComponent } from '../../app/views/pages/register/component/control-errors/control-errors.component'
 import { ASYNC_DELAY, RegisterComponent} from '../../app/views/pages/register/register.component'
 import { PasswordStrength, SignupResult, SignupService } from '../../app/views/pages/register/service/signup.service'
 import { dispatchFakeEvent, updateTrigger } from '../util/update-form-helper'
@@ -25,7 +23,6 @@ describe('RegisterComponent', () => {
     let fixture: ComponentFixture<RegisterComponent>
     let debugElement: DebugElement
     let signupService: jasmine.SpyObj<SignupService>
-    let fragService: jasmine.SpyObj<LandingFragmentService>
     let strength: PasswordStrength
     let iconSetService: IconSetService
 
@@ -52,7 +49,7 @@ describe('RegisterComponent', () => {
         )
 
         await TestBed.configureTestingModule({
-            imports: [CardModule, FormModule, GridModule, ButtonModule, IconModule, ReactiveFormsModule, ControlErrorsComponent, IconModule,
+            imports: [CardModule, FormModule, GridModule, ButtonModule, IconModule, ReactiveFormsModule, IconModule,
                 FontAwesomeModule, ModalModule, RouterModule.forRoot([])],
             providers: [IconSetService, RegisterComponent, { provide: SignupService, useValue: signupService },
                 { provide: RECAPTCHA_V3_SITE_KEY, useValue: environment.recaptchaV3 }, provideAnimations()],
@@ -213,6 +210,7 @@ describe('RegisterComponent', () => {
         toggle.triggerEventHandler('click', null)
         fixture.detectChanges()
         expect(password.attributes['type']).toBe('password')
+        flush() //finish any async operations
     }))
 
     it('Successful submission popup', fakeAsync(() => {
@@ -228,7 +226,7 @@ describe('RegisterComponent', () => {
 
         let modalText = debugElement.query(By.css(`[data-testid="modal"]`)).nativeElement.innerText
         expect(modalText.includes('Thank You')).toBe(true)
-        expect(modalText.includes('Registration successful!')).toBe(true)
+        expect(modalText.includes('Registration successful')).toBe(true)
         flush() //finish any async operations
     }))
 
@@ -246,7 +244,7 @@ describe('RegisterComponent', () => {
 
         let modalText = debugElement.query(By.css(`[data-testid="modal"]`)).nativeElement.innerText
         expect(modalText.includes('Submission Error')).toBe(true)
-        expect(modalText.includes('Please try again later!')).toBe(true)
+        expect(modalText.includes('Internal error, please try again later')).toBe(true)
         flush() //finish any async operations
     }))
 })

@@ -21,7 +21,7 @@ import {
 } from '@coreui/angular'
 import { catchError, debounceTime, fromEvent, Observable, of, Subscription, switchMap, timer } from 'rxjs'
 import { LoginFeedbackComponent } from './component/login-feedback/login-feedback.component'
-import { ResetPasswordComponent } from './component/reset-password/reset-password.component'
+import { SubmitEmailComponent } from './component/reset-password/submit-email.component'
 import { LoginData, Result, LoginService } from './service/login.service'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IconDefinition } from '@fortawesome/free-regular-svg-icons'
@@ -44,7 +44,7 @@ export enum Status {
     standalone: true,
     imports: [ContainerComponent, RowComponent, ColComponent, CardGroupComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent,
         InputGroupTextDirective, IconDirective, FormControlDirective, ButtonDirective, NgStyle, RouterModule, ReactiveFormsModule, ButtonCloseDirective,
-        ModalModule, NgSwitchCase, NgSwitch, NgIf, FontAwesomeModule, AlertComponent, GutterDirective, LoginFeedbackComponent, ResetPasswordComponent],
+        ModalModule, NgSwitchCase, NgSwitch, NgIf, FontAwesomeModule, AlertComponent, GutterDirective, LoginFeedbackComponent, SubmitEmailComponent],
     providers: [],
 })
 export class LoginComponent implements OnInit, OnDestroy {
@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     public icons: IconDefinition[] = []
 
     public loginFeedbackVisible: boolean;
-    public resetPassVisible: boolean;
+    public submitEmailVisible: boolean;
 
     constructor(private loginService: LoginService, private formBuilder: NonNullableFormBuilder) {
         this.login = this.formBuilder.group({
@@ -84,7 +84,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
         this.togglePassword = false
         this.loginFeedbackVisible = false;
-        this.resetPassVisible = false;
+        this.submitEmailVisible = false;
         this.icons.push()
     }
 
@@ -144,7 +144,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     public forgotPass() {
-        this.showResetPassModal(true)
+        this.showResetPasswordSubmitEmailModal(true)
     }
 
     public getToken(): Observable<string> {
@@ -158,8 +158,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
     }
 
-    showResetPassModal(visible: boolean) {
-        this.resetPassVisible = visible;
+    showResetPasswordSubmitEmailModal(visible: boolean) {
+        this.submitEmailVisible = visible;
     }
 
     private getFormValues() {

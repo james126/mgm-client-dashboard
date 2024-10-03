@@ -3,27 +3,27 @@
 
         <!-- MODALS -->
         <login-feedback (changeVisible)="showLoginFeedbackModal($event)"
-                        [visible]="loginFeedbackVisible"
-                        [status]="loginStatus">
+                        [status]="loginStatus"
+                        [visible]="loginFeedbackVisible">
         </login-feedback>
 
-        <reset-password (changeVisible)="showResetPassModal($event)"
-                        [visible]="resetPassVisible">
-        </reset-password>
+        <reset-password-submit-email (changeVisible)="showResetPasswordSubmitEmailModal($event)"
+                        [visible]="submitEmailVisible">
+        </reset-password-submit-email>
 
         <c-row class="justify-content-center">
             <c-col lg="10" xl="8">
                 <c-card-group>
                     <c-card class="p-4">
                         <c-card-body>
-                            <form [formGroup]="login" cForm>
+                            <form [formGroup]="login">
                                 <h1>Login</h1>
                                 <p class="text-body-secondary">Sign in to your account</p>
                                 <c-input-group class="mb-3">
                                     <span cInputGroupText>
                                         <svg cIcon name="cilUser"></svg>
                                     </span>
-                                    <input #usernameInput [valid]="usernameValid" cFormControl data-testid="username" formControlName="username" placeholder="Username" />
+                                    <input #usernameInput [valid]="usernameValid" cFormControl data-testid="username" formControlName="username" placeholder="Username"/>
                                 </c-input-group>
                                 <c-input-group class="mb-4">
                                     <span cInputGroupText>
@@ -40,7 +40,7 @@
                                 </c-input-group>
                                 <c-row>
                                     <c-col xs="6">
-                                        <button (click)="onSubmit()" [disabled]="login.invalid" cButton class="px-4" color="primary" data-testid="submit">
+                                        <button cButton [disabled]="login.invalid" (click)="onSubmit()" color="primary" data-testid="submit-login">
                                             Login
                                         </button>
                                     </c-col>
@@ -67,7 +67,7 @@
                             <button (click)="showLoginFeedbackModal(true)">
                                 toggleLoginModalVisibility
                             </button>
-                            <button (click)="showResetPassModal(true)">
+                            <button (click)="showResetPasswordSubmitEmailModal(true)">
                                 toggleResetPassModalVisibility
                             </button>
                         </c-card-body>

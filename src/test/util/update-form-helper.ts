@@ -16,7 +16,7 @@ export function updateTrigger(fixture: ComponentFixture<any>, id: string, value:
         button: 0,
     };
     el.triggerEventHandler('input', event);
-    //validation updateOn blur
+    //validation updateOn
     dispatchFakeEvent(fixture, id);
 }
 
@@ -26,12 +26,12 @@ export function dispatchFakeEvent(fixture: ComponentFixture<any>, id: string,): 
         preventDefault(): void {},
         stopPropagation(): void {},
         stopImmediatePropagation(): void {},
-        type: 'blur',
+        type: 'input',
         target: el.nativeElement,
         currentTarget: el.nativeElement,
         bubbles: false,
         cancelable: false,
         button: 0,
     };
-    el.triggerEventHandler('blur', event);
+    el.triggerEventHandler('input', event);
 }

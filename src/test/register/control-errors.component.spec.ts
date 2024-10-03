@@ -57,7 +57,7 @@ describe('ControlErrorsComponent', () => {
                 this.register = formBuilder.group({
                     username: ['', {
                         validators: [required],
-                        updateOn: 'blur'
+                        updateOn: 'change'
                     }],
                 })
             }

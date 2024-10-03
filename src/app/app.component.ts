@@ -30,7 +30,7 @@ export class AppComponent implements OnInit {
   constructor(private router: Router, private titleService: Title, private iconSetService: IconSetService) {
     this.titleService.setTitle(this.title);
     this.iconSetService.icons = { ...iconSubset };
-    this.router.navigate(['/login'])
+    // this.router.navigate(['/login'])
     // this.router.navigate(['/landing'], { skipLocationChange: true })
     //     .then(r => true );
   }
