@@ -6,9 +6,9 @@
     </c-modal-header>
     <c-modal-body>
         <div class="d-flex justify-content-center">
-            <fa-icon [icon]="faLock" size="2x" class="faLock"></fa-icon>
+            <fa-icon [icon]="faLock" size="2x" animation="fade" style="--fa-animation-iteration-count: 3;" class="faLock"></fa-icon>
         </div>
-        <form [formGroup]="resetPassEmail" cForm>
+        <form [formGroup]="form" cForm>
             <p class="text-body-secondary">To reset your password, enter the email address used when registering your account.</p>
             <c-input-group class="mb-3">
                 <span cInputGroupText>&#64;</span>
@@ -16,17 +16,17 @@
             </c-input-group>
         </form>
         <c-alert [visible]="getStatus() === 'Success'" color="success">
-            <h4 cAlertHeading>Email Sent</h4>
+            <h4 cAlertHeading>Check your email</h4>
             <hr />
             <p>If this email mathes an account, a temporary password will have been sent to that address.</p>
         </c-alert>
-        <c-alert [visible]="getStatus() === 'Danger'" color="danger">
+        <c-alert [visible]="getStatus() === 'Error'" color="danger">
             <h4 cAlertHeading>Submission Error</h4>
             <hr />
             <p>Please try again later.</p>
         </c-alert>
     </c-modal-body>
     <c-modal-footer>
-        <button cButton [disabled]="resetPassEmail.invalid && getStatus() === 'Idle'" (click)="onSubmit()" color="primary" data-testid="submit">Submit</button>
+        <button cButton [disabled]="form.invalid && getStatus() === 'Idle'" (click)="onSubmit()" color="primary" data-testid="submit">Submit</button>
     </c-modal-footer>
 </c-modal>

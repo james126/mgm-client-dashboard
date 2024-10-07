@@ -14,9 +14,9 @@ import { iconSubset } from 'src/app/icons/icon-subset'
 import { environment } from 'src/environments/environment.test'
 import { ASYNC_DELAY, RegisterComponent} from '../../app/views/pages/register/register.component'
 import { PasswordStrength, SignupResult, SignupService } from '../../app/views/pages/register/service/signup.service'
-import { dispatchFakeEvent, updateTrigger } from '../util/update-form-helper'
-import { email, password, repeatPassword, signupData, username } from './util/dummy-data'
-import { formatErrors } from './util/format-errors-helper'
+import { dispatchFakeEvent, updateTrigger } from '../test-util/update-form-helper'
+import { email, password, repeatPassword, signupData, username } from './dummy-data'
+import { formatErrors } from '../../app/views/pages/register/util/format-validation-errors'
 
 describe('RegisterComponent', () => {
     let component: RegisterComponent

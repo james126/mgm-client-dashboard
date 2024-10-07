@@ -21,7 +21,8 @@ import {
 } from '@coreui/angular'
 import { catchError, debounceTime, fromEvent, Observable, of, Subscription, switchMap, timer } from 'rxjs'
 import { LoginFeedbackComponent } from './component/login-feedback/login-feedback.component'
-import { SubmitEmailComponent } from './component/reset-password/submit-email.component'
+import { NewPasswordComponent } from './component/reset-password/new-password/new-password.component'
+import { SubmitEmailComponent } from './component/reset-password/submit-email/submit-email.component'
 import { LoginData, Result, LoginService } from './service/login.service'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IconDefinition } from '@fortawesome/free-regular-svg-icons'
@@ -44,7 +45,7 @@ export enum Status {
     standalone: true,
     imports: [ContainerComponent, RowComponent, ColComponent, CardGroupComponent, TextColorDirective, CardComponent, CardBodyComponent, FormDirective, InputGroupComponent,
         InputGroupTextDirective, IconDirective, FormControlDirective, ButtonDirective, NgStyle, RouterModule, ReactiveFormsModule, ButtonCloseDirective,
-        ModalModule, NgSwitchCase, NgSwitch, NgIf, FontAwesomeModule, AlertComponent, GutterDirective, LoginFeedbackComponent, SubmitEmailComponent],
+        ModalModule, NgSwitchCase, NgSwitch, NgIf, FontAwesomeModule, AlertComponent, GutterDirective, LoginFeedbackComponent, SubmitEmailComponent, NewPasswordComponent],
     providers: [],
 })
 export class LoginComponent implements OnInit, OnDestroy {
@@ -62,6 +63,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     public loginFeedbackVisible: boolean;
     public submitEmailVisible: boolean;
+    public newPasswordVisible: boolean;
 
     constructor(private loginService: LoginService, private formBuilder: NonNullableFormBuilder) {
         this.login = this.formBuilder.group({
@@ -79,13 +81,13 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.password$ = undefined;
         this.usernameValid = undefined
         this.passwordValid = undefined
-
-        this.loginStatus = Status.Idle
-
         this.togglePassword = false
+        this.loginStatus = Status.Idle
+        this.icons.push()
+
         this.loginFeedbackVisible = false;
         this.submitEmailVisible = false;
-        this.icons.push()
+        this.newPasswordVisible = false;
     }
 
     ngOnInit(): void {
@@ -160,6 +162,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     showResetPasswordSubmitEmailModal(visible: boolean) {
         this.submitEmailVisible = visible;
+    }
+
+    showNewPasswordModal(visible: boolean) {
+        this.newPasswordVisible = visible;
     }
 
     private getFormValues() {

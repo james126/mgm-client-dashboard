@@ -5,7 +5,7 @@ import { NGXLogger } from 'ngx-logger'
 import { LoggerTestingModule, NGXLoggerMock } from 'ngx-logger/testing'
 import { LoginData, LoginService } from '../../../app/views/pages/login/service/login.service'
 import { environment } from '../../../environments/environment.development'
-import { loginData } from 'src/test/login/util/dummy-data'
+import { loginData } from '../dummy-data'
 
 describe('LoginService', () => {
     let loginService: LoginService

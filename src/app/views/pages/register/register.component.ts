@@ -20,7 +20,7 @@ import _default from 'chart.js/dist/core/core.interaction'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
-import { ControlErrorsComponent } from './component/control-errors/control-errors.component'
+import { ControlErrorsComponent } from '../../../utility/control-errors/control-errors.component'
 import { map, switchMap, timer, of, Observable, catchError, Subscription, fromEvent, debounceTime } from 'rxjs'
 import { PasswordStrength, SignupResult, SignupService } from './service/signup.service'
 import { CommonModule } from '@angular/common'
@@ -167,9 +167,6 @@ export class RegisterComponent implements AfterViewInit, OnDestroy{
     // }
 
     public togglePass(field: String) {
-        this.status = Status.Idle;
-        this.toggleModalVisibility();
-
         switch (field) {
             case 'pass1':
                 this.show1 = !this.show1

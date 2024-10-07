@@ -6,74 +6,123 @@ import { catchError, map, Observable, of } from 'rxjs'
 import { environment } from '../../../../../environments/environment'
 
 export interface LoginData {
-  username: string;
-  password: string;
+    username: string;
+    password: string;
+}
+
+export interface PasswordStrength {
+    valid: boolean;
+    suggestions: string[];
 }
 
 export class Result {
-  outcome!: boolean;
-  error: HttpErrorResponse | null;
+    outcome!: boolean
+    error: HttpErrorResponse | null
 
-  constructor(outcome: boolean, error: HttpErrorResponse | null) {
-    this.outcome = outcome
-    this.error = error
-  }
+    constructor(outcome: boolean, error: HttpErrorResponse | null) {
+        this.outcome = outcome
+        this.error = error
+    }
 }
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root',
 })
 export class LoginService {
-  private loginUrl = ''
-  private recaptchaUrl = ''
-  private forgotPassEmail = ''
+    private loginUrl = ''
+    private recaptchaUrl = ''
+    private forgotPassEmail = ''
 
-  constructor(private http: HttpClient, private logger: NGXLogger, private recaptchaV3Service: ReCaptchaV3Service) {
-    this.loginUrl = environment.server + environment.login
-    this.recaptchaUrl = environment.server + environment.recaptcha
-    this.forgotPassEmail = environment.server + environment.forgotPassEmail
-  }
-
-  public login(data: LoginData): Observable<Result | any> {
-    return this.http.post<Result>(this.loginUrl, data).pipe(
-        catchError((err, caught) => {
-          this.handleError(err, this.logger)
-          return of(err)
-        })
-    )
-  }
-
-    public getToken(): Observable<string>{
-        return this.recaptchaV3Service.execute('submit');
+    constructor(private http: HttpClient, private logger: NGXLogger, private recaptchaV3Service: ReCaptchaV3Service) {
+        this.loginUrl = environment.server + environment.login
+        this.recaptchaUrl = environment.server + environment.recaptcha
+        this.forgotPassEmail = environment.server + environment.forgotPassEmail
     }
 
-  submitRecaptcha(token: String): Observable<number | HttpErrorResponse> {
-    return this.http.post<{ score: number }>(this.recaptchaUrl, token).pipe(
-        map(result => result.score),
-        catchError((err, caught) => {
-          this.handleError(err, this.logger)
-          return of(err)
-        })
-    )
-  }
+    public login(data: LoginData): Observable<Result | any> {
+        return this.http.post<Result>(this.loginUrl, data).pipe(
+            catchError((err, caught) => {
+                this.handleError(err, this.logger)
+                return of(err)
+            }),
+        )
+    }
 
-  forgotPassCheck(email: String): Observable<any> {
-    return this.http.post<Result>(this.forgotPassEmail, email).pipe(
-        catchError((err, caught) => {
-            this.handleError(err, this.logger)
-            return of(err)
-        })
-    )
-  }
+    public getToken(): Observable<string> {
+        return this.recaptchaV3Service.execute('submit')
+    }
 
-  private handleError(error: HttpErrorResponse, logger: NGXLogger) {
-    this.logger.error(error)
-  }
+    submitRecaptcha(token: String): Observable<number | HttpErrorResponse> {
+        return this.http.post<{ score: number }>(this.recaptchaUrl, token).pipe(
+            map(result => result.score),
+            catchError((err, caught) => {
+                this.handleError(err, this.logger)
+                return of(err)
+            }),
+        )
+    }
 
-  validateLoginInput(username: string, password: string): boolean {
-          return (username.length >= 5)
-              && (username.length <= 20)
-              && (password.length >= 10)
-              && (password.length <= 20)
-  }
+    forgotPassCheck(email: String): Observable<any> {
+        return this.http.post<Result>(this.forgotPassEmail, email).pipe(
+            catchError((err, caught) => {
+                this.handleError(err, this.logger)
+                return of(err)
+            }),
+        )
+    }
+
+    private handleError(error: HttpErrorResponse, logger: NGXLogger) {
+        this.logger.error(error)
+    }
+
+    validateLoginInput(username: string, password: string): boolean {
+        return (username.length >= 5)
+            && (username.length <= 20)
+            && (password.length >= 10)
+            && (password.length <= 20)
+    }
+
+    public getPasswordStrength(value: string): Observable<PasswordStrength> {
+        const strength: PasswordStrength = {
+            valid: false,
+            suggestions: [],
+        }
+
+        if (!value) {
+            strength.suggestions.push('invalidPassword')
+            return of(strength)
+        }
+
+        const upperCase = this.hasUpperCase(value, strength)
+        const lowerCase = this.hasLowerCase(value, strength)
+        const numeric = this.hasNumeric(value, strength)
+        const specialChar = this.hasSpecialChar(value, strength)
+        strength.valid = upperCase && lowerCase && numeric && specialChar
+
+        return of(strength)
+    }
+
+    private hasUpperCase(value: string, strength: PasswordStrength): boolean {
+        const hasUpperCase = /[A-Z]+/.test(value)
+        hasUpperCase ? null : strength.suggestions.push('requiresUppercase')
+        return hasUpperCase
+    }
+
+    private hasLowerCase(value: string, strength: PasswordStrength): boolean {
+        const hasLowerCase = /[a-z]+/.test(value)
+        hasLowerCase ? null : strength.suggestions.push('requiresLowercase')
+        return hasLowerCase
+    }
+
+    private hasNumeric(value: string, strength: PasswordStrength): boolean {
+        const hasNumeric = /[0-9]+/.test(value)
+        hasNumeric ? null : strength.suggestions.push('requiresNumeric')
+        return hasNumeric
+    }
+
+    private hasSpecialChar(value: string, strength: PasswordStrength): boolean {
+        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>\-=\[\];'"\?/]+/.test(value)
+        hasSpecialChar ? null : strength.suggestions.push('requiresSpecial')
+        return hasSpecialChar
+    }
 }

@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common'
 import { HttpErrorResponse } from '@angular/common/http'
 import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core'
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
@@ -15,22 +14,21 @@ import {
     ModalFooterComponent,
     ModalHeaderComponent,
     ModalTitleDirective,
-    RowComponent,
 } from '@coreui/angular'
 import { FaIconComponent } from '@fortawesome/angular-fontawesome'
 import { catchError, debounceTime, fromEvent, Observable, of, Subscription, switchMap, timer } from 'rxjs'
 import { faLock } from '@fortawesome/free-solid-svg-icons';
-import { ASYNC_DELAY } from '../../login.component'
-import { LoginService, Result } from '../../service/login.service'
+import { LoginService, Result } from '../../../service/login.service'
 
 const { required, maxLength, email } = Validators
 
-export enum Status {
+export enum EmailStatus {
     Idle = 'Idle',
     Success = 'Success',
-    Invalid = 'Invalid',
     Error = 'Error'
 }
+
+export const ASYNC_DELAY = 1000
 
 @Component({
     selector: 'reset-password-submit-email',
@@ -44,12 +42,11 @@ export enum Status {
         ModalHeaderComponent,
         ModalTitleDirective,
         InputGroupComponent,
-        RowComponent,
         FormControlDirective,
         AlertComponent,
-        NgIf,
         RouterLink,
-        ReactiveFormsModule, InputGroupTextDirective],
+        ReactiveFormsModule,
+        InputGroupTextDirective],
     templateUrl: './submit-email.component.html',
     styleUrl: './submit-email.component.scss',
 })
@@ -59,16 +56,17 @@ export class SubmitEmailComponent implements OnInit, OnDestroy {
     @Output() changeVisible: EventEmitter<boolean> = new EventEmitter();
     @ViewChild('emailInput', { static: true }) emailInput!: ElementRef
     public emailValid: boolean | undefined
-    public resetPassEmail: FormGroup
+    public form: FormGroup
     public email$: Subscription | undefined
-    public status: Status
+    public status: EmailStatus
     readonly faLock = faLock
 
 
     constructor(private formBuilder: NonNullableFormBuilder, private loginService: LoginService) {
-        this.resetPassEmail = this.formBuilder.group({
+        this.form = this.formBuilder.group({
             email: ['', {
                 validators: [required, email, maxLength(40)],
+                // asyncValidators: [(control: AbstractControl) => this.validatePassword(control.value)],
                 updateOn: 'change',
             }],
         })
@@ -76,9 +74,11 @@ export class SubmitEmailComponent implements OnInit, OnDestroy {
         this.emailValid = undefined
         this.visible = false;
         this.internalVisible = false;
-        this.status = Status.Idle;
+        this.status = EmailStatus.Idle;
     }
 
+    //Use Observer so in template input element can include attribute [valid]=
+    //Gives the option of returning undefined which applies no styling
     ngOnInit(): void {
         this.email$ = fromEvent(this.emailInput.nativeElement, 'focus')
             .pipe(debounceTime(1000))
@@ -87,7 +87,7 @@ export class SubmitEmailComponent implements OnInit, OnDestroy {
                 let regex = new RegExp('\\S+[@]\\S+[.]\\S+')
                 let valid = regex.test(value)
                 if (value.length == 0) {
-                    this.emailValid = false
+                    this.emailValid = undefined
                 } else if (valid) {
                     this.emailValid = true
                 } else {
@@ -97,43 +97,42 @@ export class SubmitEmailComponent implements OnInit, OnDestroy {
     }
 
     public onSubmit() {
-        if(this.resetPassEmail.valid) {
+        if(this.form.valid) {
             timer(ASYNC_DELAY).pipe(
                 switchMap(() => this.getToken()),
                 switchMap((token: string) => this.loginService.submitRecaptcha(token)),
                 switchMap((score: number | HttpErrorResponse) =>
-                    (score instanceof HttpErrorResponse || score < 0.7) ? of('Error') : this.loginService.forgotPassCheck(this.resetPassEmail.get('email')!.value)),
+                    (score instanceof HttpErrorResponse || score < 0.7) ? of('Error') : this.loginService.forgotPassCheck(this.form.get('email')!.value)),
                 catchError(() => of('Error')),
-            )
-                .subscribe({
+            ).subscribe({
                     next: (value: string | Result) => {
                         if (value.constructor === Result) {
-                            this.status = Status.Success
+                            this.status = EmailStatus.Success
                         } else {
-                            this.status = Status.Error
+                            this.status = EmailStatus.Error
                         }
                     },
                     error: () => {
-                        this.status = Status.Error
+                        this.status = EmailStatus.Error
                     }
                 })
         } else {
-            this.status = Status.Error //this method should only be called if this.resetPassEmail is valid (as submit button is now enabled)
+            this.status = EmailStatus.Error //this method should only be called if this.resetPassEmail is valid (as submit button is now enabled)
         }
     }
 
     public isVisible() {
         if (this.visible == false){
             if (this.internalVisible) {
-                this.resetPassEmail.get('email')?.reset();
-                this.status = Status.Idle
+                this.form.get('email')?.reset();
+                this.status = EmailStatus.Idle
                 this.internalVisible = false;
             }
             return false;
         } else {
             if (!this.internalVisible) {
-                this.resetPassEmail.get('email')?.reset();
-                this.status = Status.Idle
+                this.form.get('email')?.reset();
+                this.status = EmailStatus.Idle
                 this.internalVisible = true;
             }
             return true;
@@ -149,8 +148,9 @@ export class SubmitEmailComponent implements OnInit, OnDestroy {
     }
 
     hideFeedback() {
-        this.resetPassEmail.get('email')?.reset();
-        this.status = Status.Idle
+        this.form.get('email')?.reset();
+        this.status = EmailStatus.Idle
+        this.emailValid = undefined
         this.changeVisible.emit(false);
     }
 
@@ -161,8 +161,9 @@ export class SubmitEmailComponent implements OnInit, OnDestroy {
      can be used for other events etc
      */
     handleChange(event: boolean) {
-        this.resetPassEmail.get('email')?.reset();
-        this.status = Status.Idle
+        this.form.get('email')?.reset();
+        this.status = EmailStatus.Idle
+        this.emailValid = undefined
     }
 
     ngOnDestroy(): void {

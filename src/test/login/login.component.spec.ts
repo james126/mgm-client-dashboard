@@ -12,11 +12,11 @@ import { LoginComponent  } from '../../app/views/pages/login/login.component'
 import { IconModule } from '@coreui/icons-angular'
 import { IconSetService } from '@coreui/icons-angular'
 import { iconSubset } from '../../app/icons/icon-subset'
-import { LoginData, Result, LoginService } from '../../app/views/pages/login/service/login.service'
+import { LoginData, Result, LoginService, PasswordStrength } from '../../app/views/pages/login/service/login.service'
 import { ASYNC_DELAY } from '../../app/views/pages/login/login.component'
 import { environment } from '../../environments/environment.test'
-import { loginData } from '../login/util/dummy-data'
-import { updateTrigger } from '../util/update-form-helper'
+import { loginData } from './dummy-data'
+import { updateTrigger } from '../test-util/update-form-helper'
 
 describe('LoginComponent', () => {
     let component: LoginComponent
@@ -25,6 +25,10 @@ describe('LoginComponent', () => {
     let loginService: jasmine.SpyObj<LoginService>
     let iconSetService: IconSetService
     let testData: LoginData
+    let passStrength: PasswordStrength = {
+        valid: true,
+        suggestions: [],
+    }
 
     const fillForm = () => {
         updateTrigger(fixture, 'username', testData.username)
@@ -32,13 +36,15 @@ describe('LoginComponent', () => {
     }
 
     beforeEach(async () => {
+
         loginService = jasmine.createSpyObj<LoginService>('LoginService', {
                 login: of(new Result(true, null)),
                 getToken: of('123'),
                 submitRecaptcha: of(1),
                 forgotPassCheck: of(true),
-                validateLoginInput: true
-            },
+                validateLoginInput: true,
+                getPasswordStrength: of(passStrength)
+            }
         )
 
         await TestBed.configureTestingModule({
@@ -111,7 +117,7 @@ describe('LoginComponent', () => {
         flush() //finish any async operations
     }))
 
-    xit('Login popup - HttpErrorResponse shows Status Error', fakeAsync(() => {
+    it('Login popup - HttpErrorResponse shows Status Error', fakeAsync(() => {
         const mockErrorResponse = new HttpErrorResponse({
             error: 'Server Error',
             status: 500,
@@ -167,7 +173,7 @@ describe('LoginComponent', () => {
         flush() //finish any async operations
     }))
 
-    xit('Displays reset password popup', fakeAsync(() => {
+    it('Displays reset password popup', fakeAsync(() => {
         let forgotPassword = debugElement.query(By.css(`[data-testid="forgot-password-link"]`))
         forgotPassword.triggerEventHandler('click', null)
         fixture.detectChanges()
@@ -179,18 +185,6 @@ describe('LoginComponent', () => {
         expect(passwordResetModal.nativeElement.getAttribute('ng-reflect-visible')).toBe('true');
         expect(passwordResetModal.nativeElement.innerText.includes('Reset Password')).toBe(true)
         flush();
-    }))
-
-    xit('Reset password - submit new password - success', fakeAsync(() => {
-
-    }))
-
-    xit('Reset password - submit new password - invalid password', fakeAsync(() => {
-
-    }))
-
-    xit('Reset password - submit new password - server error', fakeAsync(() => {
-
     }))
 })
 

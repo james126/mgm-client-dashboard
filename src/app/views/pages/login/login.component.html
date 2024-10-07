@@ -11,6 +11,10 @@
                         [visible]="submitEmailVisible">
         </reset-password-submit-email>
 
+        <new-password (changeVisible)="showNewPasswordModal($event)"
+                      [visible]="newPasswordVisible">
+        </new-password>
+
         <c-row class="justify-content-center">
             <c-col lg="10" xl="8">
                 <c-card-group>
@@ -69,6 +73,9 @@
                             </button>
                             <button (click)="showResetPasswordSubmitEmailModal(true)">
                                 toggleResetPassModalVisibility
+                            </button>
+                            <button (click)="showNewPasswordModal(true)">
+                                toggleNewPasswordVisibility
                             </button>
                         </c-card-body>
                     </c-card>

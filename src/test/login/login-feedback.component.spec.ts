@@ -12,7 +12,7 @@ describe('LoginFeedbackComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [LoginFeedbackComponent,RouterModule.forRoot([])],
+            imports: [LoginFeedbackComponent, RouterModule.forRoot([])],
             providers: [provideAnimations()],
         }).compileComponents()
 
@@ -22,21 +22,21 @@ describe('LoginFeedbackComponent', () => {
         fixture.detectChanges()
     })
 
-    it('Submitted an invalid username/password', () => {
+    it('Display invalid username or password', () => {
         component.status = Status.Invalid
         component.visible = true;
         fixture.detectChanges()
 
         let modalText = debugElement.query(By.css(`[data-testid="login-modal"]`)).nativeElement.innerText
-        expect(modalText.includes('Invalid username or password')).toBeTruthy()
+        expect(modalText.includes('Invalid username or password')).toBeTrue()
     })
 
-    it('Server error', () => {
+    it('Display Internal error', () => {
         component.status = Status.Error
         component.visible = true;
         fixture.detectChanges()
 
         let modalText = debugElement.query(By.css(`[data-testid="login-modal"]`)).nativeElement.innerText
-        expect(modalText.includes('Internal error, please try again later')).toBeTruthy()
+        expect(modalText.includes('Internal error, please try again later')).toBeTrue()
     })
 })
