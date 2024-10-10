@@ -18,7 +18,7 @@ import {
 import { FaIconComponent } from '@fortawesome/angular-fontawesome'
 import { catchError, debounceTime, fromEvent, Observable, of, Subscription, switchMap, timer } from 'rxjs'
 import { faLock } from '@fortawesome/free-solid-svg-icons';
-import { LoginService, Result } from '../../../service/login.service'
+import { LoginService, Result } from '../../service/login.service'
 
 const { required, maxLength, email } = Validators
 

@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed} from '@angular/core/testing'
 import { By } from '@angular/platform-browser'
 import { provideAnimations } from '@angular/platform-browser/animations'
 import { RouterModule } from '@angular/router'
-import { LoginFeedbackComponent, Status } from '../../app/views/pages/login/component/login-feedback/login-feedback.component'
+import { LoginFeedbackComponent, Status } from '../../app/views/pages/login/login-feedback/login-feedback.component'
 
 describe('LoginFeedbackComponent', () => {
     let component: LoginFeedbackComponent

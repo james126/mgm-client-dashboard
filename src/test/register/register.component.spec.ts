@@ -16,7 +16,7 @@ import { ASYNC_DELAY, RegisterComponent} from '../../app/views/pages/register/re
 import { PasswordStrength, SignupResult, SignupService } from '../../app/views/pages/register/service/signup.service'
 import { dispatchFakeInputEvent, updateTrigger } from '../test-util/update-form-helper'
 import { email, password, repeatPassword, signupData, username } from './dummy-data'
-import { formatErrors } from '../../app/views/pages/register/util/format-validation-errors'
+import { formatErrors } from '../../app/utility/format-validation-errors'
 
 describe('RegisterComponent', () => {
     let component: RegisterComponent

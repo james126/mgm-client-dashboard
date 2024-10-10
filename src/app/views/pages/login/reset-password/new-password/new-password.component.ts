@@ -1,3 +1,4 @@
+import { NgIf } from '@angular/common'
 import { HttpErrorResponse } from '@angular/common/http'
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core'
 import { AbstractControl, AsyncValidatorFn, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
@@ -15,9 +16,10 @@ import { IconDirective } from '@coreui/icons-angular'
 import { FaIconComponent } from '@fortawesome/angular-fontawesome'
 import { faLock } from '@fortawesome/free-solid-svg-icons'
 import { catchError, debounceTime, fromEvent, map, Observable, of, Subscription, switchMap, timer } from 'rxjs'
-import { PasswordStrength } from '../../../../register/service/signup.service'
-import { formatErrors } from '../../../../register/util/format-validation-errors'
-import { LoginService, Result } from '../../../service/login.service'
+import { ControlErrorsComponent } from '../../../../../utility/control-errors/control-errors.component'
+import { PasswordStrength } from '../../../register/service/signup.service'
+import { formatErrors } from '../../../../../utility/format-validation-errors'
+import { LoginService, Result } from '../../service/login.service'
 
 const { maxLength, minLength, required } = Validators
 
@@ -48,6 +50,8 @@ export enum PasswordStatus {
         ModalTitleDirective,
         ReactiveFormsModule,
         IconDirective,
+        ControlErrorsComponent,
+        NgIf,
     ],
     templateUrl: './new-password.component.html',
     styleUrl: './new-password.component.scss',
@@ -59,10 +63,7 @@ export class NewPasswordComponent implements AfterViewInit, OnDestroy {
 
     @ViewChild('password', { static: true }) passwordInput!: ElementRef
     public passwordValid: boolean | undefined
-    @ViewChild('repeatPassword', { static: true }) repeatPasswordInput!: ElementRef
-    public repeatPasswordValid: boolean | undefined
     public password$: Subscription | undefined
-    public repeatPassword$: Subscription | undefined
 
     public form: FormGroup
     public show3: boolean
@@ -78,7 +79,7 @@ export class NewPasswordComponent implements AfterViewInit, OnDestroy {
                 updateOn: 'change',
             }],
             repeatNewPass: ['', {
-                validators: [required, maxLength(20), minLength(10)],
+                validators: [required],
                 asyncValidators: [(control: AbstractControl) => this.validateRepeatedPassword(control.value)],
                 updateOn: 'change',
             }],
@@ -93,7 +94,6 @@ export class NewPasswordComponent implements AfterViewInit, OnDestroy {
 
     ngAfterViewInit(): void {
         this.password$ = fromEvent(this.passwordInput.nativeElement, 'focus')
-            .pipe(debounceTime(1000))
             .subscribe(() => {
                 const value = this.passwordInput.nativeElement.value.trim()
                 const valid = this.form.controls['newPass'].valid
@@ -103,20 +103,6 @@ export class NewPasswordComponent implements AfterViewInit, OnDestroy {
                     this.passwordValid = true
                 } else {
                     this.passwordValid = false
-                }
-            })
-
-        this.repeatPassword$ = fromEvent(this.repeatPasswordInput.nativeElement, 'focus')
-            .pipe(debounceTime(1000))
-            .subscribe(() => {
-                const value = this.repeatPasswordInput.nativeElement.value.trim()
-                const valid = this.form.controls['repeatNewPass'].valid
-                if (value.length == 0) {
-                    this.repeatPasswordValid = undefined
-                } else if (valid) {
-                    this.repeatPasswordValid = true
-                } else {
-                    this.repeatPasswordValid = false
                 }
             })
     }
@@ -201,7 +187,6 @@ export class NewPasswordComponent implements AfterViewInit, OnDestroy {
         this.form.get('repeatPassword')?.reset()
         this.status = PasswordStatus.Idle
         this.passwordValid = undefined
-        this.repeatPasswordValid = undefined
     }
 
     public togglePass(field: String) {
@@ -215,8 +200,16 @@ export class NewPasswordComponent implements AfterViewInit, OnDestroy {
         }
     }
 
+    repeatPassValid(): boolean | undefined {
+        if (this.form.get('newPass')?.valid && this.form.get('repeatNewPass')?.touched){
+            return (this.form.get('newPass')?.valid && this.form.get('repeatNewPass')?.valid
+                && this.form.get('newPass')?.value == this.form.get('repeatNewPass')?.value)
+        } else {
+            return undefined;
+        }
+    }
+
     ngOnDestroy(): void {
         this.password$?.unsubscribe()
-        this.repeatPassword$?.unsubscribe()
     }
 }

@@ -1,10 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http'
-import { DebugElement } from '@angular/core'
+import { DebugElement  } from '@angular/core'
 import { ComponentFixture, fakeAsync, flush, TestBed, tick } from '@angular/core/testing'
 import { ReactiveFormsModule } from '@angular/forms'
 import { By } from '@angular/platform-browser'
 import { provideAnimations } from '@angular/platform-browser/animations'
-import { RouterModule } from '@angular/router'
+import { Router } from '@angular/router'
+import { RouterTestingModule } from '@angular/router/testing'
 import { ButtonDirective, ButtonModule, CardModule, FormModule, GridModule } from '@coreui/angular'
 import { RECAPTCHA_V3_SITE_KEY } from 'ng-recaptcha'
 import { of, throwError } from 'rxjs'
@@ -18,7 +19,6 @@ import { ASYNC_DELAY } from '../../app/views/pages/login/login.component'
 import { environment } from '../../environments/environment.test'
 import { loginData } from './dummy-data'
 import { updateTrigger } from '../test-util/update-form-helper'
-import { RouterTestingModule } from '@angular/router/testing'
 
 describe('LoginComponent', () => {
     let component: LoginComponent
@@ -38,7 +38,6 @@ describe('LoginComponent', () => {
     }
 
     beforeEach(async () => {
-
         loginService = jasmine.createSpyObj<LoginService>('LoginService', {
                 login: of(new Result(true, null)),
                 getToken: of('123'),
@@ -52,7 +51,7 @@ describe('LoginComponent', () => {
 
         await TestBed.configureTestingModule({
             imports: [FormModule, CardModule, GridModule, ButtonModule, IconModule, LoginComponent, ReactiveFormsModule,
-                RouterModule.forRoot([{ path: 'dashboard', component: DashboardComponent }]), ButtonDirective],
+            RouterTestingModule.withRoutes([ { path: 'dashboard', component: DashboardComponent }]) , ButtonDirective],
             providers: [IconSetService, LoginComponent, { provide: LoginService, useValue: loginService },
                 { provide: RECAPTCHA_V3_SITE_KEY, useValue: environment.recaptchaV3 }, provideAnimations()],
         }).compileComponents()
@@ -69,6 +68,11 @@ describe('LoginComponent', () => {
     })
 
     it('Submit login - successful shows status Success', fakeAsync(() => {
+        const router = TestBed.inject(Router);
+        const promise = new Promise<boolean>((resolve, reject) => { true });
+        //prevents warning 'Navigation triggered outside Angular zone, did you forget to call 'ngZone.run()'?'
+        spyOn(router, 'navigate').and.returnValue(promise)
+
         let submitButton = debugElement.query(By.css('[data-testid="submit-login"]'))
         expect(submitButton.nativeElement.disabled).toBeTrue()
 
@@ -83,6 +87,7 @@ describe('LoginComponent', () => {
         fixture.detectChanges() //updates DOM
 
         expect(loginService.login).toHaveBeenCalledWith(testData)
+        expect(router.navigate).toHaveBeenCalled()
         expect(component.loginStatus).toBe("Success")
         flush() //finish any async operations
     }))
@@ -104,7 +109,7 @@ describe('LoginComponent', () => {
         flush() //finish any async operations
     }))
 
-    xit('Submit login - server error shows Status Error', fakeAsync(() => {
+    it('Submit login - server error shows Status Error', fakeAsync(() => {
         loginService.login.and.returnValue(throwError(() => 'server error'))
         let submitButton = debugElement.query(By.css(`[data-testid="submit-login"]`))
 
@@ -120,7 +125,7 @@ describe('LoginComponent', () => {
         flush() //finish any async operations
     }))
 
-    xit('Login popup - HttpErrorResponse shows Status Error', fakeAsync(() => {
+    it('Login popup - HttpErrorResponse shows Status Error', fakeAsync(() => {
         const mockErrorResponse = new HttpErrorResponse({
             error: 'Server Error',
             status: 500,

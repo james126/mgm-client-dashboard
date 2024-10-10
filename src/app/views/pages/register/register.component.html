@@ -138,49 +138,49 @@
                                     <ng-container *ngIf="errors.required" data-testid="errors.required">
                                         <div>
                                             <span class="control-error-mark">❗</span>
-                                            Enter a password
+                                            Required
                                         </div>
                                     </ng-container>
                                     <ng-container *ngIf="errors.maxlength">
                                         <div>
                                             <span class="control-error-mark">❗</span>
-                                            Max length 20 characters
+                                            Max 20 characters
                                         </div>
                                     </ng-container>
                                     <ng-container *ngIf="errors.minlength">
                                         <div>
                                             <span class="control-error-mark">❗</span>
-                                            Min length 10 characters
+                                            Min 10 characters
                                         </div>
                                     </ng-container>
                                     <ng-container *ngIf="errors.invalidPassword">
                                         <div>
                                             <span class="control-error-mark">❗</span>
-                                            Invalid password
+                                            Invalid
                                         </div>
                                     </ng-container>
                                     <ng-container *ngIf="errors.requiresUppercase">
                                         <div>
                                             <span class="control-error-mark">❗</span>
-                                            Requires an uppercase character
+                                            Uppercase character
                                         </div>
                                     </ng-container>
                                     <ng-container *ngIf="errors.requiresLowercase">
                                         <div>
                                             <span class="control-error-mark">❗</span>
-                                            Requires a lowercase character
+                                            Lowercase character
                                         </div>
                                     </ng-container>
                                     <ng-container *ngIf="errors.requiresNumeric">
                                         <div>
                                             <span class="control-error-mark">❗</span>
-                                            Requires a numeric character
+                                            Numeric character
                                         </div>
                                     </ng-container>
                                     <ng-container *ngIf="errors.requiresSpecial">
                                         <div>
                                             <span class="control-error-mark">❗</span>
-                                            Requires a special character
+                                            Special character
                                         </div>
                                     </ng-container>
                                 </ng-template>
@@ -202,25 +202,13 @@
                                     <ng-container *ngIf="errors.required" data-testid="errors.required">
                                         <div>
                                             <span class="control-error-mark">❗</span>
-                                            Enter password again
-                                        </div>
-                                    </ng-container>
-                                    <ng-container *ngIf="errors.maxlength">
-                                        <div>
-                                            <span class="control-error-mark">❗</span>
-                                            Max length 20 characters
-                                        </div>
-                                    </ng-container>
-                                    <ng-container *ngIf="errors.minlength">
-                                        <div>
-                                            <span class="control-error-mark">❗</span>
-                                            Min length 10 characters
+                                            Required
                                         </div>
                                     </ng-container>
                                     <ng-container *ngIf="errors.invalid">
                                         <div>
                                             <span class="control-error-mark">❗</span>
-                                            Repeated password doesn't equal password
+                                            Passwords don't match
                                         </div>
                                     </ng-container>
                                 </ng-template>

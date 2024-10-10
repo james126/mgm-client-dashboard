@@ -20,9 +20,9 @@ import {
     ButtonDirective, ButtonCloseDirective, ModalModule, GutterDirective,
 } from '@coreui/angular'
 import { catchError, debounceTime, fromEvent, Observable, of, Subscription, switchMap, timer } from 'rxjs'
-import { LoginFeedbackComponent } from './component/login-feedback/login-feedback.component'
-import { NewPasswordComponent } from './component/reset-password/new-password/new-password.component'
-import { SubmitEmailComponent } from './component/reset-password/submit-email/submit-email.component'
+import { LoginFeedbackComponent } from './login-feedback/login-feedback.component'
+import { NewPasswordComponent } from './reset-password/new-password/new-password.component'
+import { SubmitEmailComponent } from './reset-password/submit-email/submit-email.component'
 import { LoginData, Result, LoginService } from './service/login.service'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IconDefinition } from '@fortawesome/free-regular-svg-icons'

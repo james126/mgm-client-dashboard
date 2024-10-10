@@ -25,7 +25,7 @@ import { map, switchMap, timer, of, Observable, catchError, Subscription, fromEv
 import { PasswordStrength, SignupResult, SignupService } from './service/signup.service'
 import { CommonModule } from '@angular/common'
 import { RecaptchaModule, ReCaptchaV3Service } from 'ng-recaptcha'
-import { formatErrors } from './util/format-validation-errors'
+import { formatErrors } from '../../../utility/format-validation-errors'
 import { RouterLink } from '@angular/router'
 
 const { email, maxLength, minLength, pattern, required } = Validators

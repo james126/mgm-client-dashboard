@@ -5,7 +5,7 @@ import { provideAnimations } from '@angular/platform-browser/animations'
 import { IconSetService } from '@coreui/icons-angular'
 import { of } from 'rxjs'
 import { iconSubset } from '../../app/icons/icon-subset'
-import { ASYNC_DELAY, NewPasswordComponent, PasswordStatus } from '../../app/views/pages/login/component/reset-password/new-password/new-password.component'
+import { ASYNC_DELAY, NewPasswordComponent, PasswordStatus } from '../../app/views/pages/login/reset-password/new-password/new-password.component'
 import { LoginService, PasswordStrength, Result } from '../../app/views/pages/login/service/login.service'
 import { updateTrigger } from '../test-util/update-form-helper'
 
@@ -63,15 +63,16 @@ describe('NewPasswordComponent', () => {
     expect(modalText.includes('Submission Error')).toBeTrue()
   });
 
-  it('will not submit an invalid form', () => {
+  it('will not submit an invalid form', fakeAsync(() => {
     let submitButton = debugElement.query(By.css('[data-testid="submit-new-pass"]'))
 
     updateTrigger(fixture, 'newPass', 'abc')
     updateTrigger(fixture, 'repeatNewPass', 'def')
+    tick(ASYNC_DELAY)
     fixture.detectChanges()
 
     expect(submitButton.nativeElement.disabled).toBeTrue()
-  });
+  }));
 
   it('password synchronously validated', () => {
     updateTrigger(fixture, 'newPass', 'abc')
@@ -140,5 +141,30 @@ describe('NewPasswordComponent', () => {
 
     expect(spy).toHaveBeenCalled();
     expect(component.status).toBe(PasswordStatus.Success)
+  }));
+
+  it('invalid password displays asynchronous feedback', fakeAsync(() => {
+    const strength: PasswordStrength = {
+      valid: false,
+      suggestions: ['requiresSpecial'],
+    }
+    loginService.getPasswordStrength.and.returnValue(of(strength))
+
+    updateTrigger(fixture, 'newPass', 'Windows111')
+    tick(ASYNC_DELAY)
+    fixture.detectChanges()
+
+    let el = debugElement.query(By.css(`#new-pass-errors`))
+    expect(el.nativeElement.textContent).toContain('Special character')
+  }));
+
+  it('repeated password is not the same feedback', fakeAsync(() => {
+    updateTrigger(fixture, 'newPass', 'Windows11%')
+    updateTrigger(fixture, 'newPass', 'Windows10%')
+    tick(ASYNC_DELAY)
+    fixture.detectChanges()
+
+    let el = debugElement.query(By.css(`#new-repeat-pass-errors`))
+    expect(el.nativeElement.textContent).toContain('Passwords don\'t match')
   }));
 });
