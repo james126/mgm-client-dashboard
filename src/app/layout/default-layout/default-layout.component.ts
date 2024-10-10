@@ -4,16 +4,17 @@ import { NgScrollbar } from 'ngx-scrollbar';
 import { DefaultLogoComponent } from './default-logo/default-logo.component'
 import { IconDirective } from '@coreui/icons-angular';
 import {
-  ContainerComponent,
-  ShadowOnScrollDirective,
-  SidebarBrandComponent,
-  SidebarComponent,
-  SidebarFooterComponent,
-  SidebarHeaderComponent,
-  SidebarNavComponent,
-  SidebarToggleDirective,
-  SidebarTogglerDirective
-} from '@coreui/angular';
+    ButtonDirective, ColComponent,
+    ContainerComponent, FormControlDirective, InputGroupComponent, InputGroupTextDirective, RowComponent,
+    ShadowOnScrollDirective,
+    SidebarBrandComponent,
+    SidebarComponent,
+    SidebarFooterComponent,
+    SidebarHeaderComponent,
+    SidebarNavComponent,
+    SidebarToggleDirective,
+    SidebarTogglerDirective,
+} from '@coreui/angular'
 
 import { DefaultFooterComponent, DefaultHeaderComponent } from './';
 import { navItems } from './_nav';
@@ -30,24 +31,30 @@ function isOverflown(element: HTMLElement) {
   templateUrl: './default-layout.component.html',
   styleUrls: ['./default-layout.component.scss'],
   standalone: true,
-  imports: [
-    SidebarComponent,
-    SidebarHeaderComponent,
-    SidebarBrandComponent,
-    RouterLink,
-    IconDirective,
-    NgScrollbar,
-    SidebarNavComponent,
-    SidebarFooterComponent,
-    SidebarToggleDirective,
-    SidebarTogglerDirective,
-    DefaultHeaderComponent,
-    ShadowOnScrollDirective,
-    ContainerComponent,
-    RouterOutlet,
-    DefaultFooterComponent,
-    DefaultLogoComponent
-  ]
+    imports: [
+        SidebarComponent,
+        SidebarHeaderComponent,
+        SidebarBrandComponent,
+        RouterLink,
+        IconDirective,
+        NgScrollbar,
+        SidebarNavComponent,
+        SidebarFooterComponent,
+        SidebarToggleDirective,
+        SidebarTogglerDirective,
+        DefaultHeaderComponent,
+        ShadowOnScrollDirective,
+        ContainerComponent,
+        RouterOutlet,
+        DefaultFooterComponent,
+        DefaultLogoComponent,
+        ButtonDirective,
+        ColComponent,
+        FormControlDirective,
+        InputGroupComponent,
+        InputGroupTextDirective,
+        RowComponent,
+    ],
 })
 export class DefaultLayoutComponent {
   public navItems = navItems;

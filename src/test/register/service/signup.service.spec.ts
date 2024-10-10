@@ -2,6 +2,7 @@ import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http'
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
 
 import { TestBed } from '@angular/core/testing'
+import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module } from 'ng-recaptcha'
 import { NGXLogger } from 'ngx-logger'
 import { LoggerTestingModule, NGXLoggerMock } from 'ngx-logger/testing'
 import { environment } from '../../../environments/environment.development'
@@ -16,8 +17,8 @@ describe('SignupService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, LoggerTestingModule],
-            providers: [SignupService, { provide: NGXLogger, useClass: NGXLoggerMock }],
+            imports: [HttpClientTestingModule, LoggerTestingModule, RecaptchaV3Module],
+            providers: [SignupService, { provide: NGXLogger, useClass: NGXLoggerMock }, { provide: RECAPTCHA_V3_SITE_KEY, useValue: environment.recaptchaV3 }],
         })
 
         signupService = TestBed.inject(SignupService)

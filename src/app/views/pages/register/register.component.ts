@@ -65,7 +65,7 @@ export class RegisterComponent implements AfterViewInit, OnDestroy{
     public status: Status
     public show1: boolean
     public show2: boolean
-    public visible: boolean;
+    public modalVisible: boolean;
 
     readonly faCircleExclamation  = faCircleExclamation
     readonly faCircleCheck  = faCircleCheck
@@ -97,7 +97,7 @@ export class RegisterComponent implements AfterViewInit, OnDestroy{
         this.show1 = false
         this.show2 = false
         this.status = Status.Idle
-        this.visible = false;
+        this.modalVisible = false;
     }
 
     ngAfterViewInit(): void {
@@ -263,7 +263,7 @@ export class RegisterComponent implements AfterViewInit, OnDestroy{
     }
 
     toggleModalVisibility() {
-        this.visible = !this.visible;
+        this.modalVisible = !this.modalVisible;
     }
 
     /*

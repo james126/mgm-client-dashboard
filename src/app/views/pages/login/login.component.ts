@@ -3,7 +3,7 @@ import { HttpErrorResponse } from '@angular/common/http'
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { NgIf, NgStyle, NgSwitch, NgSwitchCase } from '@angular/common'
 import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
-import { RouterModule } from '@angular/router'
+import { Router, RouterModule } from '@angular/router'
 import { IconDirective } from '@coreui/icons-angular'
 import {
     ContainerComponent,
@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     public submitEmailVisible: boolean;
     public newPasswordVisible: boolean;
 
-    constructor(private loginService: LoginService, private formBuilder: NonNullableFormBuilder) {
+    constructor(private loginService: LoginService, private formBuilder: NonNullableFormBuilder, private router: Router) {
         this.login = this.formBuilder.group({
             username: ['', {
                 validators: [required],
@@ -126,6 +126,9 @@ export class LoginComponent implements OnInit, OnDestroy {
                 next: (value: string | Result) => {
                     if (value.constructor === Result) {
                         this.loginStatus = value.outcome ? Status.Success : Status.Invalid
+                        if (value.outcome){
+                            this.router.navigate(['/dashboard'])
+                        }
                     } else {
                         this.loginStatus = Status.Error
                     }

@@ -148,9 +148,7 @@ export class SubmitEmailComponent implements OnInit, OnDestroy {
     }
 
     hideFeedback() {
-        this.form.get('email')?.reset();
-        this.status = EmailStatus.Idle
-        this.emailValid = undefined
+        this.internalVisible = false;
         this.changeVisible.emit(false);
     }
 

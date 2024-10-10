@@ -8,5 +8,5 @@ export const repeatPassword = 'Under#Tree1';
 export const signupData: SignupData = {
     username,
     email,
-    password,
+    password
 }

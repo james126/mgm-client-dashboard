@@ -27,11 +27,16 @@
         position="sticky"
         sidebarId="sidebar1" />
     <!--app-body-->
-    <div class="body flex-grow-1">
-        <c-container breakpoint="lg" class="h-auto px-4">
-            <router-outlet />
-        </c-container>
-    </div>
+
+       <div class="body flex-grow-1">
+            <c-container breakpoint="lg" class="h-auto px-4">
+                <img cImg fluid src="assets/images/under-construction.jpg" />
+                <p class="fs-6" >Clicking most links except drop-downs etc will log you out..</p>
+                <router-outlet />
+            </c-container>
+       </div>
+
     <!--app footer-->
     <app-default-footer />
 </div>
+

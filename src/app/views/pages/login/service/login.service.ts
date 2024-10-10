@@ -32,11 +32,13 @@ export class LoginService {
     private loginUrl = ''
     private recaptchaUrl = ''
     private forgotPassEmail = ''
+    private newPassUrl = ''
 
     constructor(private http: HttpClient, private logger: NGXLogger, private recaptchaV3Service: ReCaptchaV3Service) {
         this.loginUrl = environment.server + environment.login
         this.recaptchaUrl = environment.server + environment.recaptcha
         this.forgotPassEmail = environment.server + environment.forgotPassEmail
+        this.newPassUrl = environment.server + environment.newPass
     }
 
     public login(data: LoginData): Observable<Result | any> {
@@ -52,7 +54,7 @@ export class LoginService {
         return this.recaptchaV3Service.execute('submit')
     }
 
-    submitRecaptcha(token: String): Observable<number | HttpErrorResponse> {
+    submitRecaptcha(token: string): Observable<number | HttpErrorResponse> {
         return this.http.post<{ score: number }>(this.recaptchaUrl, token).pipe(
             map(result => result.score),
             catchError((err, caught) => {
@@ -62,8 +64,17 @@ export class LoginService {
         )
     }
 
-    forgotPassCheck(email: String): Observable<any> {
+    forgotPassCheck(email: string): Observable<any> {
         return this.http.post<Result>(this.forgotPassEmail, email).pipe(
+            catchError((err, caught) => {
+                this.handleError(err, this.logger)
+                return of(err)
+            }),
+        )
+    }
+
+    newPass(newPass: string): Observable<any> {
+        return this.http.post<Result>(this.newPassUrl, newPass).pipe(
             catchError((err, caught) => {
                 this.handleError(err, this.logger)
                 return of(err)

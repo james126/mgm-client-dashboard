@@ -16,11 +16,32 @@ export function updateTrigger(fixture: ComponentFixture<any>, id: string, value:
         button: 0,
     };
     el.triggerEventHandler('input', event);
+    // el.nativeElement.dispatchEvent(new Event('change'));
     //validation updateOn
-    dispatchFakeEvent(fixture, id);
+    dispatchFocusEvent(fixture, id);
 }
 
-export function dispatchFakeEvent(fixture: ComponentFixture<any>, id: string,): void {
+/*
+ Subscription are being triggered by focus events
+ */
+export function dispatchFocusEvent(fixture: ComponentFixture<any>, id: string,): void {
+    let el = fixture.debugElement.query(By.css(`[data-testid="${id}"]`))
+    const event = {
+        preventDefault(): void {},
+        stopPropagation(): void {},
+        stopImmediatePropagation(): void {},
+        type: 'focus',
+        target: el.nativeElement,
+        currentTarget: el.nativeElement,
+        bubbles: false,
+        cancelable: false,
+        button: 0,
+    };
+    el.triggerEventHandler('focus', event);
+    el.nativeElement.dispatchEvent(new Event('focus'));
+}
+
+export function dispatchFakeInputEvent(fixture: ComponentFixture<any>, id: string,): void {
     let el = fixture.debugElement.query(By.css(`[data-testid="${id}"]`))
     const event = {
         preventDefault(): void {},

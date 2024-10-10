@@ -1,11 +1,13 @@
+import value from '*.json'
 import { HttpErrorResponse } from '@angular/common/http'
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
 import { TestBed } from '@angular/core/testing'
+import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module, ReCaptchaV3Service } from 'ng-recaptcha'
 import { NGXLogger } from 'ngx-logger'
 import { LoggerTestingModule, NGXLoggerMock } from 'ngx-logger/testing'
-import { LoginData, LoginService } from '../../../app/views/pages/login/service/login.service'
+import { LoginData, LoginService, Result } from '../../../app/views/pages/login/service/login.service'
 import { environment } from '../../../environments/environment.development'
-import { loginData } from '../dummy-data'
+import { loginData, validEmail } from '../dummy-data'
 
 describe('LoginService', () => {
     let loginService: LoginService
@@ -17,8 +19,8 @@ describe('LoginService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule, LoggerTestingModule],
-            providers: [LoginService, { provide: NGXLogger, useClass: NGXLoggerMock }],
+            imports: [HttpClientTestingModule, LoggerTestingModule, RecaptchaV3Module],
+            providers: [LoginService, { provide: NGXLogger, useClass: NGXLoggerMock }, { provide: RECAPTCHA_V3_SITE_KEY, useValue: environment.recaptchaV3 }],
         })
 
         loginService = TestBed.inject(LoginService)
@@ -31,7 +33,7 @@ describe('LoginService', () => {
 
     it('Submit login', () => {
         const response = {
-            success: true,
+            outcome: true,
         }
         let actualResult: any
 
@@ -49,7 +51,7 @@ describe('LoginService', () => {
         request.flush(response);
         httpMock.verify();
 
-        expect(actualResult).toBe(response.success)
+        expect(actualResult).toBe(response.outcome)
     })
 
     it('Submit login - handle response error', () => {
@@ -96,27 +98,27 @@ describe('LoginService', () => {
         expect(actualResult).toBe(response.score)
     })
 
-    xit('Submit forgot password', () => {
-        const username = testData.username
-        const response = {
-            responseStatus: 200
-        }
+    it('Submit forgot password', () => {
+        const username = validEmail
+        const response = new Result(true, null)
         let actualResult: any
 
-        loginService.forgotPassCheck(username).subscribe((res: boolean | HttpErrorResponse )=> {
-            actualResult = res
+        loginService.forgotPassCheck(validEmail).subscribe((res: Result | HttpErrorResponse )=> {
+            if (res.constructor === Result) {
+                actualResult = res.outcome
+            }
         })
 
         const matchFn = (req: any) => {
             return req.url === passUrl &&
                 req.method === 'POST' &&
-                req.body == username
+                req.body == validEmail
         }
 
         const request = httpMock.expectOne(matchFn)
         request.flush(response);
         httpMock.verify();
 
-        expect(actualResult).toBe(response.responseStatus)
+        expect(actualResult).toBe(response.outcome)
     })
 })

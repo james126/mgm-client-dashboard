@@ -14,7 +14,7 @@ import { iconSubset } from 'src/app/icons/icon-subset'
 import { environment } from 'src/environments/environment.test'
 import { ASYNC_DELAY, RegisterComponent} from '../../app/views/pages/register/register.component'
 import { PasswordStrength, SignupResult, SignupService } from '../../app/views/pages/register/service/signup.service'
-import { dispatchFakeEvent, updateTrigger } from '../test-util/update-form-helper'
+import { dispatchFakeInputEvent, updateTrigger } from '../test-util/update-form-helper'
 import { email, password, repeatPassword, signupData, username } from './dummy-data'
 import { formatErrors } from '../../app/views/pages/register/util/format-validation-errors'
 
@@ -121,7 +121,7 @@ describe('RegisterComponent', () => {
 
         // Mark required fields as touched
         requiredFields.forEach((testId) => {
-            dispatchFakeEvent(fixture, testId)
+            dispatchFakeInputEvent(fixture, testId)
             tick(ASYNC_DELAY)
             fixture.detectChanges()
 

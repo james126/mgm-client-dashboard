@@ -1,7 +1,7 @@
 <div class="bg-light dark:bg-transparent min-vh-100 d-flex flex-row align-items-center">
     <c-container>
         <c-row class="justify-content-center">
-            <c-modal alignment="center" [ngSwitch]="status" data-testid="modal" [visible]="visible" (visibleChange)="handleChange($event)">
+            <c-modal alignment="center" [ngSwitch]="status" data-testid="modal" [visible]="modalVisible" (visibleChange)="handleChange($event)">
                 <c-modal-header>
                     <h5 *ngSwitchCase="'Idle'" cModalTitle>Submission Error</h5>
                     <h5 *ngSwitchCase="'Success'" cModalTitle>Thank You</h5>
