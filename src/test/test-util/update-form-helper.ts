@@ -8,17 +8,17 @@ export function updateTrigger(fixture: ComponentFixture<any>, id: string, value:
         preventDefault(): void {},
         stopPropagation(): void {},
         stopImmediatePropagation(): void {},
-        type: 'input',
+        type: 'change',
         target: el.nativeElement,
         currentTarget: el.nativeElement,
         bubbles: false,
         cancelable: false,
         button: 0,
     };
-    el.triggerEventHandler('input', event);
+    el.triggerEventHandler('change', event);
     // el.nativeElement.dispatchEvent(new Event('change'));
     //validation updateOn
-    dispatchFocusEvent(fixture, id);
+    dispatchFakeInputEvent(fixture, id);
 }
 
 /*

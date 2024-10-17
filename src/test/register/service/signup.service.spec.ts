@@ -68,7 +68,6 @@ describe('SignupService', () => {
         request.error(errorEvent, { status, statusText });
         mock.verify()
 
-        expect(true).not.toBeNull()
         expect(actualError!.error).toBe(errorEvent);
         expect(actualError!.status).toBe(status);
         expect(actualError!.statusText).toBe(statusText);

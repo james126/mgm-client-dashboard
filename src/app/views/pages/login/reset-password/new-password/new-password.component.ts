@@ -1,6 +1,6 @@
 import { NgIf } from '@angular/common'
 import { HttpErrorResponse } from '@angular/common/http'
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core'
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core'
 import { AbstractControl, AsyncValidatorFn, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
 import {
     AlertComponent,
@@ -18,7 +18,7 @@ import { faLock } from '@fortawesome/free-solid-svg-icons'
 import { catchError, debounceTime, fromEvent, map, Observable, of, Subscription, switchMap, timer } from 'rxjs'
 import { ControlErrorsComponent } from '../../../../../utility/control-errors/control-errors.component'
 import { PasswordStrength } from '../../../register/service/signup.service'
-import { formatErrors } from '../../../../../utility/format-validation-errors'
+import { formatErrors } from './format-validation-errors'
 import { LoginService, Result } from '../../service/login.service'
 
 const { maxLength, minLength, required } = Validators
@@ -56,7 +56,7 @@ export enum PasswordStatus {
     templateUrl: './new-password.component.html',
     styleUrl: './new-password.component.scss',
 })
-export class NewPasswordComponent implements AfterViewInit, OnDestroy {
+export class NewPasswordComponent implements OnInit, OnDestroy {
     @Input() visible: boolean
     public internalVisible: boolean
     @Output() changeVisible: EventEmitter<boolean> = new EventEmitter()
@@ -92,8 +92,9 @@ export class NewPasswordComponent implements AfterViewInit, OnDestroy {
         this.show4 = false
     }
 
-    ngAfterViewInit(): void {
-        this.password$ = fromEvent(this.passwordInput.nativeElement, 'focus')
+    ngOnInit(): void {
+        this.password$ = fromEvent(this.passwordInput.nativeElement, 'input')
+            .pipe(debounceTime(1000))
             .subscribe(() => {
                 const value = this.passwordInput.nativeElement.value.trim()
                 const valid = this.form.controls['newPass'].valid
@@ -150,19 +151,16 @@ export class NewPasswordComponent implements AfterViewInit, OnDestroy {
     }
 
     public isVisible() {
+        this.form?.reset()
+        this.status = PasswordStatus.Idle
+
         if (this.visible == false) {
             if (this.internalVisible) {
-                this.form.get('newPass')?.reset()
-                this.form.get('repeatNewPassword')?.reset()
-                this.status = PasswordStatus.Idle
                 this.internalVisible = false
             }
             return false
         } else {
             if (!this.internalVisible) {
-                this.form.get('newPass')?.reset()
-                this.form.get('repeatNewPassword')?.reset()
-                this.status = PasswordStatus.Idle
                 this.internalVisible = true
             }
             return true
@@ -201,9 +199,10 @@ export class NewPasswordComponent implements AfterViewInit, OnDestroy {
     }
 
     repeatPassValid(): boolean | undefined {
-        if (this.form.get('newPass')?.valid && this.form.get('repeatNewPass')?.touched){
-            return (this.form.get('newPass')?.valid && this.form.get('repeatNewPass')?.valid
-                && this.form.get('newPass')?.value == this.form.get('repeatNewPass')?.value)
+        if (this.form.get('newPass')?.valid && this.form.get('repeatNewPass')?.valid){
+            return (this.form.get('newPass')?.value == this.form.get('repeatNewPass')?.value)
+        } else if (this.form.get('repeatNewPass')?.value.length > 0 ){
+            return false
         } else {
             return undefined;
         }

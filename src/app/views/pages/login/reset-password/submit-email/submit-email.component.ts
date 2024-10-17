@@ -80,7 +80,7 @@ export class SubmitEmailComponent implements OnInit, OnDestroy {
     //Use Observer so in template input element can include attribute [valid]=
     //Gives the option of returning undefined which applies no styling
     ngOnInit(): void {
-        this.email$ = fromEvent(this.emailInput.nativeElement, 'focus')
+        this.email$ = fromEvent(this.emailInput.nativeElement, 'input')
             .pipe(debounceTime(1000))
             .subscribe(() => {
                 const value = this.emailInput.nativeElement.value.trim()

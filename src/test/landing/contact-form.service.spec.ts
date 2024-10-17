@@ -1,11 +1,13 @@
+import { HttpErrorResponse } from '@angular/common/http'
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
 import { TestBed } from '@angular/core/testing';
+import { MockProvider } from 'ng-mocks'
+import { ReCaptchaV3Service } from 'ng-recaptcha'
 import { NGXLogger } from "ngx-logger";
 import { NGXLoggerMock } from "ngx-logger/testing";
 import { environment } from "../../environments/environment";
 import { Contact } from "src/app/views/pages/landing/dto/contact";
-import { ContactFormService } from 'src/app/views/pages/landing/service/contact-form.service';
-import { concat, isEmpty } from "rxjs";
+import { ContactFormService, SubmitFormResult } from 'src/app/views/pages/landing/service/contact-form.service'
 
 
 describe('ContactFormService', () => {
@@ -19,7 +21,7 @@ describe('ContactFormService', () => {
 	beforeEach(() => {
 		TestBed.configureTestingModule({
 			imports: [HttpClientTestingModule],
-			providers: [ContactFormService, { provide: NGXLogger, useClass: NGXLoggerMock },]
+			providers: [ContactFormService, { provide: NGXLogger, useClass: NGXLoggerMock }, MockProvider(ReCaptchaV3Service)]
 		});
 
 		submitService = TestBed.inject(ContactFormService);
@@ -39,36 +41,44 @@ describe('ContactFormService', () => {
 
 
 	it('should submit a record', async () => {
+		const serverResponse = { success: true }
+		let expectedResult = new SubmitFormResult(true, null)
+		let actualResult: any
+
 		submitService.submitContactForm(contact)
-			.subscribe(
-				res => {
-					expect(res).toBeUndefined();
-					//submitContactForm returns Observable<void>
-				}
-			)
+			.subscribe(res => {
+					actualResult = res
+
+		})
 
 		const request = httpMock.expectOne(url);
 		expect(request.request.method).toBe('POST');
 		expect(request.request.url).toBe(url);
 		expect(request.request.body).toEqual(contact);
-		request.flush({ body: contact });
+		request.flush(serverResponse);
+		expect(actualResult).toEqual(expectedResult)
 	});
 
 
 	it('should handle error responses', (done) => {
+		const status = 500
+		const statusText = 'Internal Server Error'
+		const errorEvent = new ProgressEvent('Server Error')
+		let actualResult = new SubmitFormResult(true, null);
+
 		//submitContactForm catches error and returns const EMPTY
 		submitService.submitContactForm(contact)
-			.pipe(isEmpty()).subscribe((res) => {
-				expect(res).toEqual(true);
-				done();
+			.subscribe((res) => {
+				actualResult = res
 			});
 
 		let request = httpMock.expectOne(url);
 		expect(request.request.method).toBe('POST');
-
-		const data = 'Invalid request parameters';
-		const mockErrorResponse = { status: 400, statusText: 'Bad Request' };
-		request.flush(data, mockErrorResponse);
+		request.error(errorEvent, { status, statusText });
+		httpMock.verify()
+		expect(actualResult?.outcome).toBeFalse();
+		expect(actualResult?.error instanceof HttpErrorResponse).toBeTruthy()
+		done();
 	});
 
 	afterEach(() => {

@@ -65,7 +65,7 @@ export class SignupService {
     }
 
     public signup(data: SignupData): Observable<SignupResult> {
-        return this.http.post<{ success: true }>(this.signupUrl, data).pipe(
+        return this.http.post<{ success: boolean }>(this.signupUrl, data).pipe(
             map(result => new SignupResult(result.success, null)),
             catchError((err, caught) => {
                 this.handleError(err, this.logger)

@@ -9,9 +9,9 @@
                 <img
                     alt="{{slide.line1}}"
                     class="d-block w-100"
-                    src="{{slide.src}}"
-                    loading="eager"
                     id="header-carousel-img"
+                    loading="eager"
+                    src="{{slide.src}}"
                 >
                 <c-carousel-caption>
                     <div style="width:100%;position:absolute;top:50%;transform: translate(0,-50%);">
@@ -30,7 +30,7 @@
     <div class="container-fluid facts py-6 pt-lg-0">
         <div class="container py-6 pt-lg-0">
             <div class="row gx-0">
-                <div #animate id="fact1" class="col-lg-4">
+                <div #animate class="col-lg-4" id="fact1">
                     <div class="bg-white shadow d-flex align-items-center h-100 p-4" style="min-height: 150px;">
                         <div class="d-flex">
                             <div class="flex-shrink-0 btn-lg-square index-primary-background-color">
@@ -43,7 +43,7 @@
                         </div>
                     </div>
                 </div>
-                <div #animate id="fact2" class="col-lg-4">
+                <div #animate class="col-lg-4" id="fact2">
                     <div class="bg-white shadow d-flex align-items-center h-100 p-4" style="min-height: 150px;">
                         <div class="d-flex">
                             <div class="flex-shrink-0 btn-lg-square index-primary-background-color">
@@ -56,7 +56,7 @@
                         </div>
                     </div>
                 </div>
-                <div #animate id="fact3" class="col-lg-4">
+                <div #animate class="col-lg-4" id="fact3">
                     <div class="bg-white shadow d-flex align-items-center h-100 p-4" style="min-height: 150px;">
                         <div class="d-flex">
                             <div class="flex-shrink-0 btn-lg-square index-primary-background-color">
@@ -78,18 +78,18 @@
     <div class="container-xxl py-6" id="about">
         <div class="container">
             <div class="row g-5">
-                <div #animate id="about1" class="col-lg-6">
+                <div #animate class="col-lg-6" id="about1">
                     <div class="position-relative overflow-hidden h-100" style="min-height: 400px;">
                         <div style="min-height: 450px;">
-                            <iframe class="position-relative w-100 h-100"
-                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d115288.4172787173!2d174.89674264358936!3d-36.92204129439933!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6d0d4b65a6a3918b%3A0x5704a28d482bdf5e!2sEast%20Auckland%2C%20Golflands%2C%20Auckland%202013!5e0!3m2!1sen!2snz!4v1689739846967!5m2!1sen!2snz"
-                                    frameborder="0" style="min-height: 450px; border:0;" allowfullscreen=""
-                                    aria-hidden="false" tabindex="0">
+                            <iframe allowfullscreen=""
+                                    aria-hidden="false"
+                                    class="position-relative w-100 h-100" frameborder="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d115288.4172787173!2d174.89674264358936!3d-36.92204129439933!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6d0d4b65a6a3918b%3A0x5704a28d482bdf5e!2sEast%20Auckland%2C%20Golflands%2C%20Auckland%202013!5e0!3m2!1sen!2snz!4v1689739846967!5m2!1sen!2snz"
+                                    style="min-height: 450px; border:0;" tabindex="0">
                             </iframe>
                         </div>
                     </div>
                 </div>
-                <div #animate id="about2" class="col-lg-6">
+                <div #animate class="col-lg-6" id="about2">
                     <div class="h-100">
                         <h5 class="index-primary-color text-uppercase mb-2">About Us</h5>
                         <h1 class="mb-4 index-heading-color">High quality services at a competitive price</h1>
@@ -112,7 +112,7 @@
                         </div>
                         <div class="row g-4">
                             <div class="col-sm-6">
-                                <a class="btn py-3 px-5 index-button" aria-hidden="true" href="#contact">Contact us now</a>
+                                <a aria-hidden="true" class="btn py-3 px-5 index-button" href="#contact">Contact us now</a>
                             </div>
                         </div>
                     </div>
@@ -124,14 +124,14 @@
 
     <!-- Services start -->
     <div class="container-xxl my-6 py-6 mb-5" id="services">
-        <div #animate id="regular-services" class="container">
+        <div #animate class="container" id="regular-services">
             <div class="text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
                 <h5 class="index-primary-color text-uppercase mb-2">Regular Services</h5>
                 <h1 class="mb-4 index-heading-color">General Garden Maintenance</h1>
             </div>
 
             <div class="row g-4 justify-content-center" id="service-row-1">
-                <div #animate id="service1" class="col-lg-4 col-md-6">
+                <div #animate class="col-lg-4 col-md-6" id="service1">
                     <div class="courses-item d-flex flex-column bg-white overflow-hidden h-100">
                         <div class="text-center p-4 pt-0">
                             <div class="d-inline-block index-primary-background-color text-white fs-5 py-1 px-4 mb-4">Available</div>
@@ -146,9 +146,9 @@
                             </ol>
                         </div>
                         <div class="position-relative mt-auto">
-                            <img class="img-fluid" src="/assets/landing/image/mower.jpg" alt="">
+                            <img alt="" class="img-fluid" src="/assets/landing/image/mower.jpg">
                             <div class="courses-overlay">
-                                <a class="btn btn-outline-primary border-2" routerLink="/index" fragment="contact">
+                                <a class="btn btn-outline-primary border-2" fragment="contact" routerLink="/index">
                                     <i class="fa fa-calendar-alt text-primary me-2"></i>
                                     Enquire now
                                 </a>
@@ -157,7 +157,7 @@
                     </div>
                 </div>
 
-                <div #animate id="service2" class="col-lg-4 col-md-6">
+                <div #animate class="col-lg-4 col-md-6" id="service2">
                     <div class="courses-item d-flex flex-column bg-white overflow-hidden h-100">
                         <div class="text-center p-4 pt-0">
                             <div class="d-inline-block index-primary-background-color text-white fs-5 py-1 px-4 mb-4">Available</div>
@@ -172,9 +172,9 @@
                             </ol>
                         </div>
                         <div class="position-relative mt-auto">
-                            <img class="img-fluid" src="assets/landing/image/hedge.jpg" alt="">
+                            <img alt="" class="img-fluid" src="assets/landing/image/hedge.jpg">
                             <div class="courses-overlay">
-                                <a class="btn btn-outline-primary border-2" routerLink="/index" fragment="contact">
+                                <a class="btn btn-outline-primary border-2" fragment="contact" routerLink="/index">
                                     Enquire now
                                 </a>
                             </div>
@@ -182,7 +182,7 @@
                     </div>
                 </div>
 
-                <div #animate id="service3" class="col-lg-4 col-md-6">
+                <div #animate class="col-lg-4 col-md-6" id="service3">
                     <div class="courses-item d-flex flex-column bg-white overflow-hidden h-100">
                         <div class="text-center p-4 pt-0">
                             <div class="d-inline-block index-primary-background-color text-white fs-5 py-1 px-4 mb-4">Available</div>
@@ -197,9 +197,9 @@
                             </ol>
                         </div>
                         <div class="position-relative mt-auto">
-                            <img class="img-fluid" src="/assets/landing/image/rake.jpg" alt="">
+                            <img alt="" class="img-fluid" src="/assets/landing/image/rake.jpg">
                             <div class="courses-overlay">
-                                <a class="btn btn-outline-primary border-2" routerLink="/index" fragment="contact">
+                                <a class="btn btn-outline-primary border-2" fragment="contact" routerLink="/index">
                                     Enquire now
                                 </a>
                             </div>
@@ -208,7 +208,7 @@
                 </div>
             </div>
 
-            <div #animate id="service-row-2" class="row g-4 justify-content-center">
+            <div #animate class="row g-4 justify-content-center" id="service-row-2">
                 <div class="col-lg-4 col-md-6">
                     <div class="courses-item d-flex flex-column bg-white overflow-hidden h-100">
                         <div class="text-center p-4 pt-0">
@@ -224,16 +224,16 @@
                             </ol>
                         </div>
                         <div class="position-relative mt-auto">
-                            <img class="img-fluid" src="/assets/landing/image/gutter.jpg" alt="">
+                            <img alt="" class="img-fluid" src="/assets/landing/image/gutter.jpg">
                             <div class="courses-overlay">
-                                <a class="btn btn-outline-primary border-2 disabled" routerLink="/index" fragment="contact">
+                                <a class="btn btn-outline-primary border-2 disabled" fragment="contact" routerLink="/index">
                                     Coming soon</a>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div #animate id="service5" class="col-lg-4 col-md-6">
+                <div #animate class="col-lg-4 col-md-6" id="service5">
                     <div class="courses-item d-flex flex-column bg-white overflow-hidden h-100">
                         <div class="text-center p-4 pt-0">
                             <div class="d-inline-block index-primary-background-color text-white fs-5 py-1 px-4 mb-4">Unavailable</div>
@@ -248,9 +248,9 @@
                             </ol>
                         </div>
                         <div class="position-relative mt-auto">
-                            <img class="img-fluid" src="/assets/landing/image/gardenwaste.jpg" alt="">
+                            <img alt="" class="img-fluid" src="/assets/landing/image/gardenwaste.jpg">
                             <div class="courses-overlay">
-                                <a class="btn btn-outline-primary border-2 disabled" routerLink="/index" fragment="contact">
+                                <a class="btn btn-outline-primary border-2 disabled" fragment="contact" routerLink="/index">
                                     Coming soon
                                 </a>
                             </div>
@@ -258,7 +258,7 @@
                     </div>
                 </div>
 
-                <div #animate id="service6" class="col-lg-4 col-md-6">
+                <div #animate class="col-lg-4 col-md-6" id="service6">
                     <div class="courses-item d-flex flex-column bg-white overflow-hidden h-100">
                         <div class="text-center p-4 pt-0">
                             <div class="d-inline-block index-primary-background-color text-white fs-5 py-1 px-4 mb-4">Available</div>
@@ -273,9 +273,9 @@
                             </ol>
                         </div>
                         <div class="position-relative mt-auto">
-                            <img class="img-fluid" src="/assets/landing/image/gardenwaste.jpg" alt="">
+                            <img alt="" class="img-fluid" src="/assets/landing/image/gardenwaste.jpg">
                             <div class="courses-overlay">
-                                <a class="btn btn-outline-primary border-2" routerLink="/index" fragment="contact">
+                                <a class="btn btn-outline-primary border-2" fragment="contact" routerLink="/index">
                                     Enquire now
                                 </a>
                             </div>
@@ -286,107 +286,267 @@
             <!-- Services end -->
 
             <!-- Contact start -->
+            <c-modal #modal alignment="center" [ngSwitch]="status" data-testid="modal" [visible]="modalVisible" (visibleChange)="handleChange($event)">
+                <c-modal-header>
+                    <h5 *ngSwitchCase="'Idle'" cModalTitle>Submission Error</h5>
+                    <h5 *ngSwitchCase="'Success'" cModalTitle>Thank You</h5>
+                    <h5 *ngSwitchCase="'Error'" cModalTitle>Submission Error</h5>
+                    <button (click)="toggleModalVisibility()" cButtonClose></button>
+                </c-modal-header>
+
+                <c-modal-body>
+                    <div class="d-flex justify-content-center">
+                        <fa-icon *ngSwitchCase="'Idle'" [icon]="faCircleExclamation" size="2x" class="faCircleExclamation"></fa-icon>
+                        <fa-icon *ngSwitchCase="'Success'" [icon]="faCircleCheck" size="2x" class="faCircleCheck"></fa-icon>
+                        <fa-icon *ngSwitchCase="'Error'" [icon]="faCircleExclamation" size="2x" class="faCircleExclamation"></fa-icon>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <p class="text-body-secondary mt-2 mb-0" *ngSwitchCase="'Idle'">Internal error, please try again later</p>
+                        <p class="text-body-secondary mt-2 mb-0" *ngSwitchCase="'Success'">Your message has been sent</p>
+                        <p class="text-body-secondary mt-2 mb-0" *ngSwitchCase="'Error'">Internal error, please try again later</p>
+                    </div>
+                </c-modal-body>
+                <c-modal-footer>
+                    <button (click)="toggleModalVisibility()" cButton color="primary">
+                        Close
+                    </button>
+                </c-modal-footer>
+            </c-modal>
             <div #animate class="row justify-content-center" id="contact">
                 <div class="col-lg-8 mb-0">
                     <div class="bg-primary text-center p-5">
                         <h1 class="mb-4">Contact Us Now</h1>
-                        <form class="needs-validation" id="contact-form"
-                              [formGroup]="contactForm">
+                        <form [formGroup]="_contactForm"
+                              id="contact-form">
                             <div class="row g-3">
 
                                 <!-- first_name	-->
                                 <div class="col-sm-6">
                                     <div class="form-floating">
-                                        <input type="text" id="first_name" placeholder="First Name" maxlength="50" required
-                                               formControlName="first_name" data-testid="first-name-input"
-                                               [ngClass]="first_name?.invalid && submitted ? 'form-control border-0 is-invalid' : 'form-control border-0'">
+                                        <input #firstName [valid]="firstNameValid" cFormControl class="form-control border-0" data-testid="first_name"
+                                               formControlName="first_name" id="first_name" placeholder="First Name" type="text">
                                         <label for="first_name">First Name</label>
-                                        <div class="custom-invalid-feedback" data-testid="first-name-invalid-feedback"
-                                             *ngIf="first_name?.invalid && (first_name?.dirty || first_name?.untouched) && submitted">
-                                            enter first name
-                                        </div>
                                     </div>
+                                    <control-errors controlName="first_name" data-testid="first-name-errors">
+                                        <ng-template let-errors>
+                                            <ng-container *ngIf="errors.required" data-testid="errors.required">
+                                                <div>
+                                                    <span class="control-error-mark">❗</span>
+                                                    Enter first name
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="errors.pattern">
+                                                <div>
+                                                    <span class="control-error-mark">❗</span>
+                                                    Letters only
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="errors.maxlength">
+                                                <div>
+                                                    <span class="control-error-mark">❗</span>
+                                                    Max length 30
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="errors.minlength">
+                                                <div>
+                                                    <span class="control-error-mark">❗</span>
+                                                    Min length 1
+                                                </div>
+                                            </ng-container>
+                                        </ng-template>
+                                    </control-errors>
                                 </div>
 
                                 <!-- last_name	-->
                                 <div class="col-sm-6">
                                     <div class="form-floating">
-                                        <input type="text" id="last_name" placeholder="First Name" maxlength="50"
-                                               formControlName="last_name"
-                                               [ngClass]="last_name?.invalid && submitted ? 'form-control border-0 is-invalid' : 'form-control border-0'">
+                                        <input #lastName [valid]="lastNameValid" cFormControl class="form-control border-0" data-testid="last_name"
+                                               formControlName="last_name" id="last_name" placeholder="First Name" type="text">
                                         <label for="last_name">Last Name</label>
-                                        <div class="custom-invalid-feedback" *ngIf="last_name?.invalid && (last_name?.dirty || last_name?.untouched) && submitted">enter
-                                            enter last name
-                                        </div>
                                     </div>
+                                    <control-errors controlName="last_name">
+                                        <ng-template let-errors>
+                                            <ng-container *ngIf="errors.required" data-testid="errors.required">
+                                                <div>
+                                                    <span class="control-error-mark">❗</span>
+                                                    Enter last name
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="errors.pattern">
+                                                <div>
+                                                    <span class="control-error-mark">❗</span>
+                                                    Letters only
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="errors.maxlength">
+                                                <div>
+                                                    <span class="control-error-mark">❗</span>
+                                                    Max length 30
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="errors.minlength">
+                                                <div>
+                                                    <span class="control-error-mark">❗</span>
+                                                    Min length 1
+                                                </div>
+                                            </ng-container>
+                                        </ng-template>
+                                    </control-errors>
                                 </div>
 
                                 <!-- email	-->
                                 <div class="col-sm-6">
                                     <div class="form-floating">
-                                        <input type="email" placeholder="Email" id="email" maxlength="50"
-                                               formControlName="email"
-                                               [ngClass]="email?.invalid && submitted ? 'form-control border-0 is-invalid' : 'form-control border-0'">
+                                        <input #email [valid]="emailValid" cFormControl class="form-control border-0" data-testid="email" formControlName="email"
+                                               id="email" placeholder="Email" type="email">
                                         <label for="email">Email</label>
-                                        <div class="custom-invalid-feedback" *ngIf="email?.invalid && (email?.dirty || email?.untouched) && submitted">enter
-                                            enter email
-                                        </div>
                                     </div>
+                                    <control-errors controlName="email">
+                                        <ng-template let-errors>
+                                            <ng-container *ngIf="errors.required" data-testid="errors.required">
+                                                <div>
+                                                    <span class="control-error-mark">❗</span>
+                                                    Enter email address
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="errors.maxlength">
+                                                <div>
+                                                    <span class="control-error-mark">❗</span>
+                                                    Max length 50
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="errors.email">
+                                                <div>
+                                                    <span class="control-error-mark">❗</span>
+                                                    Invalid email
+                                                </div>
+                                            </ng-container>
+                                        </ng-template>
+                                    </control-errors>
                                 </div>
 
                                 <!-- phone	-->
                                 <div class="col-sm-6">
                                     <div class="form-floating">
-                                        <input type="tel" placeholder="Phone" id="phone" maxlength="50"
-                                               formControlName="phone"
-                                               [ngClass]="phone?.invalid && submitted ? 'form-control border-0 is-invalid' : 'form-control border-0'">
+                                        <input #phone [valid]="phoneValid" cFormControl class="form-control border-0" data-testid="phone" formControlName="phone" id="phone"
+                                               placeholder="Phone" type="tel">
                                         <label for="phone">Phone</label>
-                                        <div class="custom-invalid-feedback" *ngIf="phone?.invalid && (phone?.dirty || phone?.untouched) && submitted">enter phone
-                                            number
-                                        </div>
                                     </div>
+                                    <control-errors controlName="phone">
+                                        <ng-template let-errors>
+                                            <ng-container *ngIf="errors.required" data-testid="errors.required">
+                                                <div>
+                                                    <span class="control-error-mark">❗</span>
+                                                    Enter contact number
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="errors.minlength">
+                                                <div>
+                                                    <span class="control-error-mark">❗</span>
+                                                    Min length 1
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="errors.maxlength">
+                                                <div>
+                                                    <span class="control-error-mark">❗</span>
+                                                    Max length 30
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="errors.pattern">
+                                                <div>
+                                                    <span class="control-error-mark">❗</span>
+                                                    Numbers only
+                                                </div>
+                                            </ng-container>
+                                        </ng-template>
+                                    </control-errors>
                                 </div>
 
                                 <!-- address_line1	-->
                                 <div class="col-sm-6">
                                     <div class="form-floating">
-                                        <input type="text" placeholder="Address Line 1" id="address_line1" name="phone"
-                                               maxlength="60"
-                                               formControlName="address_line1"
-                                               [ngClass]="address_line1?.invalid && submitted ? 'form-control border-0 is-invalid' : 'form-control border-0'">
+                                        <input #addressLine1 [valid]="addressLine1Valid" cFormControl class="form-control border-0" data-testid="address_line1"
+                                               formControlName="address_line1" id="address_line1" name="phone" placeholder="Address Line 1"
+                                               type="text">
                                         <label for="address_line1">Number and road</label>
-                                        <div class="custom-invalid-feedback" *ngIf="address_line1?.invalid && (address_line1?.dirty || address_line1?.untouched) && submitted">
-                                            enter number and road
-                                        </div>
                                     </div>
+                                    <control-errors controlName="address_line1">
+                                        <ng-template let-errors>
+                                            <ng-container *ngIf="errors.required" data-testid="errors.required">
+                                                <div>
+                                                    <span class="control-error-mark">❗</span>
+                                                    Enter address line 1
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="errors.minlength">
+                                                <div>
+                                                    <span class="control-error-mark">❗</span>
+                                                    Min length 1
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="errors.maxlength">
+                                                <div>
+                                                    <span class="control-error-mark">❗</span>
+                                                    Max length 100
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="errors.pattern">
+                                                <div>
+                                                    <span class="control-error-mark">❗</span>
+                                                    Letters, numbers and spaces only
+                                                </div>
+                                            </ng-container>
+                                        </ng-template>
+                                    </control-errors>
                                 </div>
 
                                 <!-- address_line2	-->
                                 <div class="col-sm-6">
                                     <div class="form-floating">
-                                        <input type="text" placeholder="Address Line 2" id="address_line2" name="phone"
-                                               maxlength="60"
-                                               formControlName="address_line2"
-                                               [ngClass]="address_line2?.invalid && submitted ? 'form-control border-0 is-invalid' : 'form-control border-0'">
+                                        <input #addressLine2 [valid]="addressLine2Valid" cFormControl class="form-control border-0" data-testid="address_line2"
+                                               formControlName="address_line2" id="address_line2" name="phone" placeholder="Address Line 2"
+                                               type="text">
                                         <label for="address_line2">Suburb</label>
-                                        <div class="custom-invalid-feedback" *ngIf="address_line2?.invalid && (address_line2?.dirty || address_line2?.untouched) && submitted">
-                                            enter suburb
-                                        </div>
                                     </div>
+                                    <control-errors controlName="address_line2">
+                                        <ng-template let-errors>
+                                            <ng-container *ngIf="errors.required" data-testid="errors.required">
+                                                <div>
+                                                    <span class="control-error-mark">❗</span>
+                                                    Enter suburb
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="errors.minlength">
+                                                <div>
+                                                    <span class="control-error-mark">❗</span>
+                                                    Min length 1
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="errors.maxlength">
+                                                <div>
+                                                    <span class="control-error-mark">❗</span>
+                                                    Max length 100
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="errors.pattern">
+                                                <div>
+                                                    <span class="control-error-mark">❗</span>
+                                                    Letters, numbers and spaces only
+                                                </div>
+                                            </ng-container>
+                                        </ng-template>
+                                    </control-errors>
                                 </div>
 
                                 <div class="col-sm-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control border-0" id="city"
-                                               placeholder="City" disabled>
+                                        <input cFormControl class="form-control border-0" disabled id="city" placeholder="City" type="text">
                                         <label for="city">Auckland</label>
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control border-0" id="country"
-                                               placeholder="Country"
-                                               disabled>
+                                        <input cFormControl class="form-control border-0" disabled id="country" placeholder="Country" type="text">
                                         <label for="country">New Zealand</label>
                                     </div>
                                 </div>
@@ -394,30 +554,48 @@
                                 <!-- message	-->
                                 <div class="col-12">
                                     <div class="form-floating">
-                      						<textarea class="form-control border-0" placeholder="Leave a message here"
-                                                      id="message" maxlength="400"
-                                                      formControlName="message"
-                                                      [ngClass]="message?.invalid && submitted ? 'form-control border-0 is-invalid' : 'form-control border-0'">
+                      						<textarea #message cFormControl class="form-control border-0" [valid]="messageValid"
+                                                      data-testid="message" formControlName="message" id="message" placeholder="Leave a message here">
 											</textarea>
                                         <label for="message">Message</label>
-                                        <div class="custom-invalid-feedback" *ngIf="message?.invalid && (message?.dirty || message?.untouched) && submitted">enter a
-                                            message
-                                        </div>
                                     </div>
+                                    <control-errors controlName="message">
+                                        <ng-template let-errors>
+                                            <ng-container *ngIf="errors.required" data-testid="errors.required">
+                                                <div>
+                                                    <span class="control-error-mark">❗</span>
+                                                    Enter a message
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="errors.minlength">
+                                                <div>
+                                                    <span class="control-error-mark">❗</span>
+                                                    Min length 1
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="errors.maxlength">
+                                                <div>
+                                                    <span class="control-error-mark">❗</span>
+                                                    Max length 1000
+                                                </div>
+                                            </ng-container>
+                                            <ng-container *ngIf="errors.pattern">
+                                                <div>
+                                                    <span class="control-error-mark">❗</span>
+                                                    Letters, numbers and spaces only
+                                                </div>
+                                            </ng-container>
+                                        </ng-template>
+                                    </control-errors>
                                 </div>
                             </div>
 
-                            <div class="d-flex justify-content-center">
-                                <re-captcha #recaptcha formControlName="recaptcha"
-                                            (resolved)="submitRecaptcha($event)" ngDefaultControl
-                                            (errored)="erroredRecaptcha($event)" errorMode="handled"></re-captcha>
-                            </div>
-
+                            <br>
                             <div class="d-flex justify-content-center">
                                 <div class="col-sm-6">
-                                    <button class="btn btn-dark w-100 py-3" type="submit" id="submit-button" data-testid="submit-button"
-                                            [disabled]="!recaptchaValid"
-                                            (click)="submitForm()">Submit
+                                    <button (click)="submitForm()" [disabled]="_contactForm.invalid" class="btn btn-dark w-100 py-3" data-testid="submit-button"
+                                            id="submit-button"
+                                            type="submit">Submit
                                     </button>
                                 </div>
                             </div>
@@ -444,7 +622,7 @@
                         </p>
                     </div>
                     <div class="row gy-5 gx-4">
-                        <div #animate id="values1" class="col-sm-6">
+                        <div #animate class="col-sm-6" id="values1">
                             <div class="d-flex align-items-center mb-3">
                                 <div class="flex-shrink-0 btn-square index-primary-background-color me-3">
                                     <i class="fa fa-check text-white"></i>
@@ -453,7 +631,7 @@
                             </div>
                             <span class="index-font-color">Do it right the first time, every time</span>
                         </div>
-                        <div #animate id="values2" class="col-sm-6">
+                        <div #animate class="col-sm-6" id="values2">
                             <div class="d-flex align-items-center mb-3">
                                 <div class="flex-shrink-0 btn-square index-primary-background-color me-3">
                                     <i class="fa fa-check text-white"></i>
@@ -462,7 +640,7 @@
                             </div>
                             <span class="index-font-color">Industry certified Landscaping and Horticulture specialists</span>
                         </div>
-                        <div #animate id="values3" class="col-sm-6">
+                        <div #animate class="col-sm-6" id="values3">
                             <div class="d-flex align-items-center mb-3">
                                 <div class="flex-shrink-0 btn-square index-primary-background-color me-3">
                                     <i class="fa fa-check text-white"></i>
@@ -471,7 +649,7 @@
                             </div>
                             <span class="index-font-color">Non-toxic weed control keeps pets safe</span>
                         </div>
-                        <div #animate id="values4" class="col-sm-6">
+                        <div #animate class="col-sm-6" id="values4">
                             <div class="d-flex align-items-center mb-3">
                                 <div class="flex-shrink-0 btn-square index-primary-background-color me-3">
                                     <i class="fa fa-check text-white"></i>
@@ -482,12 +660,12 @@
                         </div>
                     </div>
                 </div>
-                <div #animate id="values5" class="col-lg-6">
+                <div #animate class="col-lg-6" id="values5">
                     <div class="position-relative overflow-hidden pe-5 pt-5 h-100" style="min-height: 400px;">
-                        <img class="position-absolute w-100 h-100" src="/assets/landing/image/chipper.jpg" alt=""
+                        <img alt="" class="position-absolute w-100 h-100" src="/assets/landing/image/chipper.jpg"
                              style="object-fit: cover;">
-                        <img class="position-absolute top-0 end-0 bg-white ps-3 pb-3" src="/assets/landing/image/guarantee.png"
-                             alt="" id="guarantee" style="width: 200px; height: 200px;">
+                        <img alt="" class="position-absolute top-0 end-0 bg-white ps-3 pb-3"
+                             id="guarantee" src="/assets/landing/image/guarantee.png" style="width: 200px; height: 200px;">
                     </div>
                 </div>
             </div>
@@ -498,14 +676,14 @@
     <!-- Testimonial start -->
     <div class="container-xxl py-6">
         <div class="container">
-            <span #animate id="testimonial1" class="mb-4 text-center mx-auto mb-5" style="max-width: 500px;">
+            <span #animate class="mb-4 text-center mx-auto mb-5" id="testimonial1" style="max-width: 500px;">
                 <h5 class="index-primary-color text-uppercase mb-2">Testimonials</h5>
                 <h1 class="index-heading-color">What Our Clients Say</h1>
             </span>
-            <div #animate id="testimonial2" class="row justify-content-center">
+            <div #animate class="row justify-content-center" id="testimonial2">
                 <div class="col-lg-8 wow fadeInUp" data-wow-delay="0.1s">
 
-                    <c-carousel [dark]="true" [animate]="false" transition="crossfade" [interval]="2500">
+                    <c-carousel [animate]="false" [dark]="true" [interval]="2500" transition="crossfade">
                         <c-carousel-indicators></c-carousel-indicators>
                         <c-carousel-inner>
                             <c-carousel-item *ngFor="let slide of testimonialSlides; index as i;" class="text-center">

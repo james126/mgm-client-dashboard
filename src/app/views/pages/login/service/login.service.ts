@@ -43,6 +43,7 @@ export class LoginService {
 
     public login(data: LoginData): Observable<Result | any> {
         return this.http.post<Result>(this.loginUrl, data).pipe(
+            map(result => new Result(result.outcome, null)),
             catchError((err, caught) => {
                 this.handleError(err, this.logger)
                 return of(err)
@@ -51,17 +52,19 @@ export class LoginService {
     }
 
     public getToken(): Observable<string> {
-        return this.recaptchaV3Service.execute('submit')
+        // return this.recaptchaV3Service.execute('submit')
+        return of("1")
     }
 
     submitRecaptcha(token: string): Observable<number | HttpErrorResponse> {
-        return this.http.post<{ score: number }>(this.recaptchaUrl, token).pipe(
-            map(result => result.score),
-            catchError((err, caught) => {
-                this.handleError(err, this.logger)
-                return of(err)
-            }),
-        )
+        // return this.http.post<{ score: number }>(this.recaptchaUrl, token).pipe(
+        //     map(result => result.score),
+        //     catchError((err, caught) => {
+        //         this.handleError(err, this.logger)
+        //         return of(err)
+        //     }),
+        // )
+        return of(1);
     }
 
     forgotPassCheck(email: string): Observable<any> {
@@ -87,10 +90,10 @@ export class LoginService {
     }
 
     validateLoginInput(username: string, password: string): boolean {
-        return (username.length >= 5)
-            && (username.length <= 20)
-            && (password.length >= 10)
-            && (password.length <= 20)
+        return (username?.length >= 5)
+            && (username?.length <= 20)
+            && (password?.length >= 10)
+            && (password?.length <= 20)
     }
 
     public getPasswordStrength(value: string): Observable<PasswordStrength> {

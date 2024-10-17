@@ -21,11 +21,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
 import { ControlErrorsComponent } from '../../../utility/control-errors/control-errors.component'
-import { map, switchMap, timer, of, Observable, catchError, Subscription, fromEvent, debounceTime } from 'rxjs'
+import { map, switchMap, timer, of, Observable, catchError, Subscription, fromEvent, debounceTime, throttleTime } from 'rxjs'
 import { PasswordStrength, SignupResult, SignupService } from './service/signup.service'
 import { CommonModule } from '@angular/common'
 import { RecaptchaModule, ReCaptchaV3Service } from 'ng-recaptcha'
-import { formatErrors } from '../../../utility/format-validation-errors'
+import { formatErrors } from '../login/reset-password/new-password/format-validation-errors'
 import { RouterLink } from '@angular/router'
 
 const { email, maxLength, minLength, pattern, required } = Validators
@@ -101,21 +101,21 @@ export class RegisterComponent implements AfterViewInit, OnDestroy{
     }
 
     ngAfterViewInit(): void {
-        this.username$ = fromEvent(this.usernameInput.nativeElement, 'focus')
+        this.username$ = fromEvent(this.usernameInput.nativeElement, 'input')
             .pipe(debounceTime(1000))
             .subscribe(() => {
                 const value = this.usernameInput.nativeElement.value.trim()
-                const valid = this.register.controls['username'].errors
+                const valid = this.register.controls['username'].valid
                 if (value.length == 0) {
                     this.usernameValid = undefined
-                } else if (!valid) {
+                } else if (valid) {
                     this.usernameValid = true
                 } else {
                     this.usernameValid = false
                 }
             })
 
-        this.password$ = fromEvent(this.passwordInput.nativeElement, 'focus')
+        this.password$ = fromEvent(this.passwordInput.nativeElement, 'input')
             .pipe(debounceTime(1000))
             .subscribe(() => {
                 const value = this.passwordInput.nativeElement.value.trim()
@@ -129,7 +129,7 @@ export class RegisterComponent implements AfterViewInit, OnDestroy{
                 }
             })
 
-        this.repeatPassword$ = fromEvent(this.repeatPasswordInput.nativeElement, 'focus')
+        this.repeatPassword$ = fromEvent(this.repeatPasswordInput.nativeElement, 'input')
             .pipe(debounceTime(1000))
             .subscribe(() => {
                 const value = this.repeatPasswordInput.nativeElement.value.trim()
@@ -143,7 +143,7 @@ export class RegisterComponent implements AfterViewInit, OnDestroy{
                 }
             })
 
-        this.email$ = fromEvent(this.emailInput.nativeElement, 'focus')
+        this.email$ = fromEvent(this.emailInput.nativeElement, 'input')
             .pipe(debounceTime(1000))
             .subscribe(() => {
                 const value = this.emailInput.nativeElement.value.trim()
@@ -267,17 +267,17 @@ export class RegisterComponent implements AfterViewInit, OnDestroy{
     }
 
     /*
-    Unused Modal fucnction
     event: true when modal switched from invisible to visible
            false when modal switched from visible to invisible
      */
     handleChange(event: boolean) {
-        // if (event){
-        //     setTimeout(() => {
-        //         this.modalButton?.nativeElement.classList.add('btn-custom');
-        //         this.cd.detectChanges();  // Manually trigger change detection if needed
-        //     }, 100);  // 100ms delay to ensure transition happens
-        // }
+        if (!event){
+            this.register.reset()
+            this.usernameValid = undefined;
+            this.emailValid = undefined;
+            this.passwordValid = undefined;
+            this.repeatPasswordValid = undefined;
+        }
     }
 
     ngOnDestroy(): void {

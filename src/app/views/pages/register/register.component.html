@@ -1,6 +1,7 @@
 <div class="bg-light dark:bg-transparent min-vh-100 d-flex flex-row align-items-center">
     <c-container>
         <c-row class="justify-content-center">
+
             <c-modal alignment="center" [ngSwitch]="status" data-testid="modal" [visible]="modalVisible" (visibleChange)="handleChange($event)">
                 <c-modal-header>
                     <h5 *ngSwitchCase="'Idle'" cModalTitle>Submission Error</h5>
@@ -25,9 +26,9 @@
                     <button (click)="toggleModalVisibility()" cButton color="secondary">
                         Close
                     </button>
-                    <button routerLink="login" *ngSwitchCase="'Success'" cButton color="primary">Login</button>
-                    <button routerLink="landing" *ngSwitchCase="'Idle'" cButton color="primary">Home</button>
-                    <button routerLink="landing" *ngSwitchCase="'Error'" cButton color="primary">Home</button>
+                    <button routerLink="/login" *ngSwitchCase="'Success'" cButton color="primary">Login</button>
+                    <button routerLink="/landing" *ngSwitchCase="'Idle'" cButton color="primary">Home</button>
+                    <button routerLink="/landing" *ngSwitchCase="'Error'" cButton color="primary">Home</button>
                 </c-modal-footer>
             </c-modal>
 
@@ -138,7 +139,7 @@
                                     <ng-container *ngIf="errors.required" data-testid="errors.required">
                                         <div>
                                             <span class="control-error-mark">❗</span>
-                                            Required
+                                            Enter a password
                                         </div>
                                     </ng-container>
                                     <ng-container *ngIf="errors.maxlength">
@@ -202,7 +203,7 @@
                                     <ng-container *ngIf="errors.required" data-testid="errors.required">
                                         <div>
                                             <span class="control-error-mark">❗</span>
-                                            Required
+                                            Repeat password
                                         </div>
                                     </ng-container>
                                     <ng-container *ngIf="errors.invalid">

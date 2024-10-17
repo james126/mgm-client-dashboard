@@ -6,4 +6,4 @@ export const loginData: LoginData = {
 }
 
 export const invalidEmail: string = 'abc';
-export const validEmail: string = 'abc@mail.cm';
+export const validEmail: string = 'abc@mail.com';

@@ -16,7 +16,7 @@ import { ASYNC_DELAY, RegisterComponent} from '../../app/views/pages/register/re
 import { PasswordStrength, SignupResult, SignupService } from '../../app/views/pages/register/service/signup.service'
 import { dispatchFakeInputEvent, updateTrigger } from '../test-util/update-form-helper'
 import { email, password, repeatPassword, signupData, username } from './dummy-data'
-import { formatErrors } from '../../app/utility/format-validation-errors'
+import { formatErrors } from '../../app/views/pages/login/reset-password/new-password/format-validation-errors'
 
 describe('RegisterComponent', () => {
     let component: RegisterComponent
@@ -45,6 +45,7 @@ describe('RegisterComponent', () => {
                 signup: of(new SignupResult(true, null)),
                 getPasswordStrength: of(strength),
                 submitRecaptcha: of(1),
+                getToken: of("abc")
             },
         )
 
@@ -85,7 +86,7 @@ describe('RegisterComponent', () => {
         flush() //finish any async operations
     }))
 
-    it('Invalid form', fakeAsync(() => {
+    it('Don\'t submit invalid form', fakeAsync(() => {
         let submitButton = debugElement.query(By.css(`[data-testid="submit"]`))
         tick(ASYNC_DELAY) // Wait for async validators
 
@@ -126,7 +127,26 @@ describe('RegisterComponent', () => {
             fixture.detectChanges()
 
             let el = debugElement.query(By.css(`#${testId}-errors`))
-            let string = (testId == 'repeatPassword') ? `^.+(Enter password again).+$` : `^.+(Enter).+(${testId}).+$`
+            let string = ''
+
+            switch (testId.valueOf()) {
+                case "username":
+                    string = "Enter a username"
+                    break
+
+                case "email":
+                    string = "Enter an email address"
+                    break
+
+                case "password":
+                    string = "Enter a password"
+                    break
+
+                case "repeatPassword":
+                    string = "Repeat password"
+                    break
+            }
+
             let regex = new RegExp(string)
             let valid = regex.test(el.nativeElement.textContent)
 

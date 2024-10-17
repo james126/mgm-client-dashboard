@@ -91,7 +91,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.username$ = fromEvent(this.usernameInput.nativeElement, 'focus')
+        this.username$ = fromEvent(this.usernameInput.nativeElement, 'input')
             .pipe(debounceTime(1000))
             .subscribe(() => {
                 const value = this.usernameInput.nativeElement.value.trim()
@@ -102,7 +102,7 @@ export class LoginComponent implements OnInit, OnDestroy {
                 }
             })
 
-        this.password$ = fromEvent(this.passwordInput.nativeElement, 'focus')
+        this.password$ = fromEvent(this.passwordInput.nativeElement, 'input')
             .pipe(debounceTime(1000))
             .subscribe(() => {
                 const value = this.passwordInput.nativeElement.value.trim()
@@ -115,7 +115,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     public onSubmit() {
-        if (this.login.valid && this.loginService.validateLoginInput(this.login.get('username')!.value, this.login.get('password')!.value)) {
+        if (this.login.valid && this.secretValidation()) {
             timer(ASYNC_DELAY).pipe(
                 switchMap(() => this.getToken()),
                 switchMap((token: string) => this.loginService.submitRecaptcha(token)),
@@ -148,6 +148,13 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
     }
 
+    /*
+    Validate username and password lengths, without giving feedback to the user, to prevent sending unecessary requests
+     */
+    public secretValidation(): boolean {
+        return this.loginService.validateLoginInput(this.login.get('username')?.value, this.login.get('password')?.value)
+    }
+
     public forgotPass() {
         this.showResetPasswordSubmitEmailModal(true)
     }
@@ -160,6 +167,9 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.loginFeedbackVisible = visible;
         if (!visible){
             this.loginStatus = Status.Idle;
+            this.login.reset();
+            this.usernameValid = undefined;
+            this.passwordValid = undefined;
         }
     }
 
