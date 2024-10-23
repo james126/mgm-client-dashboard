@@ -27,6 +27,6 @@
         </c-alert>
     </c-modal-body>
     <c-modal-footer>
-        <button cButton [disabled]="form.invalid && getStatus() === 'Idle'" (click)="onSubmit()" color="primary" data-testid="submit-email">Submit</button>
+        <button cButton [disabled]="form.invalid || getStatus() != 'Idle'" (click)="onSubmit()" color="primary" data-testid="submit-email" id="submit-email">Submit</button>
     </c-modal-footer>
 </c-modal>

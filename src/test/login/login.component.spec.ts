@@ -92,7 +92,7 @@ describe('LoginComponent', () => {
         flush() //finish any async operations
     }))
 
-    it('Submit login - invalid shows Status invalid', fakeAsync(() => {
+    it('Submit login - invalid shows status invalid', fakeAsync(() => {
         let submitButton = debugElement.query(By.css(`[data-testid="submit-login"]`))
         loginService.validateLoginInput.and.returnValue(false);
 

@@ -109,6 +109,10 @@ export class NewPasswordComponent implements OnInit, OnDestroy {
     }
 
     public onSubmit() {
+        setTimeout(() => {
+            document.getElementById('submit-new-pass')?.blur()
+        }, 500)
+
         if (this.form.valid) {
             timer(ASYNC_DELAY).pipe(
                 switchMap(() => this.getToken()),
@@ -151,9 +155,6 @@ export class NewPasswordComponent implements OnInit, OnDestroy {
     }
 
     public isVisible() {
-        this.form?.reset()
-        this.status = PasswordStatus.Idle
-
         if (this.visible == false) {
             if (this.internalVisible) {
                 this.internalVisible = false
@@ -181,8 +182,7 @@ export class NewPasswordComponent implements OnInit, OnDestroy {
     }
 
     handleChange(event: boolean) {
-        this.form.get('password')?.reset()
-        this.form.get('repeatPassword')?.reset()
+        this.form?.reset()
         this.status = PasswordStatus.Idle
         this.passwordValid = undefined
     }

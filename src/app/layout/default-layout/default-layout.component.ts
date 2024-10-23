@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { NgScrollbar } from 'ngx-scrollbar';
+import { Observable } from 'rxjs'
+import { LogoutService } from '../../utility/service/logout.service'
+import { Result } from '../../views/pages/login/service/login.service'
 import { DefaultLogoComponent } from './default-logo/default-logo.component'
 import { IconDirective } from '@coreui/icons-angular';
 import {
     ButtonDirective, ColComponent,
-    ContainerComponent, FormControlDirective, InputGroupComponent, InputGroupTextDirective, RowComponent,
+    ContainerComponent, FormControlDirective, INavData, InputGroupComponent, InputGroupTextDirective, RowComponent,
     ShadowOnScrollDirective,
     SidebarBrandComponent,
     SidebarComponent,
