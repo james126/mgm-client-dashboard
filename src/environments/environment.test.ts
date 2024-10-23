@@ -3,7 +3,7 @@ export const environment = {
     server: 'http://localhost:8080',
     contactForm: '/contact-form',
     login: '/login',
-    logout: '/admin/logout',
+    logout: '/custom-logout',
     usernameTaken: '/username-taken',
     emailTaken: '/email-taken',
     signUp: '/sign-up',

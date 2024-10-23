@@ -3,7 +3,7 @@ export const environment = {
 	server: 'https://server.mrgrassmaster.com:8443/mr-grass-master-2.2',
 	contactForm: '/contact-form',
 	login: '/login',
-	logout: '/admin/logout',
+	logout: '/custom-logout',
 	usernameTaken: '/username-taken',
 	emailTaken: '/email-taken',
 	signUp: '/sign-up',

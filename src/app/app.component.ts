@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
     this.titleService.setTitle(this.title);
     this.iconSetService.icons = { ...iconSubset };
     // this.router.navigate(['/login'])
-    // this.router.navigate(['/landing'], { skipLocationChange: true })
+    // this.router.navigate(['/dashboard'], { skipLocationChange: true })
     //     .then(r => true );
   }
 

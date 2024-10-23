@@ -115,6 +115,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     public onSubmit() {
+        setTimeout(() => {
+            document.getElementById('submit-button')?.blur()
+        }, 500)
+
         if (this.login.valid && this.secretValidation()) {
             timer(ASYNC_DELAY).pipe(
                 switchMap(() => this.getToken()),
@@ -186,7 +190,8 @@ export class LoginComponent implements OnInit, OnDestroy {
             username: this.login.get('username')!.value,
             password: this.login.get('password')!.value,
         }
-        return data
+
+        return data;
     }
 
     public togglePass() {

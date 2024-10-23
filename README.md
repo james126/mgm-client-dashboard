@@ -1,6 +1,12 @@
 <!-- Heading start-->
 <h3 align="center">feature/dashboard</h3>
 <p align="center">Angular landing page and dashboard</p>
+<ul>
+	<li>Client uses Angular</li>
+	<li>Server uses Spring Boot</li>
+
+</ul>
+
 
 <div align="center">
     <picture>
@@ -22,9 +28,13 @@
     - user submits their email
     - create a new password
 - [x] Asynchronous form validation feedback
-- [ ] Docker image
-- [ ] Deploy on AWS
-- [ ] Encrypt request body e.g. passwords
+- [ ] CI pipeline
+- [ ] Deploy
+- [ ] Encrypt request body
+- [ ] Add autocomplete to forms
+
+### Ideas
+- [ ] Client Server to REST API architecture
 
 <br/>
 <img align="center" src="https://github-readme-stats.vercel.app/api/top-langs?username=james126&langs_count=10&&hide=php" alt="language"/>
@@ -33,27 +43,44 @@
 
 ### Screenshots
 ### `Landing`
-[<img src=".github/readme/landing.jpeg"/>](.github/readme/register-now.png)
+[<img src=".github/readme/landing/landing.jpeg" style="width:25%"/>](.github/readme/landing/landing.jpeg)
 <br/>
+<br/>
+[<img src=".github/readme/landing/contact.png" style="width:25%"/>](.github/readme/landing/contact.png)
+<br/>
+<br/>
+[<img src=".github/readme/landing/success.png" style="width:25%"/>](.github/readme/landing/success.png)
+<br/>
+<br/>
+[<img src=".github/readme/landing/error.png" style="width:25%"/>](.github/readme/landing/error.png)
 
 ### `Register`
-[<img src=".github/readme/register-now.png" />](.github/readme/register-now.png)
+[<img src=".github/readme/register/register.png" style="width:25%"/>](.github/readme/register/register.png)
 <br/>
-[<img src=".github/readme/registration-successful.png"/>](registration-successful.png)
+<br/>
+[<img src=".github/readme/register/success.png" style="width:25%"/>](.github/readme/register/success.png)
+<br/>
+<br/>
+[<img src=".github/readme/register/error.png" style="width:25%"/>](.github/readme/register/error.png)
 <br/>
 
 ### `Login`
-[<img src=".github/readme/login.png"/>](.github/readme/login.png)
+[<img src=".github/readme/login/login.png" style="width:25%"/>](.github/readme/login/login.png)
+<br/>
+<br/>
+[<img src=".github/readme/login/invalid.png" style="width:25%"/>](.github/readme/login/invalid.png)
+<br/>
+<br/>
+[<img src=".github/readme/login/error.png" style="width:25%"/>](.github/readme/login/error.png)
+<br/>
+#### `Successful login redirects to dashboard (under construction)`
+[<img src=".github/readme/login/dashboard.jpeg" style="width:25%"/>](.github/readme/login/dashboard.jpeg)
+
+
+#### `Login - Reset password`
+[<img src=".github/readme/login/reset-email.png" style="width:25%"/>](.github/readme/login/reset-email.png)
 <br/>
 
-### `Login Error`
-[<img src=".github/readme/login-error.png"/>](.github/readme/login-error.png)
-<br/>
-
-### `Reset Password`
-[<img src=".github/readme/reset-password.png"/>](.github/readme/reset-password.png)
-<br/>
-
-### `New Password`
-[<img src=".github/readme/new-password.png"/>](.github/readme/new-password.png)
+#### `Login - Set new password`
+[<img src=".github/readme/login/reset-new.png" style="width:25%"/>](.github/readme/login/reset-new.png)
 <br/>

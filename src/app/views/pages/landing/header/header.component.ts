@@ -19,7 +19,7 @@ import { Router } from '@angular/router'
 export class HeaderComponent {
     @Input() currentRoute: String = ''
 
-    constructor(public router: Router) {
+    constructor() {
     }
 
     // logout() {

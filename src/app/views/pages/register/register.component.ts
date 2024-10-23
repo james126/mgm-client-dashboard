@@ -220,6 +220,10 @@ export class RegisterComponent implements AfterViewInit, OnDestroy{
 
 //Cancellation: switchMap has a cancellation effect. It will unsubscribe from the previous inner observable when a new value is emitted by the source observable. map does not have this behavior.
     public onSubmit() {
+        setTimeout(() => {
+            document.getElementById('submit-button')?.blur()
+        }, 500)
+
         if (this.register.valid) {
             timer(ASYNC_DELAY).pipe(
                 switchMap((delay: 0) => this.getToken()),

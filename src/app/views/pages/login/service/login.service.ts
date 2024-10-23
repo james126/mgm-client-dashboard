@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http'
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { ReCaptchaV3Service } from 'ng-recaptcha'
 import { NGXLogger } from 'ngx-logger'
@@ -25,9 +25,7 @@ export class Result {
     }
 }
 
-@Injectable({
-    providedIn: 'root',
-})
+@Injectable()
 export class LoginService {
     private loginUrl = ''
     private recaptchaUrl = ''
@@ -42,8 +40,11 @@ export class LoginService {
     }
 
     public login(data: LoginData): Observable<Result | any> {
-        return this.http.post<Result>(this.loginUrl, data).pipe(
-            map(result => new Result(result.outcome, null)),
+        return this.http.post<Result>(this.loginUrl, data, {
+            observe: 'response',
+            withCredentials: true
+        }).pipe(
+            map(result => new Result(result.body?.outcome ? result.body.outcome : false, null)),
             catchError((err, caught) => {
                 this.handleError(err, this.logger)
                 return of(err)
@@ -52,23 +53,28 @@ export class LoginService {
     }
 
     public getToken(): Observable<string> {
-        // return this.recaptchaV3Service.execute('submit')
-        return of("1")
+        return this.recaptchaV3Service.execute('submit')
     }
 
     submitRecaptcha(token: string): Observable<number | HttpErrorResponse> {
-        // return this.http.post<{ score: number }>(this.recaptchaUrl, token).pipe(
-        //     map(result => result.score),
-        //     catchError((err, caught) => {
-        //         this.handleError(err, this.logger)
-        //         return of(err)
-        //     }),
-        // )
-        return of(1);
+        return this.http.post<{ score: number }>(this.recaptchaUrl, token).pipe(
+            map(result => result.score),
+            catchError((err, caught) => {
+                this.handleError(err, this.logger)
+                return of(err)
+            }),
+        )
     }
 
+    /*
+    Submits an email address
+    If the email matches an existing account true is returned, otherwise false
+     */
     forgotPassCheck(email: string): Observable<any> {
-        return this.http.post<Result>(this.forgotPassEmail, email).pipe(
+        return this.http.post<Result>(this.forgotPassEmail, email, {
+            headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+        }).pipe(
+            map(result => new Result(result.outcome, result.error)),
             catchError((err, caught) => {
                 this.handleError(err, this.logger)
                 return of(err)
@@ -77,7 +83,9 @@ export class LoginService {
     }
 
     newPass(newPass: string): Observable<any> {
-        return this.http.post<Result>(this.newPassUrl, newPass).pipe(
+        return this.http.post<Result>(this.newPassUrl, newPass, {
+            headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+        }).pipe(
             catchError((err, caught) => {
                 this.handleError(err, this.logger)
                 return of(err)
@@ -90,10 +98,22 @@ export class LoginService {
     }
 
     validateLoginInput(username: string, password: string): boolean {
+        const strength: PasswordStrength = {
+            valid: false,
+            suggestions: [],
+        }
+
+        const upperCase = this.hasUpperCase(password, strength)
+        const lowerCase = this.hasLowerCase(password, strength)
+        const numeric = this.hasNumeric(password, strength)
+        const specialChar = this.hasSpecialChar(password, strength)
+        strength.valid = upperCase && lowerCase && numeric && specialChar
+
         return (username?.length >= 5)
             && (username?.length <= 20)
             && (password?.length >= 10)
             && (password?.length <= 20)
+            && strength.valid
     }
 
     public getPasswordStrength(value: string): Observable<PasswordStrength> {

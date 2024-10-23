@@ -97,6 +97,10 @@ export class SubmitEmailComponent implements OnInit, OnDestroy {
     }
 
     public onSubmit() {
+        setTimeout(() => {
+            document.getElementById('submit-email')?.blur()
+        }, 500)
+
         if(this.form.valid) {
             timer(ASYNC_DELAY).pipe(
                 switchMap(() => this.getToken()),
