@@ -97,6 +97,7 @@ describe('RegisterComponent', () => {
         expect(signupService.getPasswordStrength).not.toHaveBeenCalled()
         expect(signupService.signup).not.toHaveBeenCalled()
         expect(component.status).toBe("Idle")
+        flush();
     }))
 
     it('Form submission failure', fakeAsync(async () => {

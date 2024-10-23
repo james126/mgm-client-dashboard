@@ -29,7 +29,7 @@ import { ControlErrorsComponent } from '../../app/utility/control-errors/control
 import { updateTrigger } from '../test-util/update-form-helper'
 import { addressLine1, firstName, lastName, email, message, phone } from './dummy-data'
 
-describe('Landing Page - Contact Form', () => {
+describe('LandingComponent', () => {
     let fixture: ComponentFixture<LandingComponent>;
     let component: LandingComponent;
     let debugElement: DebugElement;
