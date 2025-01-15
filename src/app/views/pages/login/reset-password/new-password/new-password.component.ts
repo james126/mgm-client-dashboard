@@ -56,12 +56,13 @@ export enum PasswordStatus {
     templateUrl: './new-password.component.html',
     styleUrl: './new-password.component.scss',
 })
-export class NewPasswordComponent implements OnInit, OnDestroy {
+export class NewPasswordComponent implements OnDestroy, AfterViewInit {
     @Input() visible: boolean
+    @Input() username: string
     public internalVisible: boolean
     @Output() changeVisible: EventEmitter<boolean> = new EventEmitter()
 
-    @ViewChild('password', { static: true }) passwordInput!: ElementRef
+    @ViewChild('password', { static: false }) passwordInput!: ElementRef
     public passwordValid: boolean | undefined
     public password$: Subscription | undefined
 
@@ -86,13 +87,14 @@ export class NewPasswordComponent implements OnInit, OnDestroy {
         })
 
         this.visible = false
+        this.username = ""
         this.internalVisible = false
         this.status = PasswordStatus.Idle
         this.show3 = false
         this.show4 = false
     }
 
-    ngOnInit(): void {
+    ngAfterViewInit(): void {
         this.password$ = fromEvent(this.passwordInput.nativeElement, 'input')
             .pipe(debounceTime(1000))
             .subscribe(() => {
@@ -117,11 +119,11 @@ export class NewPasswordComponent implements OnInit, OnDestroy {
             timer(ASYNC_DELAY).pipe(
                 switchMap(() => this.getToken()),
                 switchMap((token: string) => this.loginService.submitRecaptcha(token)),
-                switchMap((score: number | HttpErrorResponse) => this.loginService.newPass(this.form.get('newPass')?.value)),
+                switchMap((score: number | HttpErrorResponse) => this.loginService.newPass(this.form.get('newPass')?.value, this.username)),
                 catchError(() => of('Error')),
             ).subscribe({
                 next: (value: string | Result) => {
-                    if (value.constructor === Result) {
+                    if (value.constructor === Result && value.outcome) {
                         this.status = PasswordStatus.Success
                     } else {
                         this.status = PasswordStatus.Error

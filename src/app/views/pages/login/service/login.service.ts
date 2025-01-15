@@ -18,10 +18,12 @@ export interface PasswordStrength {
 export class Result {
     outcome!: boolean
     error: HttpErrorResponse | null
+    temporaryPassword!: boolean
 
-    constructor(outcome: boolean, error: HttpErrorResponse | null) {
+    constructor(outcome: boolean, error: HttpErrorResponse | null, temporaryPassword: boolean) {
         this.outcome = outcome
         this.error = error
+        this.temporaryPassword = temporaryPassword
     }
 }
 
@@ -44,7 +46,7 @@ export class LoginService {
             observe: 'response',
             withCredentials: true
         }).pipe(
-            map(result => new Result(result.body?.outcome ? result.body.outcome : false, null)),
+            map(result => new Result(result.body?.outcome ? result.body.outcome : false, null, result.body?.temporaryPassword ? result.body.temporaryPassword : false)),
             catchError((err, caught) => {
                 this.handleError(err, this.logger)
                 return of(err)
@@ -74,7 +76,7 @@ export class LoginService {
         return this.http.post<Result>(this.forgotPassEmail, email, {
             headers: new HttpHeaders({ 'Content-Type': 'application/json' })
         }).pipe(
-            map(result => new Result(result.outcome, result.error)),
+            map(result => new Result(result.outcome, result.error, result.temporaryPassword)),
             catchError((err, caught) => {
                 this.handleError(err, this.logger)
                 return of(err)
@@ -82,10 +84,16 @@ export class LoginService {
         )
     }
 
-    newPass(newPass: string): Observable<any> {
-        return this.http.post<Result>(this.newPassUrl, newPass, {
+    newPass(newPass: string, username: string): Observable<any> {
+        let data: LoginData = {
+            username: username,
+            password: newPass,
+        }
+
+        return this.http.post<Result>(this.newPassUrl, data, {
             headers: new HttpHeaders({ 'Content-Type': 'application/json' })
         }).pipe(
+            map(result => new Result(result.outcome, result.error, result.temporaryPassword)),
             catchError((err, caught) => {
                 this.handleError(err, this.logger)
                 return of(err)

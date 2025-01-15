@@ -22,11 +22,11 @@ describe('NewPasswordComponent', () => {
 
   beforeEach(async () => {
     loginService = jasmine.createSpyObj<LoginService>('LoginService', {
-          login: of(new Result(true, null)),
+          login: of(new Result(true, null, false)),
           getToken: of('123'),
           submitRecaptcha: of(1),
           forgotPassCheck: of(true),
-          newPass: of(new Result(true, null)),
+          newPass: of(new Result(true, null, false)),
           validateLoginInput: true,
           getPasswordStrength: of(passStrength)
         },
@@ -71,7 +71,7 @@ describe('NewPasswordComponent', () => {
     expect(submitButton.nativeElement.disabled).toBeTrue()
   }));
 
-  xit('password synchronously validated', () => {
+  it('password synchronously validated', () => {
     updateTrigger(fixture, 'newPass', 'abc')
     fixture.detectChanges()
     expect(component.form.get('newPass')?.errors).not.toBeNull()
@@ -81,19 +81,21 @@ describe('NewPasswordComponent', () => {
     expect(component.form.get('newPass')?.errors).toBeNull()
   });
 
-  xit('password asynchronously validated', fakeAsync(() => {
+  it('password asynchronously validated', fakeAsync(() => {
     updateTrigger(fixture, 'newPass', 'abc')
-    tick(ASYNC_DELAY)
+    component.passwordInput.nativeElement.dispatchEvent(new Event('input'));
     fixture.detectChanges()
+    tick(ASYNC_DELAY)
     expect(component.passwordValid).toBeFalse()
 
     updateTrigger(fixture, 'newPass', 'Windows11%')
-    tick(ASYNC_DELAY)
+    component.passwordInput.nativeElement.dispatchEvent(new Event('input'));
     fixture.detectChanges()
+    tick(ASYNC_DELAY)
     expect(component.passwordValid).toBeTrue()
   }));
 
-  xit('password is the same as repeat-password', fakeAsync(() => {
+  it('password is the same as repeat-password', fakeAsync(() => {
     let spy = spyOn<any>(component, 'validateRepeatedPassword').and.callThrough()
     updateTrigger(fixture, 'newPass', 'Windows11%')
     updateTrigger(fixture, 'repeatNewPass', 'Windows11%')

@@ -32,9 +32,12 @@ describe('LoginService', () => {
     })
 
     it('Submit login', () => {
-        const response = {
+        const response: Result = {
             outcome: true,
+            error: null,
+            temporaryPassword: false
         }
+
         let actualResult: any
 
         loginService.login(testData).subscribe(result => {
@@ -100,7 +103,7 @@ describe('LoginService', () => {
 
     it('Submit forgot password', () => {
         const username = validEmail
-        const response = new Result(true, null)
+        const response = new Result(true, null, false)
         let actualResult: any
 
         loginService.forgotPassCheck(validEmail).subscribe((res: Result | HttpErrorResponse )=> {

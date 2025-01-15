@@ -12,7 +12,8 @@
         </reset-password-submit-email>
 
         <new-password (changeVisible)="showNewPasswordModal($event)"
-                      [visible]="newPasswordVisible">
+                      [visible]="newPasswordVisible"
+                      [username]="login.get('username')?.value">
         </new-password>
 
         <c-row class="justify-content-center">

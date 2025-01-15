@@ -23,10 +23,10 @@ describe('LoginFeedbackComponent', () => {
 
     beforeEach(async () => {
         loginService = jasmine.createSpyObj<LoginService>('LoginService', {
-                login: of(new Result(true, null)),
+                login: of(new Result(true, null, false)),
                 getToken: of('123'),
                 submitRecaptcha: of(1),
-                forgotPassCheck: of(new Result(true, null)),
+                forgotPassCheck: of(new Result(true, null, false)),
                 newPass: of(null),
                 validateLoginInput: true,
                 getPasswordStrength: of(passStrength)
