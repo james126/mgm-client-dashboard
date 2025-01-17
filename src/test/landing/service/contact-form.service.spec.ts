@@ -1,10 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http'
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
 import { TestBed } from '@angular/core/testing'
-import { MockProvider } from 'ng-mocks'
-import { ReCaptchaV3Service } from 'ng-recaptcha'
+import { RECAPTCHA_V3_SITE_KEY, RecaptchaV3Module } from 'ng-recaptcha'
 import { NGXLogger } from 'ngx-logger'
-import { NGXLoggerMock } from 'ngx-logger/testing'
+import { LoggerTestingModule, NGXLoggerMock } from 'ngx-logger/testing'
 import { SubmitFormResult, ContactFormService } from '../../../app/views/pages/landing/service/contact-form.service'
 import { Contact } from '../../../app/views/pages/landing/dto/contact'
 import { environment } from '../../../environments/environment'
@@ -19,8 +18,8 @@ describe('ContactFormService', () => {
 
     beforeEach(() => {
         TestBed.configureTestingModule({
-            imports: [HttpClientTestingModule],
-            providers: [ContactFormService, { provide: NGXLogger, useClass: NGXLoggerMock }, MockProvider(ReCaptchaV3Service)],
+            imports: [HttpClientTestingModule, LoggerTestingModule, RecaptchaV3Module],
+            providers: [ContactFormService, { provide: NGXLogger, useClass: NGXLoggerMock }, { provide: RECAPTCHA_V3_SITE_KEY, useValue: environment.recaptchaV3 }],
         })
 
         submitService = TestBed.inject(ContactFormService)

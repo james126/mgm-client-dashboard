@@ -1,4 +1,5 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http'
+
 import { Injectable } from "@angular/core";
 import { ReCaptchaV3Service } from 'ng-recaptcha'
 import { NGXLogger } from "ngx-logger";
@@ -23,7 +24,7 @@ export class ContactFormService {
 
 	constructor(private http: HttpClient, private logger: NGXLogger, private recaptchaV3Service: ReCaptchaV3Service) {
 		this.contactFormUrl = environment.server + environment.contactForm;
-		this.recaptchaUrl = environment.server + environment.recaptchaV3;
+		this.recaptchaUrl = environment.server + environment.recaptcha;
 	}
 
 	submitContactForm(body: Contact): Observable<SubmitFormResult> {

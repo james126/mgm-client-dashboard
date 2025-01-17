@@ -15,6 +15,14 @@
 </div>
 <hr/>
 
+## Contents
+- [Backlog](#backlog)
+- [Languages](#languages)
+- [Testing](#testing)
+- [Screenshots](#screenshots)
+- [Demo](#demo)
+
+<a name="backlog"></a>
 ### Backlog
 - [x] Scaffold new app
 - [x] TDD with unit testing
@@ -28,19 +36,21 @@
     - user submits their email
     - create a new password
 - [x] Asynchronous form validation feedback
-- [ ] CI pipeline
 - [ ] Deploy
-- [ ] Encrypt request body
 - [ ] Add autocomplete to forms
 
-### Ideas
-- [ ] Client Server to REST API architecture
-
-<br/>
+<a name="languages"></a>
+### Languages
 <img align="center" src="https://github-readme-stats.vercel.app/api/top-langs?username=james126&langs_count=10&&hide=php" alt="language"/>
 <br/>
 <hr/>
 
+<a name="testing"></a>
+### Testing
+
+[<img src=".github/readme/tests.jpg" style="width:25%"/>](.github/readme/tests.jpg)
+
+<a name="screenshots"></a>
 ### Screenshots
 ### `Landing`
 [<img src=".github/readme/landing/landing.jpeg" style="width:25%"/>](.github/readme/landing/landing.jpeg)
@@ -76,7 +86,6 @@
 #### `Successful login redirects to dashboard (under construction)`
 [<img src=".github/readme/login/dashboard.jpeg" style="width:25%"/>](.github/readme/login/dashboard.jpeg)
 
-
 #### `Login - Reset password`
 [<img src=".github/readme/login/reset-email.png" style="width:25%"/>](.github/readme/login/reset-email.png)
 <br/>
@@ -84,3 +93,6 @@
 #### `Login - Set new password`
 [<img src=".github/readme/login/reset-new.png" style="width:25%"/>](.github/readme/login/reset-new.png)
 <br/>
+
+<a name="demo"></a>
+### Demo

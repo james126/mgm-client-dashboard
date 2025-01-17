@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     constructor(private loginService: LoginService, private formBuilder: NonNullableFormBuilder, private router: Router) {
         this.login = this.formBuilder.group({
-            username: ['user3', {
+            username: ['', {
                 validators: [required],
                 updateOn: 'change',
             }],
@@ -87,7 +87,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
         this.loginFeedbackVisible = false;
         this.submitEmailVisible = false;
-        this.newPasswordVisible = true;
+        this.newPasswordVisible = false;
     }
 
     ngOnInit(): void {
@@ -129,11 +129,11 @@ export class LoginComponent implements OnInit, OnDestroy {
             ).subscribe({
                 next: (value: string | Result) => {
                     if (value.constructor === Result) {
+                        this.loginStatus = value.outcome ? Status.Success : Status.Invalid
                         if (value.temporaryPassword){
                             this.showNewPasswordModal(true);
                             return;
                         }
-                        this.loginStatus = value.outcome ? Status.Success : Status.Invalid
                         if (value.outcome){
                             this.router.navigate(['/dashboard'])
                         }
