@@ -83,16 +83,16 @@ describe('NewPasswordComponent', () => {
 
   it('password asynchronously validated', fakeAsync(() => {
     updateTrigger(fixture, 'newPass', 'abc')
-    component.passwordInput.nativeElement.dispatchEvent(new Event('input'));
-    fixture.detectChanges()
     tick(ASYNC_DELAY)
-    expect(component.passwordValid).toBeFalse()
+    fixture.detectChanges()
+    flush()
+    expect(component.form.controls['newPass'].valid).toBeFalse()
 
     updateTrigger(fixture, 'newPass', 'Windows11%')
-    component.passwordInput.nativeElement.dispatchEvent(new Event('input'));
-    fixture.detectChanges()
     tick(ASYNC_DELAY)
-    expect(component.passwordValid).toBeTrue()
+    fixture.detectChanges()
+    flush()
+    expect(component.form.controls['newPass'].valid).toBeTrue()
   }));
 
   it('password is the same as repeat-password', fakeAsync(() => {

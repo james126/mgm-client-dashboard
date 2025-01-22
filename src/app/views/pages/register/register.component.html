@@ -110,6 +110,12 @@
                                             Must be a valid email address
                                         </div>
                                     </ng-container>
+                                    <ng-container *ngIf="errors.taken">
+                                        <div>
+                                            <span class="control-error-mark">❗</span>
+                                            Email address already registered
+                                        </div>
+                                    </ng-container>
                                     <ng-container *ngIf="errors.maxlength">
                                         <div>
                                             <span class="control-error-mark">❗</span>

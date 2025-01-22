@@ -16,7 +16,7 @@ import {
     ModalTitleDirective,
 } from '@coreui/angular'
 import { FaIconComponent } from '@fortawesome/angular-fontawesome'
-import { catchError, debounceTime, fromEvent, Observable, of, Subscription, switchMap, timer } from 'rxjs'
+import { catchError, debounceTime, Observable, of, Subscription, switchMap, timer } from 'rxjs'
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { LoginService, Result } from '../../service/login.service'
 
@@ -75,12 +75,13 @@ export class SubmitEmailComponent implements OnInit, OnDestroy {
         this.visible = false;
         this.internalVisible = false;
         this.status = EmailStatus.Idle;
+        this.email$ = undefined;
     }
 
     //Use Observer so in template input element can include attribute [valid]=
     //Gives the option of returning undefined which applies no styling
     ngOnInit(): void {
-        this.email$ = fromEvent(this.emailInput.nativeElement, 'input')
+        this.email$ = this.form.controls['email'].statusChanges
             .pipe(debounceTime(1000))
             .subscribe(() => {
                 const value = this.emailInput.nativeElement.value.trim()

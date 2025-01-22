@@ -1,6 +1,6 @@
 import { NgIf } from '@angular/common'
 import { HttpErrorResponse } from '@angular/common/http'
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core'
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core'
 import { AbstractControl, AsyncValidatorFn, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
 import {
     AlertComponent,
@@ -92,10 +92,15 @@ export class NewPasswordComponent implements OnDestroy, AfterViewInit {
         this.status = PasswordStatus.Idle
         this.show3 = false
         this.show4 = false
+        this.password$ = undefined
+    }
+
+    ngOnDestroy(): void {
+        this.password$?.unsubscribe()
     }
 
     ngAfterViewInit(): void {
-        this.password$ = fromEvent(this.passwordInput.nativeElement, 'input')
+        this.password$ = this.form.controls['newPass'].statusChanges
             .pipe(debounceTime(1000))
             .subscribe(() => {
                 const value = this.passwordInput.nativeElement.value.trim()
@@ -208,9 +213,5 @@ export class NewPasswordComponent implements OnDestroy, AfterViewInit {
         } else {
             return undefined;
         }
-    }
-
-    ngOnDestroy(): void {
-        this.password$?.unsubscribe()
     }
 }

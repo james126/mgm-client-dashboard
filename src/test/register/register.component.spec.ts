@@ -25,6 +25,7 @@ describe('RegisterComponent', () => {
     let signupService: jasmine.SpyObj<SignupService>
     let strength: PasswordStrength
     let iconSetService: IconSetService
+    const DELAY = ASYNC_DELAY * 10
 
     const fillForm = () => {
         updateTrigger(fixture, 'username', username)
@@ -72,13 +73,13 @@ describe('RegisterComponent', () => {
         expect(submitButton.nativeElement.disabled).toBeTrue()
 
         fillForm()
-        tick(ASYNC_DELAY)
+        tick(DELAY)
         fixture.detectChanges()
 
         expect(submitButton.nativeElement.disabled).toBeFalse()
 
         submitButton.triggerEventHandler('click', null)
-        tick(ASYNC_DELAY)
+        tick(DELAY)
         fixture.detectChanges() //updates DOM
 
         expect(signupService.signup).toHaveBeenCalledWith(signupData)
@@ -88,7 +89,7 @@ describe('RegisterComponent', () => {
 
     it('Don\'t submit invalid form', fakeAsync(() => {
         let submitButton = debugElement.query(By.css(`[data-testid="submit"]`))
-        tick(ASYNC_DELAY) // Wait for async validators
+        tick(DELAY) // Wait for async validators
 
         submitButton.triggerEventHandler('click', null)
 
@@ -105,11 +106,11 @@ describe('RegisterComponent', () => {
 
         let submitButton = debugElement.query(By.css(`[data-testid="submit"]`))
         fillForm()
-        tick(ASYNC_DELAY)
+        tick(DELAY)
         fixture.detectChanges()
 
         submitButton.triggerEventHandler('click', null)
-        tick(ASYNC_DELAY)
+        tick(DELAY)
         expect(component.status).toBe("Error")
     }))
 
@@ -124,7 +125,7 @@ describe('RegisterComponent', () => {
         // Mark required fields as touched
         requiredFields.forEach((testId) => {
             dispatchFakeInputEvent(fixture, testId)
-            tick(ASYNC_DELAY)
+            tick(DELAY)
             fixture.detectChanges()
 
             let el = debugElement.query(By.css(`#${testId}-errors`))
@@ -159,7 +160,7 @@ describe('RegisterComponent', () => {
         let submitButton = debugElement.query(By.css(`[data-testid="submit"]`))
         signupService.isUsernameTaken.and.returnValue(of(true))
         fillForm()
-        tick(ASYNC_DELAY)
+        tick(DELAY)
         fixture.detectChanges()
 
         expect(submitButton.nativeElement.disabled).toBeTrue()
@@ -177,11 +178,11 @@ describe('RegisterComponent', () => {
         signupService.getPasswordStrength.and.returnValue(of(weakPassword))
 
         fillForm()
-        tick(ASYNC_DELAY)
+        tick(DELAY)
         fixture.detectChanges()
 
         updateTrigger(fixture, 'password', 'aaaaaaaaaa')
-        tick(ASYNC_DELAY)
+        tick(DELAY)
         fixture.detectChanges()
 
         const actualErrors = formatErrors(weakPassword.suggestions)
@@ -203,7 +204,7 @@ describe('RegisterComponent', () => {
         signupService.isUsernameTaken.and.returnValue(of(mockErrorResponse))
 
         fillForm()
-        tick(ASYNC_DELAY)
+        tick(DELAY)
         fixture.detectChanges()
 
         let el = debugElement.query(By.css(`#username-errors`))
@@ -220,7 +221,7 @@ describe('RegisterComponent', () => {
         let toggle = debugElement.query(By.css(`[data-testid="pass-toggle"]`))
 
         fillForm()
-        tick(ASYNC_DELAY)
+        tick(DELAY)
         fixture.detectChanges()
         expect(password.attributes['type']).toBe('password')
 
@@ -238,11 +239,11 @@ describe('RegisterComponent', () => {
         let submitButton = debugElement.query(By.css(`[data-testid="submit"]`))
 
         fillForm()
-        tick(ASYNC_DELAY)
+        tick(DELAY)
         fixture.detectChanges()
 
         submitButton.triggerEventHandler('click', null)
-        tick(ASYNC_DELAY)
+        tick(DELAY)
         fixture.detectChanges() //updates DOM
 
         let modalText = debugElement.query(By.css(`[data-testid="modal"]`)).nativeElement.innerText
@@ -256,11 +257,11 @@ describe('RegisterComponent', () => {
 
         let submitButton = debugElement.query(By.css(`[data-testid="submit"]`))
         fillForm()
-        tick(ASYNC_DELAY)
+        tick(DELAY)
         fixture.detectChanges()
 
         submitButton.triggerEventHandler('click', null)
-        tick(ASYNC_DELAY)
+        tick(DELAY)
         fixture.detectChanges()
 
         let modalText = debugElement.query(By.css(`[data-testid="modal"]`)).nativeElement.innerText

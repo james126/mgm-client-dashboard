@@ -1,6 +1,6 @@
 
 import { HttpErrorResponse } from '@angular/common/http'
-import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core'
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core'
 import { AbstractControl, AsyncValidatorFn, FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
 import { IconDirective } from '@coreui/icons-angular'
 import {
@@ -21,12 +21,13 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCircleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
 import { ControlErrorsComponent } from '../../../utility/control-errors/control-errors.component'
-import { map, switchMap, timer, of, Observable, catchError, Subscription, fromEvent, debounceTime, throttleTime } from 'rxjs'
+import { map, switchMap, timer, of, Observable, catchError, Subscription, fromEvent, debounceTime, throttleTime, take } from 'rxjs'
 import { PasswordStrength, SignupResult, SignupService } from './service/signup.service'
 import { CommonModule } from '@angular/common'
 import { RecaptchaModule, ReCaptchaV3Service } from 'ng-recaptcha'
 import { formatErrors } from '../login/reset-password/new-password/format-validation-errors'
 import { RouterLink } from '@angular/router'
+import x = _default.modes.x
 
 const { email, maxLength, minLength, pattern, required } = Validators
 export const ASYNC_DELAY = 1000
@@ -94,6 +95,11 @@ export class RegisterComponent implements AfterViewInit, OnDestroy{
             }],
         })
 
+        this.username$ = undefined
+        this.email$ = undefined
+        this.password$ = undefined
+        this.repeatPassword$ = undefined
+
         this.show1 = false
         this.show2 = false
         this.status = Status.Idle
@@ -101,8 +107,8 @@ export class RegisterComponent implements AfterViewInit, OnDestroy{
     }
 
     ngAfterViewInit(): void {
-        this.username$ = fromEvent(this.usernameInput.nativeElement, 'input')
-            .pipe(debounceTime(1000))
+        this.username$ = this.register.controls['username'].statusChanges
+            .pipe(debounceTime(2000))
             .subscribe(() => {
                 const value = this.usernameInput.nativeElement.value.trim()
                 const valid = this.register.controls['username'].valid
@@ -115,7 +121,7 @@ export class RegisterComponent implements AfterViewInit, OnDestroy{
                 }
             })
 
-        this.password$ = fromEvent(this.passwordInput.nativeElement, 'input')
+        this.password$ = this.register.controls['password'].statusChanges
             .pipe(debounceTime(1000))
             .subscribe(() => {
                 const value = this.passwordInput.nativeElement.value.trim()
@@ -129,7 +135,7 @@ export class RegisterComponent implements AfterViewInit, OnDestroy{
                 }
             })
 
-        this.repeatPassword$ = fromEvent(this.repeatPasswordInput.nativeElement, 'input')
+        this.repeatPassword$ = this.register.controls['repeatPassword'].statusChanges
             .pipe(debounceTime(1000))
             .subscribe(() => {
                 const value = this.repeatPasswordInput.nativeElement.value.trim()
@@ -143,7 +149,7 @@ export class RegisterComponent implements AfterViewInit, OnDestroy{
                 }
             })
 
-        this.email$ = fromEvent(this.emailInput.nativeElement, 'input')
+        this.email$ = this.register.controls['email'].statusChanges
             .pipe(debounceTime(1000))
             .subscribe(() => {
                 const value = this.emailInput.nativeElement.value.trim()

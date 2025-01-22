@@ -192,6 +192,7 @@ describe('LoginComponent', () => {
         expect(loginModal.nativeElement.getAttribute('ng-reflect-visible')).toBe('false');
         expect(passwordResetModal.nativeElement.getAttribute('ng-reflect-visible')).toBe('true');
         expect(passwordResetModal.nativeElement.innerText.includes('Reset Password')).toBe(true)
+        tick(ASYNC_DELAY)
         flush();
     }))
 })

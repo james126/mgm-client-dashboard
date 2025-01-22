@@ -1,4 +1,4 @@
-import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http'
+import { HttpErrorResponse } from '@angular/common/http'
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
 
 import { TestBed } from '@angular/core/testing'
@@ -29,8 +29,7 @@ describe('SignupService', () => {
 
     it('Check if username taken', () => {
         const response = {
-            usernameTaken: true,
-            status: HttpStatusCode.Ok,
+            outcome: true,
         }
         let actualResult: any
 
@@ -49,7 +48,7 @@ describe('SignupService', () => {
         request.flush(response)
         mock.verify()
 
-        expect(actualResult).toBe(response.usernameTaken)
+        expect(actualResult).toBe(response.outcome)
     })
 
     it('Handles response errors', () => {

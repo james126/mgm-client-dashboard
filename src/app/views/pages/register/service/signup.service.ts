@@ -1,9 +1,10 @@
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { ReCaptchaV3Service } from 'ng-recaptcha'
 import { NGXLogger } from 'ngx-logger'
 import { Observable, map, of, catchError } from 'rxjs'
 import { environment } from '../../../../../environments/environment'
+import { username } from '../../../../../test/register/dummy-data'
 
 export interface PasswordStrength {
     valid: boolean;
@@ -39,13 +40,16 @@ export class SignupService {
         this.usernameTakenUrl = environment.server + environment.usernameTaken
         this.emailTakenUrl = environment.server + environment.emailTaken
         this.signupUrl = environment.server + environment.signUp
-        this.recaptchaUrl = environment.recaptchaV3
+        this.recaptchaUrl = environment.server + environment.recaptcha
     }
 
     public isUsernameTaken(username: string): Observable<boolean | HttpErrorResponse> {
-        let params = new HttpParams().set('username', username)
-        return this.http.get<{ usernameTaken: boolean }>(this.usernameTakenUrl, { params }).pipe(
-            map(result => result.usernameTaken),
+        const httpOptions = {
+            params: {'username': username}
+        };
+
+        return this.http.get<{ outcome: boolean }>(this.usernameTakenUrl, httpOptions).pipe(
+            map(result => result.outcome),
             catchError((err, caught) => {
                 this.handleError(err, this.logger)
                 return of(err)
@@ -54,9 +58,12 @@ export class SignupService {
     }
 
     public isEmailTaken(email: string): Observable<boolean | HttpErrorResponse> {
-        let params = new HttpParams().set('email', email)
-        return this.http.get<{ emailTaken: boolean }>(this.emailTakenUrl, { params }).pipe(
-            map(result => result.emailTaken),
+        const httpOptions = {
+            params: {'email': email}
+        };
+
+        return this.http.get<{ outcome: boolean }>(this.emailTakenUrl, httpOptions).pipe(
+            map(result => result.outcome),
             catchError((err, caught) => {
                 this.handleError(err, this.logger)
                 return of(err)
@@ -65,8 +72,8 @@ export class SignupService {
     }
 
     public signup(data: SignupData): Observable<SignupResult> {
-        return this.http.post<{ success: boolean }>(this.signupUrl, data).pipe(
-            map(result => new SignupResult(result.success, null)),
+        return this.http.post<{ outcome: boolean }>(this.signupUrl, data).pipe(
+            map(result => new SignupResult(result.outcome, null)),
             catchError((err, caught) => {
                 this.handleError(err, this.logger)
                 return of(new SignupResult(false, err))

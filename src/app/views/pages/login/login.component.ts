@@ -2,7 +2,7 @@
 import { HttpErrorResponse } from '@angular/common/http'
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core'
 import { NgIf, NgStyle, NgSwitch, NgSwitchCase } from '@angular/common'
-import { FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
+import { FormControl, FormControlStatus, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'
 import { Router, RouterModule } from '@angular/router'
 import { IconDirective } from '@coreui/icons-angular'
 import {
@@ -19,7 +19,7 @@ import {
     FormControlDirective,
     ButtonDirective, ButtonCloseDirective, ModalModule, GutterDirective,
 } from '@coreui/angular'
-import { catchError, debounceTime, fromEvent, Observable, of, Subscription, switchMap, timer } from 'rxjs'
+import { catchError, debounceTime, fromEvent, Observable, Observer, of, Subscription, switchMap, timer } from 'rxjs'
 import { LoginFeedbackComponent } from './login-feedback/login-feedback.component'
 import { NewPasswordComponent } from './reset-password/new-password/new-password.component'
 import { SubmitEmailComponent } from './reset-password/submit-email/submit-email.component'
@@ -91,7 +91,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        this.username$ = fromEvent(this.usernameInput.nativeElement, 'input')
+         this.username$ = this.login.controls['username'].statusChanges
             .pipe(debounceTime(1000))
             .subscribe(() => {
                 const value = this.usernameInput.nativeElement.value.trim()
@@ -102,7 +102,8 @@ export class LoginComponent implements OnInit, OnDestroy {
                 }
             })
 
-        this.password$ = fromEvent(this.passwordInput.nativeElement, 'input')
+
+        this.password$ = this.login.controls['password'].statusChanges
             .pipe(debounceTime(1000))
             .subscribe(() => {
                 const value = this.passwordInput.nativeElement.value.trim()
