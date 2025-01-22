@@ -50,49 +50,69 @@
 
 [<img src=".github/readme/tests.jpg" style="width:25%"/>](.github/readme/tests.jpg)
 
-<a name="screenshots"></a>
-### Screenshots
-### `Landing`
-[<img src=".github/readme/landing/landing.jpeg" style="width:25%"/>](.github/readme/landing/landing.jpeg)
-<br/>
-<br/>
-[<img src=".github/readme/landing/contact.png" style="width:25%"/>](.github/readme/landing/contact.png)
-<br/>
-<br/>
-[<img src=".github/readme/landing/success.png" style="width:25%"/>](.github/readme/landing/success.png)
-<br/>
-<br/>
-[<img src=".github/readme/landing/error.png" style="width:25%"/>](.github/readme/landing/error.png)
-
-### `Register`
-[<img src=".github/readme/register/register.png" style="width:25%"/>](.github/readme/register/register.png)
-<br/>
-<br/>
-[<img src=".github/readme/register/success.png" style="width:25%"/>](.github/readme/register/success.png)
-<br/>
-<br/>
-[<img src=".github/readme/register/error.png" style="width:25%"/>](.github/readme/register/error.png)
-<br/>
-
-### `Login`
-[<img src=".github/readme/login/login.png" style="width:25%"/>](.github/readme/login/login.png)
-<br/>
-<br/>
-[<img src=".github/readme/login/invalid.png" style="width:25%"/>](.github/readme/login/invalid.png)
-<br/>
-<br/>
-[<img src=".github/readme/login/error.png" style="width:25%"/>](.github/readme/login/error.png)
-<br/>
-#### `Successful login redirects to dashboard (under construction)`
-[<img src=".github/readme/login/dashboard.jpeg" style="width:25%"/>](.github/readme/login/dashboard.jpeg)
-
-#### `Login - Reset password`
-[<img src=".github/readme/login/reset-email.png" style="width:25%"/>](.github/readme/login/reset-email.png)
-<br/>
-
-#### `Login - Set new password`
-[<img src=".github/readme/login/reset-new.png" style="width:25%"/>](.github/readme/login/reset-new.png)
-<br/>
-
 <a name="demo"></a>
-### Demo
+## Demo
+#### Development user testing on localhost
+
+<ul>
+    <li>server port 8080</li>
+    <li>Postgres port 5432</li>
+    <li>client port 80</li>
+</ul>
+
+## `Landing page`
+[<img src=".github/readme/demo/landing.jpeg" style="width:50%"/>](.github/readme/demo/landing.jpeg)
+<br/>
+
+#### `Contact form validation`
+[<img src=".github/readme/demo/contact-validation.png" style="width:50%"/>](.github/readme/demo/contact-validation.png)
+
+#### `Error submitting contact form`
+[<img src=".github/readme/demo/contact-error.png" style="width:50%"/>](.github/readme/demo/contact-error.png)
+
+#### `Successfully submission`
+[<img src=".github/readme/demo/contact-success.png" style="width:50%"/>](.github/readme/demo/contact-success.png)
+
+#### `Server writes record to database`
+[<img src=".github/readme/demo/http-contact.png" style="width:100%"/>](.github/readme/demo/http-contact.png)
+[<img src=".github/readme/demo/database-contact.png" style="width:100%"/>](.github/readme/demo/database-contact.png)
+
+<hr>
+
+## `Signup form`
+#### `Form validation`
+[<img src=".github/readme/demo/register-validation.png" style="width:50%"/>](.github/readme/demo/register-validation.png)
+
+#### `Request to check if username is taken`
+[<img src=".github/readme/demo/http-username.png" style="width:100%"/>](.github/readme/demo/http-username.png)
+
+#### `Unsuccessful submission`
+[<img src=".github/readme/demo/register-error.png" style="width:50%"/>](.github/readme/demo/register-error.png)
+
+#### `Successful submission`
+[<img src=".github/readme/demo/register-success.png" style="width:50%"/>](.github/readme/demo/register-success.png)
+
+#### `Record written to database`
+[<img src=".github/readme/demo/database-register.png" style="width:100%"/>](.github/readme/demo/database-register.png)
+
+<hr>
+
+## `Forgot Password`
+#### `Enter email to receive one-time password`
+[<img src=".github/readme/demo/forgot-password-email.png" style="width:50%"/>](.github/readme/demo/forgot-password-email.png)
+
+#### `Password received`
+[<img src=".github/readme/demo/temporary-password.png" style="width:50%"/>](.github/readme/demo/temporary-password.png)
+
+#### `Sets accounts temporary attribute true (indicates password is temporary)`
+[<img src=".github/readme/demo/database-temporary-true.png" style="width:100%"/>](.github/readme/demo/database-temporary-true.png)
+
+#### `Attempting to login with one-time password prompts user to change it`
+[<img src=".github/readme/demo/new-password.png" style="width:100%"/>](.github/readme/demo/new-password.png)
+
+#### `Resetting password sets temporary false (indicates password is not temporary)`
+[<img src=".github/readme/demo/database-temporary-false.png" style="width:100%"/>](.github/readme/demo/database-temporary-false.png)
+
+#### `Successfully logged into a dashboard`
+[<img src=".github/readme/demo/dashboard.png" style="width:50%"/>](.github/readme/demo/dashboard.png)
+
