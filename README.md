@@ -64,9 +64,6 @@
 [<img src=".github/readme/demo/landing.jpeg" style="width:50%"/>](.github/readme/demo/landing.jpeg)
 <br/>
 
-#### `Contact form validation`
-[<img src=".github/readme/demo/contact-validation.png" style="width:50%"/>](.github/readme/demo/contact-validation.png)
-
 #### `Error submitting contact form`
 [<img src=".github/readme/demo/contact-error.png" style="width:50%"/>](.github/readme/demo/contact-error.png)
 
