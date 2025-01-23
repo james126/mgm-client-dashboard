@@ -105,7 +105,7 @@
 [<img src=".github/readme/demo/database-temporary-true.png" style="width:100%"/>](.github/readme/demo/database-temporary-true.png)
 
 #### `Attempting to login with one-time password prompts user to change it`
-[<img src=".github/readme/demo/new-password.png" style="width:100%"/>](.github/readme/demo/new-password.png)
+[<img src=".github/readme/demo/new-password.png" style="width:50%"/>](.github/readme/demo/new-password.png)
 
 #### `Resetting password sets temporary false (indicates password is not temporary)`
 [<img src=".github/readme/demo/database-temporary-false.png" style="width:100%"/>](.github/readme/demo/database-temporary-false.png)
